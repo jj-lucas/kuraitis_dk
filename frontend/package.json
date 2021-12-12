@@ -33,6 +33,7 @@
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
-    "@types/styled-components": "^5.1.17"
+    "@types/styled-components": "^5.1.17",
+    "gatsby-plugin-graphql-codegen": "^3.1.0"
   }
 }
