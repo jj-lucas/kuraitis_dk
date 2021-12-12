@@ -1,0 +1,14 @@
+{
+	"workbench.colorCustomizations": {
+		"titleBar.activeForeground": "#000",
+		"titleBar.inactiveForeground": "#000000cc",
+		"titleBar.activeBackground": "#2b77be",
+		"titleBar.inactiveBackground": "#2b77be"
+	},
+	"editor.formatOnSave": true,
+	"prettier.semi": false,
+	"prettier.singleQuote": true,
+	"emmet.includeLanguages": {
+		"javascript": "javascript"
+	}
+}
