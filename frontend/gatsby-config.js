@@ -1,9 +1,26 @@
+const dotenv = require('dotenv')
+
+dotenv.config({
+	path: '.env',
+})
+
 module.exports = {
 	siteMetadata: {
 		siteUrl: 'https://www.yourdomain.tld',
 		title: 'Gatsby typescript',
 	},
 	plugins: [
+		{
+			resolve: 'gatsby-source-graphql',
+			options: {
+				// Arbitrary name for the remote schema Query type
+				typeName: 'Kuraitis',
+				// Field under which the remote schema will be accessible. You'll use this in your Gatsby query
+				fieldName: 'kuraitis',
+				// Url to query from
+				url: process.env.GATSBY_GRAPHQL_ENDPOINT,
+			},
+		},
 		'gatsby-plugin-styled-components',
 		'gatsby-plugin-image',
 		'gatsby-plugin-react-helmet',
