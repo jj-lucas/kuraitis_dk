@@ -1,7 +1,7 @@
 import { graphql, PageProps } from 'gatsby'
 import * as React from 'react'
 import { StaticPageQuery } from '../../graphql-types'
-import { StaticQueryComponent } from '../components'
+import { StaticQueryComponent, ApolloQueryComponent } from '../components'
 
 const IndexPage: React.FC<PageProps<StaticPageQuery>> = ({ data }) => (
 	<>
@@ -13,6 +13,7 @@ const IndexPage: React.FC<PageProps<StaticPageQuery>> = ({ data }) => (
 			))}
 		</ul>
 		<StaticQueryComponent />
+		<ApolloQueryComponent />
 	</>
 )
 

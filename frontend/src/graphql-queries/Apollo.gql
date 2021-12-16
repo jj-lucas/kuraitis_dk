@@ -1,0 +1,3 @@
+query Apollo($name: String!, $amount: Int) {
+	hello(name: $name, amount: $amount)
+}

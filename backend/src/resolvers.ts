@@ -12,6 +12,10 @@ const books = [
 const resolvers = {
 	Query: {
 		books: () => books,
+
+		hello: async (parent, { name, amount }, ctx) => {
+			return `Hello ${name}: ${amount}`
+		},
 	},
 }
 export default resolvers

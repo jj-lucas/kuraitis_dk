@@ -30,6 +30,12 @@ module.exports = {
 		'gatsby-transformer-sharp',
 		`gatsby-plugin-graphql-codegen`,
 		{
+			resolve: 'gatsby-plugin-apollo',
+			options: {
+				uri: process.env.GATSBY_GRAPHQL_ENDPOINT,
+			},
+		},
+		{
 			resolve: 'gatsby-source-filesystem',
 			options: {
 				name: 'images',
