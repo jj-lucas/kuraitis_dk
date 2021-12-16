@@ -1,54 +1,103 @@
-<p align="center">
-  <a href="https://www.gatsbyjs.com/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter">
-    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
-  </a>
-</p>
-<h1 align="center">
-  Gatsby minimal starter
-</h1>
+# Dev notes
 
-## 🚀 Quick start
+## Approaches for querying data
 
-1.  **Create a Gatsby site.**
+### Page query
 
-    Use the Gatsby CLI to create a new site, specifying the minimal starter.
+The name of the query is the one used by the `gatsby-plugin-graphql-codegen` to
+generate types, based on the introspected schema of the API.
 
-    ```shell
-    # create a new Gatsby site using the minimal starter
-    npm init gatsby
-    ```
+```
+// pages/test.tsx
 
-2.  **Start developing.**
+import { graphql, PageProps } from 'gatsby'
+import * as React from 'react'
+import { TestQuery } from '../../graphql-types'
 
-    Navigate into your new site’s directory and start it up.
+const Page: React.FC<PageProps<TestQuery>> = ({ data }) => {
+	// data is typed
+	return (<>{data.kuraitis.hello}</>)
+}
 
-    ```shell
-    cd my-gatsby-site/
-    npm run develop
-    ```
+export default Page
 
-3.  **Open the code and start customizing!**
+export const testQuery = graphql`
+	# The query name will define the type name
+	query Test {
+		kuraitis {
+			hello
+		}
+	}
+`
 
-    Your site is now running at http://localhost:8000!
+```
 
-    Edit `src/pages/index.js` to see your site update in real-time!
+### Static component query
 
-4.  **Learn more**
+Similar to page query. Uses a hook to run the query.
 
-    - [Documentation](https://www.gatsbyjs.com/docs/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+```
+import React from 'react'
+import { useStaticQuery, graphql } from 'gatsby'
+import { TestQuery } from '../../../graphql-types'
 
-    - [Tutorials](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+const ExampleComponent: React.FC = () => {
+	const { site } = useStaticQuery<TestQuery>(graphql`
+		query Test {
+			site {
+				siteMetadata {
+					title
+				}
+			}
+		}
+	`)
+	// site is typed
+	return <h1>{site?.siteMetadata?.title}</h1>
+}
 
-    - [Guides](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+export { ExampleComponent }
+```
 
-    - [API Reference](https://www.gatsbyjs.com/docs/api-reference/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+### Apollo Client
 
-    - [Plugin Library](https://www.gatsbyjs.com/plugins?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+For client side queries, the app uses `gatsby-plugin-apollo` to wrap the site
+with an Apollo Client. Queries have to be defined in
+`./src/graphql-queries/*.gql`.
 
-    - [Cheat Sheet](https://www.gatsbyjs.com/docs/cheat-sheet/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+We use `graphql-codegen` to generate types on the detected queries, based on the
+type definitions of the backend relatively found at
+`../backend/dist/type-defs.js`.
 
-## 🚀 Quick start (Gatsby Cloud)
+Generated types and hooks end up in `./src/graphql-queries/index.tsx`, and can
+be imported from there. The name of the query defines the name of the types /
+hooks.
 
-Deploy this starter with one click on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/):
+```
+// src/graphql-queries/Test.gql
 
-[<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-minimal)
+query Test($name: String!, $amount: Int) {
+	hello(name: $name, amount: $amount)
+}
+
+
+// src/components/Test.tsx
+
+import React from 'react'
+import { useTestQuery, TestQueryVariables } from '../../graphql-queries'
+
+const TestQueryComponent: React.FC = () => {
+	const variables: TestQueryVariables = {
+		name: 'Lucas',
+	}
+	const { data, loading } = useTestQuery({ variables })
+
+	if (loading) {
+		return <p>Loading</p>
+	}
+
+	return <h1>{data?.hello}</h1>
+}
+
+export { TestQueryComponent }
+
+```

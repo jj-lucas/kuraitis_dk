@@ -1,4 +1,10 @@
-import { Context } from './index'
+import { ExpressContext } from 'apollo-server-express'
+import { PrismaClient } from '@prisma/client'
+import { Resolvers } from './generated/graphql'
+
+interface Context extends ExpressContext {
+	prisma: PrismaClient
+}
 
 const books = [
 	{
@@ -11,7 +17,7 @@ const books = [
 	},
 ]
 
-const resolvers = {
+const resolvers: Resolvers = {
 	Query: {
 		books: () => books,
 

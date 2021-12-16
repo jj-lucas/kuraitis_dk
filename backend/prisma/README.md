@@ -2,6 +2,8 @@
 
 https://www.prisma.io/docs/concepts/components/prisma-migrate
 
+Manually generate types using: `npx prisma generate`
+
 In a development environment, use the migrate dev command to generate and apply
 migrations: `npx prisma migrate dev`
 

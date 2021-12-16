@@ -25,12 +25,19 @@ export type Query = {
   __typename?: 'Query';
   books?: Maybe<Array<Maybe<Book>>>;
   hello?: Maybe<Scalars['String']>;
+  users?: Maybe<Array<Maybe<User>>>;
 };
 
 
 export type QueryHelloArgs = {
   amount?: InputMaybe<Scalars['Int']>;
   name: Scalars['String'];
+};
+
+export type User = {
+  __typename?: 'User';
+  email: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
 };
 
 export type ApolloQueryVariables = Exact<{
