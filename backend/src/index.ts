@@ -7,8 +7,8 @@ import http from 'http'
 import typeDefs from './type-defs'
 import resolvers from './resolvers'
 import { PrismaClient } from '@prisma/client'
-
-// PRISMA
+import jwt from 'jsonwebtoken'
+var cookieParser = require('cookie-parser')
 
 const prisma = new PrismaClient()
 
@@ -24,19 +24,56 @@ async function startServer(typeDefs, resolvers) {
 
 	// METRICS
 
-	// CORS
+	app.use(cookieParser())
 
-	// BODY PARSER
+	// https://stackoverflow.com/a/67270036
+	app.use(express.json())
+	app.use(express.urlencoded({ extended: true }))
+
+	// Populate user
+	app.use(async (req, res, next) => {
+		const { token }: { token?: string } = req.cookies
+		if (token) {
+			const decoded = jwt.verify(token, process.env.APP_SECRET)
+
+			console.log(decoded)
+			// put the user Id onto the req for future requests to access
+			// req.userId = userId
+		}
+		next()
+	})
 
 	app.get('/hello', (req, res) => {
 		res.send('Hello World!')
 	})
 
-	// Populate user
-
 	// Health check
 
 	await server.start()
+
+	// CORS
+	server.applyMiddleware({
+		app,
+		cors: {
+			credentials: true,
+			origin: (origin, callback) => {
+				let whitelist = [
+					process.env.FRONTEND_URL_PROD,
+					'https://checkout.stripe.com/',
+					'https://studio.apollographql.com',
+				]
+				if (process.env.NODE_ENV !== 'production') {
+					whitelist.push(process.env.FRONTEND_URL_LOCAL, `http://localhost:${process.env.PORT}`)
+				}
+
+				if (whitelist.indexOf(origin) !== -1 || !origin) {
+					callback(null, true)
+				} else {
+					callback(new Error(`Not allowed by CORS: ${origin}`))
+				}
+			},
+		},
+	})
 
 	// mount Apollo middleware
 	server.applyMiddleware({ app })
