@@ -1,11 +1,18 @@
 require('dotenv').config({ path: '.env' })
 
-import { ApolloServer } from 'apollo-server-express'
+import { ApolloServer, ExpressContext } from 'apollo-server-express'
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
 import express from 'express'
 import http from 'http'
 import typeDefs from './type-defs'
 import resolvers from './resolvers'
+import { PrismaClient } from '@prisma/client'
+
+// PRISMA
+export interface Context extends ExpressContext {
+	prisma: PrismaClient
+}
+const prisma = new PrismaClient()
 
 async function startServer(typeDefs, resolvers) {
 	const app = express()
@@ -14,13 +21,12 @@ async function startServer(typeDefs, resolvers) {
 		typeDefs,
 		resolvers,
 		plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+		context: req => ({ ...req, prisma } as Context),
 	})
 
 	// METRICS
 
 	// CORS
-
-	// PRISMA
 
 	// BODY PARSER
 

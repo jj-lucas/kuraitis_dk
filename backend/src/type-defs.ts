@@ -6,9 +6,16 @@ const typeDefs = gql`
 		author: String
 	}
 
+	type User {
+		id: ID
+		email: String!
+		name: String
+	}
+
 	type Query {
 		books: [Book]
 		hello(name: String!, amount: Int): String
+		users: [User]
 	}
 `
 
