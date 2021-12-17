@@ -8,9 +8,19 @@ import typeDefs from './type-defs'
 import resolvers from './resolvers'
 import { PrismaClient } from '@prisma/client'
 import jwt from 'jsonwebtoken'
+import { ExpressContext } from 'apollo-server-express'
 var cookieParser = require('cookie-parser')
 
 const prisma = new PrismaClient()
+
+export interface Req extends express.Request {
+	userId?: string
+}
+
+export interface Context extends ExpressContext {
+	prisma: PrismaClient
+	req: Req
+}
 
 async function startServer(typeDefs, resolvers) {
 	const app = express()
@@ -33,12 +43,12 @@ async function startServer(typeDefs, resolvers) {
 	// Populate user
 	app.use(async (req, res, next) => {
 		const { token }: { token?: string } = req.cookies
+		console.log(token)
 		if (token) {
 			const decoded = jwt.verify(token, process.env.APP_SECRET)
 
-			console.log(decoded)
 			// put the user Id onto the req for future requests to access
-			// req.userId = userId
+			// req.userId = decoded.userId
 		}
 		next()
 	})

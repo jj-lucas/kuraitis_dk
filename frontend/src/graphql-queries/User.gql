@@ -1,0 +1,16 @@
+query CurrentUser {
+	currentUser {
+		id
+		name
+		email
+		permissions {
+			name
+		}
+	}
+}
+
+mutation SignIn($email: String!, $password: String!) {
+	signIn(email: $email, password: $password) {
+		name
+	}
+}
