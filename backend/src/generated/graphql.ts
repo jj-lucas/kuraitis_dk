@@ -22,10 +22,41 @@ export type Book = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  assignPermission?: Maybe<Result>;
+  createPermission?: Maybe<Permission>;
+  createUser?: Maybe<User>;
+  deletePermission?: Maybe<Result>;
+  deleteUser?: Maybe<Result>;
   signIn?: Maybe<User>;
   signOut?: Maybe<Result>;
-  userCreate?: Maybe<User>;
-  userDelete?: Maybe<Result>;
+};
+
+
+export type MutationAssignPermissionArgs = {
+  permissionName: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+
+export type MutationCreatePermissionArgs = {
+  name: Scalars['String'];
+};
+
+
+export type MutationCreateUserArgs = {
+  email: Scalars['String'];
+  name: Scalars['String'];
+  password: Scalars['String'];
+};
+
+
+export type MutationDeletePermissionArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteUserArgs = {
+  id?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -34,20 +65,9 @@ export type MutationSignInArgs = {
   password: Scalars['String'];
 };
 
-
-export type MutationUserCreateArgs = {
-  email: Scalars['String'];
-  name: Scalars['String'];
-  password: Scalars['String'];
-};
-
-
-export type MutationUserDeleteArgs = {
-  id?: InputMaybe<Scalars['String']>;
-};
-
 export type Permission = {
   __typename?: 'Permission';
+  id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
 };
 
@@ -56,6 +76,7 @@ export type Query = {
   books?: Maybe<Array<Maybe<Book>>>;
   currentUser?: Maybe<User>;
   hello?: Maybe<Scalars['String']>;
+  permissions?: Maybe<Array<Maybe<Permission>>>;
   users?: Maybe<Array<Maybe<User>>>;
 };
 
@@ -178,13 +199,17 @@ export type BookResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  assignPermission?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType, RequireFields<MutationAssignPermissionArgs, 'permissionName' | 'userId'>>;
+  createPermission?: Resolver<Maybe<ResolversTypes['Permission']>, ParentType, ContextType, RequireFields<MutationCreatePermissionArgs, 'name'>>;
+  createUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'email' | 'name' | 'password'>>;
+  deletePermission?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType, RequireFields<MutationDeletePermissionArgs, 'id'>>;
+  deleteUser?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType, RequireFields<MutationDeleteUserArgs, never>>;
   signIn?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationSignInArgs, 'email' | 'password'>>;
   signOut?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType>;
-  userCreate?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationUserCreateArgs, 'email' | 'name' | 'password'>>;
-  userDelete?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType, RequireFields<MutationUserDeleteArgs, never>>;
 };
 
 export type PermissionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Permission'] = ResolversParentTypes['Permission']> = {
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -193,6 +218,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   books?: Resolver<Maybe<Array<Maybe<ResolversTypes['Book']>>>, ParentType, ContextType>;
   currentUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   hello?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<QueryHelloArgs, 'name'>>;
+  permissions?: Resolver<Maybe<Array<Maybe<ResolversTypes['Permission']>>>, ParentType, ContextType>;
   users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
 };
 

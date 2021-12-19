@@ -7,6 +7,7 @@ const typeDefs = gql`
 	}
 
 	type Permission {
+		id: String
 		name: String
 	}
 
@@ -24,15 +25,23 @@ const typeDefs = gql`
 	type Query {
 		books: [Book]
 		hello(name: String!, amount: Int): String
+
 		users: [User]
 		currentUser: User
+
+		permissions: [Permission]
 	}
 
 	type Mutation {
-		userCreate(name: String!, email: String!, password: String!): User
-		userDelete(id: String): Result
+		createUser(name: String!, email: String!, password: String!): User
+		deleteUser(id: String): Result
+
 		signIn(email: String!, password: String!): User
 		signOut: Result
+
+		createPermission(name: String!): Permission
+		deletePermission(id: String!): Result
+		assignPermission(userId: String!, permissionName: String!): Result
 	}
 `
 

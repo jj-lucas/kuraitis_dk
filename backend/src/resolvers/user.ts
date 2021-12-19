@@ -6,20 +6,35 @@ import { hasPermissions } from '../utils/server'
 
 const resolvers: Resolvers = {
 	Query: {
-		users: async (parent, args, ctx: Context) => {
-			const users = await ctx.prisma.user.findMany()
+		users: async (_, args, ctx: Context) => {
+			hasPermissions(ctx, 'ADMIN')
+
+			const users = await ctx.prisma.user.findMany({
+				include: {
+					permissions: true,
+				},
+			})
 			return users
 		},
-		currentUser: async (parent, args, ctx: Context) => {
+		currentUser: async (_, args, ctx: Context) => {
 			if (!ctx.req.user) {
 				return null
 			}
 
 			return ctx.req.user
 		},
+		permissions: async (_, args, ctx: Context) => {
+			hasPermissions(ctx, 'ADMIN')
+
+			const permissions = await ctx.prisma.permission.findMany()
+
+			return permissions
+		},
 	},
 	Mutation: {
-		userCreate: async (parent, { name, email, password }, ctx: Context) => {
+		createUser: async (_, { name, email, password }, ctx: Context) => {
+			hasPermissions(ctx, 'ADMIN')
+
 			email = email.toLowerCase()
 
 			// hash the password
@@ -31,7 +46,7 @@ const resolvers: Resolvers = {
 
 			return user
 		},
-		userDelete: async (parent, { id }, ctx: Context) => {
+		deleteUser: async (_, { id }, ctx: Context) => {
 			hasPermissions(ctx, 'ADMIN')
 
 			// ensure we are not suiciding
@@ -39,7 +54,7 @@ const resolvers: Resolvers = {
 				throw new Error("You can't delete yourself, dummy")
 			}
 
-			const user = await ctx.prisma.user.delete({
+			await ctx.prisma.user.delete({
 				where: {
 					id,
 				},
@@ -50,7 +65,7 @@ const resolvers: Resolvers = {
 			}
 		},
 
-		signIn: async (parent, { email, password }, ctx: Context) => {
+		signIn: async (_, { email, password }, ctx: Context) => {
 			// check if there is a user with that email
 			const user = await ctx.prisma.user.findUnique({
 				where: {
@@ -74,10 +89,70 @@ const resolvers: Resolvers = {
 			// return the user
 			return user
 		},
-		signOut: async (parent, {}, ctx: Context) => {
+		signOut: async (_, {}, ctx: Context) => {
 			ctx.res.clearCookie('token')
 			return {
 				message: 'Goodbye',
+			}
+		},
+
+		createPermission: async (_, { name }, ctx: Context) => {
+			hasPermissions(ctx, 'ADMIN')
+
+			const permission = await ctx.prisma.permission.create({
+				data: {
+					name: name.toUpperCase(),
+				},
+			})
+
+			return permission
+		},
+		deletePermission: async (_, { id }, ctx: Context) => {
+			hasPermissions(ctx, 'ADMIN')
+
+			await ctx.prisma.permission.delete({
+				where: {
+					id,
+				},
+			})
+
+			return {
+				message: 'Success',
+			}
+		},
+		assignPermission: async (_, { userId, permissionName }, ctx: Context) => {
+			hasPermissions(ctx, 'ADMIN')
+
+			const user = await ctx.prisma.user.findUnique({
+				where: {
+					id: userId,
+				},
+				include: {
+					permissions: true,
+				},
+			})
+
+			if (!user) {
+				throw new Error('User not found')
+			}
+
+			if (!user.permissions.map(perm => perm.name).includes(permissionName)) {
+				await ctx.prisma.user.update({
+					where: {
+						id: userId,
+					},
+					data: {
+						permissions: {
+							connect: {
+								name: permissionName,
+							},
+						},
+					},
+				})
+			}
+
+			return {
+				message: 'Success',
 			}
 		},
 	},
