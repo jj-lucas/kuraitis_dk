@@ -20,6 +20,7 @@
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.2.4",
+    "@mui/lab": "^5.0.0-alpha.60",
     "@mui/material": "^5.2.4",
     "@mui/styled-engine-sc": "^5.1.0",
     "@types/react": "^17.0.37",
@@ -49,6 +50,7 @@
     "@graphql-codegen/typescript-operations": "2.2.1",
     "@graphql-codegen/typescript-react-apollo": "3.2.2",
     "@types/styled-components": "^5.1.17",
+    "babel-plugin-transform-imports": "^2.0.0",
     "dotenv": "^10.0.0",
     "gatsby-plugin-graphql-codegen": "^3.1.0",
     "gatsby-source-graphql": "^4.3.0"

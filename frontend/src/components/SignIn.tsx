@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { Box, Button, Stack, TextField } from '@mui/material'
-import { useSignInMutation, SignInMutationVariables, CurrentUserDocument } from '../graphql-queries'
+import { Box, Stack, TextField, Alert } from '@mui/material'
+import LoadingButton from '@mui/lab/LoadingButton'
+import { useSignInMutation, CurrentUserDocument } from '../graphql-queries'
 
 const SignIn: React.FC = () => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
-	const [signInMutation] = useSignInMutation()
+	const [signInMutation, { loading, error }] = useSignInMutation()
 
 	const signIn = () => {
 		signInMutation({
@@ -18,7 +19,6 @@ const SignIn: React.FC = () => {
 	}
 
 	const changeField: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = e => {
-		console.log(e.target.id)
 		switch (e.target.id) {
 			case 'email':
 				setEmail(e.target.value)
@@ -41,9 +41,10 @@ const SignIn: React.FC = () => {
 					value={password}
 					onChange={changeField}
 				/>
-				<Button variant="contained" fullWidth onClick={signIn}>
+				<LoadingButton variant="contained" fullWidth onClick={signIn} loading={loading}>
 					Log in
-				</Button>
+				</LoadingButton>
+				{error && <Alert severity="error">{error}</Alert>}
 			</Stack>
 		</Box>
 	)

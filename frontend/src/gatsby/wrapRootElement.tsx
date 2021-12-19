@@ -15,7 +15,6 @@ export const wrapRootElement: WrapRootElement = ({ element, props }: any) => {
 				<meta name="viewport" content="initial-scale=1, width=device-width" />
 			</Helmet>
 			<CssBaseline />
-			<h1>Root provider</h1>
 			<ThemeProvider theme={theme}>{element}</ThemeProvider>
 		</div>
 	)
