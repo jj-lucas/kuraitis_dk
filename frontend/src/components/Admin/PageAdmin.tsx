@@ -67,12 +67,6 @@ const NavigationLinks: React.FC = () => {
 					</ListItemIcon>
 					<ListItemText primary={'Reviews'} />
 				</ListItem>
-				<ListItem button component={Link} to="/admin/users">
-					<ListItemIcon>
-						<InboxIcon />
-					</ListItemIcon>
-					<ListItemText primary={'Users'} />
-				</ListItem>
 				{hasPermission(currentUser, 'ADMIN') && (
 					<>
 						<ListItem button component={Link} to="/admin/users">

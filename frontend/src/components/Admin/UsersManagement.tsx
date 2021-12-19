@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { UsersQuery, User, UsersDocument, useCreateUserMutation } from '../../graphql-queries'
+import { UsersQuery, User, UsersDocument, useCreateUserMutation, useDeleteUserMutation } from '../../graphql-queries'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -31,21 +31,26 @@ const Row: React.FC<{ user: User }> = ({ user }) => {
 			<TableRow>
 				<TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
 					<Collapse in={open} timeout="auto" unmountOnExit>
+						{user.permissions && user.permissions?.length > 0 && (
+							<Box sx={{ margin: 2 }}>
+								<Typography sx={{ mb: 2 }} component="div">
+									Permissions
+								</Typography>
+								{user.permissions
+									?.filter(perm => perm && perm.name)
+									.map(perm => (
+										<Chip
+											color="primary"
+											icon={perm?.name === 'ADMIN' ? <VerifiedUserIcon /> : undefined}
+											label={perm?.name}
+											variant="outlined"
+											sx={{ mr: '1rem' }}
+										/>
+									))}
+							</Box>
+						)}
 						<Box sx={{ margin: 2 }}>
-							<Typography sx={{ mb: 2 }} component="div">
-								Permissions
-							</Typography>
-							{user.permissions
-								?.filter(perm => perm && perm.name)
-								.map(perm => (
-									<Chip
-										color="primary"
-										icon={perm?.name === 'ADMIN' ? <VerifiedUserIcon /> : undefined}
-										label={perm?.name}
-										variant="outlined"
-										sx={{ mr: '1rem' }}
-									/>
-								))}
+							<DeleteUser user={user} />
 						</Box>
 					</Collapse>
 				</TableCell>
@@ -104,6 +109,32 @@ const AddUser: React.FC = () => {
 				{error && <Alert severity="error">{error}</Alert>}
 			</Stack>
 		</Box>
+	)
+}
+
+const DeleteUser: React.FC<{ user: User }> = ({ user }) => {
+	const [deleteUserMutation, { loading, error }] = useDeleteUserMutation()
+
+	const deleteUser = (id: string) => {
+		deleteUserMutation({
+			variables: {
+				id,
+			},
+			refetchQueries: [{ query: UsersDocument }],
+		})
+	}
+	return (
+		<>
+			<LoadingButton
+				variant="contained"
+				sx={{ mt: 3 }}
+				color={'error'}
+				loading={loading}
+				onClick={() => deleteUser(user.id || '')}>
+				Delete
+			</LoadingButton>
+			{error && <Alert severity="error">{error}</Alert>}
+		</>
 	)
 }
 
