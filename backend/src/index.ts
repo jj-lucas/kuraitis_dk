@@ -9,12 +9,13 @@ import resolvers from './resolvers'
 import { PrismaClient } from '@prisma/client'
 import jwt from 'jsonwebtoken'
 import { ExpressContext } from 'apollo-server-express'
+import { User } from './generated/graphql'
 const cookieParser = require('cookie-parser')
 
 const prisma = new PrismaClient()
 
 export interface Req extends express.Request {
-	userId?: string
+	user?: User
 }
 
 export interface Context extends ExpressContext {
@@ -53,11 +54,28 @@ async function startServer(typeDefs, resolvers) {
 				const decoded = jwt.verify(token, process.env.APP_SECRET) as Cookies
 
 				if (decoded && decoded.userId) {
-					// put the user Id onto the req for future requests to access
-					req.userId = decoded.userId
+					// put the user onto the req for future requests to access
+
+					const user = await prisma.user.findUnique({
+						where: {
+							id: decoded.userId,
+						},
+						include: {
+							permissions: true,
+						},
+					})
+
+					if (user) {
+						req.user = user
+					} else {
+						req.user = undefined
+					}
 				}
 			} catch (e) {
 				// do nothing, malformed JWT token
+
+				// ensure we clear the user
+				req.user = undefined
 			}
 		}
 		next()

@@ -25,6 +25,7 @@ export type Mutation = {
   signIn?: Maybe<User>;
   signOut?: Maybe<Result>;
   userCreate?: Maybe<User>;
+  userDelete?: Maybe<Result>;
 };
 
 
@@ -38,6 +39,11 @@ export type MutationUserCreateArgs = {
   email: Scalars['String'];
   name: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationUserDeleteArgs = {
+  id?: InputMaybe<Scalars['String']>;
 };
 
 export type Permission = {
@@ -175,6 +181,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   signIn?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationSignInArgs, 'email' | 'password'>>;
   signOut?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType>;
   userCreate?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationUserCreateArgs, 'email' | 'name' | 'password'>>;
+  userDelete?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType, RequireFields<MutationUserDeleteArgs, never>>;
 };
 
 export type PermissionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Permission'] = ResolversParentTypes['Permission']> = {

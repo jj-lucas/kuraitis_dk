@@ -26,6 +26,7 @@ export type Mutation = {
   signIn?: Maybe<User>;
   signOut?: Maybe<Result>;
   userCreate?: Maybe<User>;
+  userDelete?: Maybe<Result>;
 };
 
 
@@ -39,6 +40,11 @@ export type MutationUserCreateArgs = {
   email: Scalars['String'];
   name: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationUserDeleteArgs = {
+  id?: InputMaybe<Scalars['String']>;
 };
 
 export type Permission = {

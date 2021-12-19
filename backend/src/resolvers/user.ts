@@ -2,6 +2,7 @@ import { Context } from '../index'
 import { Resolvers } from '../generated/graphql'
 const bcrypt = require('bcryptjs')
 import { generateJWT } from '../utils/jwt'
+import { hasPermissions } from '../utils/server'
 
 const resolvers: Resolvers = {
 	Query: {
@@ -10,20 +11,11 @@ const resolvers: Resolvers = {
 			return users
 		},
 		currentUser: async (parent, args, ctx: Context) => {
-			if (!ctx.req.userId) {
+			if (!ctx.req.user) {
 				return null
 			}
 
-			const user = await ctx.prisma.user.findUnique({
-				where: {
-					id: ctx.req.userId,
-				},
-				include: {
-					permissions: true,
-				},
-			})
-
-			return user
+			return ctx.req.user
 		},
 	},
 	Mutation: {
@@ -39,6 +31,25 @@ const resolvers: Resolvers = {
 
 			return user
 		},
+		userDelete: async (parent, { id }, ctx: Context) => {
+			hasPermissions(ctx, 'ADMIN')
+
+			// ensure we are not suiciding
+			if (id === ctx.req.user.id) {
+				throw new Error("You can't delete yourself, dummy")
+			}
+
+			const user = await ctx.prisma.user.delete({
+				where: {
+					id,
+				},
+			})
+
+			return {
+				message: 'Success',
+			}
+		},
+
 		signIn: async (parent, { email, password }, ctx: Context) => {
 			// check if there is a user with that email
 			const user = await ctx.prisma.user.findUnique({
