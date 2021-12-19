@@ -20,3 +20,14 @@ mutation SignOut {
 		message
 	}
 }
+
+query Users {
+	users {
+		id
+		name
+		email
+		permissions {
+			name
+		}
+	}
+}

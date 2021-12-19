@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Box, Stack, TextField, Alert } from '@mui/material'
 import LoadingButton from '@mui/lab/LoadingButton'
-import { useSignInMutation, CurrentUserDocument } from '../graphql-queries'
+import { useSignInMutation, CurrentUserDocument } from '../../graphql-queries'
 
 const SignIn: React.FC = () => {
 	const [email, setEmail] = useState('')

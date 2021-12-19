@@ -1,6 +1,6 @@
 import { Button } from '@mui/material'
 import React from 'react'
-import { useSignOutMutation, CurrentUserDocument } from '../graphql-queries'
+import { useSignOutMutation, CurrentUserDocument } from '../../graphql-queries'
 
 const SignOut: React.FC = () => {
 	const [signOutMutation] = useSignOutMutation()

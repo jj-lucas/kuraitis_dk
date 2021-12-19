@@ -1,12 +1,11 @@
 import React from 'react'
-import { useCurrentUserQuery } from '../graphql-queries'
+import { useCurrentUserQuery } from '../../graphql-queries'
 import { Helmet } from 'react-helmet'
-import { SignIn, SignOut } from '../components'
+import { SignIn, SignOut, UserContext } from '..'
 import {
 	Alert,
 	AppBar,
 	Box,
-	Button,
 	CircularProgress,
 	Container,
 	Divider,
@@ -34,7 +33,8 @@ const AuthenticateUser: React.FC = props => {
 		return <SignIn />
 	}
 
-	return <div>{props.children}</div>
+	// you are authenticated, show the actual page, providing the user in the context
+	return <UserContext.Provider value={data.currentUser}>{props.children}</UserContext.Provider>
 }
 
 const navigationLinks = (
