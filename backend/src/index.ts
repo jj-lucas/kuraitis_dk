@@ -43,7 +43,6 @@ async function startServer(typeDefs, resolvers) {
 	// Populate user
 	app.use(async (req, res, next) => {
 		const { token }: { token?: string } = req.cookies
-		console.log(token)
 		if (token) {
 			const decoded = jwt.verify(token, process.env.APP_SECRET)
 

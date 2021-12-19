@@ -1,22 +1,20 @@
 import React, { useState } from 'react'
 import { Box, Button, Stack, TextField } from '@mui/material'
-import { useSignInMutation, SignInMutationVariables } from '../graphql-queries'
+import { useSignInMutation, SignInMutationVariables, CurrentUserDocument } from '../graphql-queries'
 
 const SignIn: React.FC = () => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
-	const [signInMutation, { data, loading, error }] = useSignInMutation()
+	const [signInMutation] = useSignInMutation()
 
 	const signIn = () => {
-		console.log(password)
 		signInMutation({
 			variables: {
 				email,
 				password,
 			},
+			refetchQueries: [{ query: CurrentUserDocument }],
 		})
-
-		console.log(data, loading, error)
 	}
 
 	const changeField: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = e => {

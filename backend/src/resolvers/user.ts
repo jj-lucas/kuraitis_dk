@@ -47,6 +47,10 @@ const resolvers: Resolvers = {
 				},
 			})
 
+			if (!user) {
+				throw new Error('Invalid email or password')
+			}
+
 			const passwordMatch = await bcrypt.compare(password, user.password)
 
 			if (!passwordMatch) {
@@ -58,8 +62,6 @@ const resolvers: Resolvers = {
 
 			// return the user
 			return user
-
-			return null
 		},
 	},
 }
