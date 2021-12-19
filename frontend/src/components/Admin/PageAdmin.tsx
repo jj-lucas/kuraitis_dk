@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useCurrentUserQuery } from '../../graphql-queries'
 import { Helmet } from 'react-helmet'
 import { SignIn, SignOut, UserContext } from '..'
+import { hasPermission } from '../../utils'
 import {
 	Alert,
 	AppBar,
@@ -21,6 +22,72 @@ import MenuIcon from '@mui/icons-material/Menu'
 import InboxIcon from '@mui/icons-material/Inbox'
 import { Link } from 'gatsby'
 
+const NavigationLinks: React.FC = () => {
+	const currentUser = useContext(UserContext)
+
+	return (
+		<div>
+			<Toolbar />
+			<Divider />
+			<List>
+				<ListItem button component={Link} to="/admin">
+					<ListItemIcon>
+						<InboxIcon />
+					</ListItemIcon>
+					<ListItemText primary={'Dashboard'} />
+				</ListItem>
+				<ListItem button component={Link} to="/admin/orders">
+					<ListItemIcon>
+						<InboxIcon />
+					</ListItemIcon>
+					<ListItemText primary={'Orders'} />
+				</ListItem>
+				<Divider />
+				<ListItem button component={Link} to="/admin/categories">
+					<ListItemIcon>
+						<InboxIcon />
+					</ListItemIcon>
+					<ListItemText primary={'Categories'} />
+				</ListItem>
+				<ListItem button component={Link} to="/admin/products">
+					<ListItemIcon>
+						<InboxIcon />
+					</ListItemIcon>
+					<ListItemText primary={'Prodcts'} />
+				</ListItem>
+				<ListItem button component={Link} to="/admin/markets">
+					<ListItemIcon>
+						<InboxIcon />
+					</ListItemIcon>
+					<ListItemText primary={'Markets'} />
+				</ListItem>
+				<ListItem button component={Link} to="/admin/reviews">
+					<ListItemIcon>
+						<InboxIcon />
+					</ListItemIcon>
+					<ListItemText primary={'Reviews'} />
+				</ListItem>
+				<ListItem button component={Link} to="/admin/users">
+					<ListItemIcon>
+						<InboxIcon />
+					</ListItemIcon>
+					<ListItemText primary={'Users'} />
+				</ListItem>
+				{hasPermission(currentUser, 'ADMIN') && (
+					<>
+						<ListItem button component={Link} to="/admin/users">
+							<ListItemIcon>
+								<InboxIcon />
+							</ListItemIcon>
+							<ListItemText primary={'Users'} />
+						</ListItem>
+					</>
+				)}
+			</List>
+		</div>
+	)
+}
+
 const AuthenticateUser: React.FC = props => {
 	const { data, loading, error } = useCurrentUserQuery()
 
@@ -36,52 +103,6 @@ const AuthenticateUser: React.FC = props => {
 	// you are authenticated, show the actual page, providing the user in the context
 	return <UserContext.Provider value={data.currentUser}>{props.children}</UserContext.Provider>
 }
-
-const navigationLinks = (
-	<div>
-		<Toolbar />
-		<Divider />
-		<List>
-			<ListItem button component={Link} to="/admin">
-				<ListItemIcon>
-					<InboxIcon />
-				</ListItemIcon>
-				<ListItemText primary={'Dashboard'} />
-			</ListItem>
-			<ListItem button component={Link} to="/admin/orders">
-				<ListItemIcon>
-					<InboxIcon />
-				</ListItemIcon>
-				<ListItemText primary={'Orders'} />
-			</ListItem>
-			<Divider />
-			<ListItem button component={Link} to="/admin/categories">
-				<ListItemIcon>
-					<InboxIcon />
-				</ListItemIcon>
-				<ListItemText primary={'Categories'} />
-			</ListItem>
-			<ListItem button component={Link} to="/admin/products">
-				<ListItemIcon>
-					<InboxIcon />
-				</ListItemIcon>
-				<ListItemText primary={'Prodcts'} />
-			</ListItem>
-			<ListItem button component={Link} to="/admin/markets">
-				<ListItemIcon>
-					<InboxIcon />
-				</ListItemIcon>
-				<ListItemText primary={'Markets'} />
-			</ListItem>
-			<ListItem button component={Link} to="/admin/reviews">
-				<ListItemIcon>
-					<InboxIcon />
-				</ListItemIcon>
-				<ListItemText primary={'Reviews'} />
-			</ListItem>
-		</List>
-	</div>
-)
 
 const drawerWidth = 240
 
@@ -138,7 +159,7 @@ const PageAdmin: React.FC = props => {
 									display: { xs: 'block', sm: 'none' },
 									'& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
 								}}>
-								{navigationLinks}
+								<NavigationLinks />
 							</Drawer>
 							<Drawer
 								variant="permanent"
@@ -147,7 +168,7 @@ const PageAdmin: React.FC = props => {
 									'& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
 								}}
 								open>
-								{navigationLinks}
+								<NavigationLinks />
 							</Drawer>
 						</Box>
 						<Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
