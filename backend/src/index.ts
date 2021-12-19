@@ -9,7 +9,7 @@ import resolvers from './resolvers'
 import { PrismaClient } from '@prisma/client'
 import jwt from 'jsonwebtoken'
 import { ExpressContext } from 'apollo-server-express'
-var cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser')
 
 const prisma = new PrismaClient()
 
@@ -22,8 +22,15 @@ export interface Context extends ExpressContext {
 	req: Req
 }
 
+interface Cookies extends jwt.JwtPayload {
+	userId?: string
+}
+
 async function startServer(typeDefs, resolvers) {
 	const app = express()
+
+	app.use(cookieParser())
+
 	const httpServer = http.createServer(app)
 	const server = new ApolloServer({
 		typeDefs,
@@ -34,20 +41,24 @@ async function startServer(typeDefs, resolvers) {
 
 	// METRICS
 
-	app.use(cookieParser())
-
 	// https://stackoverflow.com/a/67270036
 	app.use(express.json())
 	app.use(express.urlencoded({ extended: true }))
 
 	// Populate user
-	app.use(async (req, res, next) => {
+	app.use(async (req: Req, res, next) => {
 		const { token }: { token?: string } = req.cookies
 		if (token) {
-			const decoded = jwt.verify(token, process.env.APP_SECRET)
+			try {
+				const decoded = jwt.verify(token, process.env.APP_SECRET) as Cookies
 
-			// put the user Id onto the req for future requests to access
-			// req.userId = decoded.userId
+				if (decoded && decoded.userId) {
+					// put the user Id onto the req for future requests to access
+					req.userId = decoded.userId
+				}
+			} catch (e) {
+				// do nothing, malformed JWT token
+			}
 		}
 		next()
 	})

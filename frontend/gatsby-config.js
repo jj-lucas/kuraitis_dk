@@ -33,6 +33,7 @@ module.exports = {
 			resolve: 'gatsby-plugin-apollo',
 			options: {
 				uri: process.env.GATSBY_GRAPHQL_ENDPOINT,
+				credentials: 'include',
 			},
 		},
 		{
