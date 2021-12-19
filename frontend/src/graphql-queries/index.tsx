@@ -23,10 +23,41 @@ export type Book = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  assignPermission?: Maybe<Result>;
+  createPermission?: Maybe<Permission>;
+  createUser?: Maybe<User>;
+  deletePermission?: Maybe<Result>;
+  deleteUser?: Maybe<Result>;
   signIn?: Maybe<User>;
   signOut?: Maybe<Result>;
-  userCreate?: Maybe<User>;
-  userDelete?: Maybe<Result>;
+};
+
+
+export type MutationAssignPermissionArgs = {
+  permissionName: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+
+export type MutationCreatePermissionArgs = {
+  name: Scalars['String'];
+};
+
+
+export type MutationCreateUserArgs = {
+  email: Scalars['String'];
+  name: Scalars['String'];
+  password: Scalars['String'];
+};
+
+
+export type MutationDeletePermissionArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteUserArgs = {
+  id?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -35,20 +66,9 @@ export type MutationSignInArgs = {
   password: Scalars['String'];
 };
 
-
-export type MutationUserCreateArgs = {
-  email: Scalars['String'];
-  name: Scalars['String'];
-  password: Scalars['String'];
-};
-
-
-export type MutationUserDeleteArgs = {
-  id?: InputMaybe<Scalars['String']>;
-};
-
 export type Permission = {
   __typename?: 'Permission';
+  id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
 };
 
@@ -57,6 +77,7 @@ export type Query = {
   books?: Maybe<Array<Maybe<Book>>>;
   currentUser?: Maybe<User>;
   hello?: Maybe<Scalars['String']>;
+  permissions?: Maybe<Array<Maybe<Permission>>>;
   users?: Maybe<Array<Maybe<User>>>;
 };
 

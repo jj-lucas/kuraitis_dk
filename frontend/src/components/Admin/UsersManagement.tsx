@@ -7,79 +7,53 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import { Alert } from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, Alert, Chip, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-
-const ActionMenu: React.FC<{ user: User }> = ({ user }) => {
-	const [anchorEl, setAnchorEl] = React.useState(null)
-	const open = Boolean(anchorEl)
-	const handleClick = (event: any) => {
-		setAnchorEl(event.currentTarget)
-	}
-	const handleClose = () => {
-		setAnchorEl(null)
-	}
-
-	return (
-		<div>
-			<Button
-				id="basic-button"
-				aria-controls="basic-menu"
-				aria-haspopup="true"
-				aria-expanded={open ? 'true' : undefined}
-				onClick={handleClick}>
-				edit
-			</Button>
-			<Menu
-				id="basic-menu"
-				anchorEl={anchorEl}
-				open={open}
-				onClose={handleClose}
-				MenuListProps={{
-					'aria-labelledby': 'basic-button',
-				}}>
-				<MenuItem onClick={handleClose}>Profile</MenuItem>
-				<MenuItem onClick={handleClose}>My account</MenuItem>
-				<MenuItem onClick={handleClose}>Logout</MenuItem>
-			</Menu>
-		</div>
-	)
-}
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 export const UsersManagement: React.FC<{ users: UsersQuery['users'] }> = ({ users }) => {
 	if (!users) {
 		return <Alert severity="info">No users</Alert>
 	} else {
 		return (
-			<TableContainer component={Paper}>
-				<Table aria-label="simple table">
-					<TableHead>
-						<TableRow>
-							<TableCell sx={{ display: { xs: 'none', sm: 'table-cell' } }}>Email</TableCell>
-							<TableCell>Name</TableCell>
-							<TableCell align="right"></TableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{users.map(
-							user =>
-								!!user && (
-									<TableRow key={user.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-										<TableCell component="th" scope="row">
-											{user.email}
-										</TableCell>
-										<TableCell sx={{ display: { xs: 'none', sm: 'table-cell' } }}>{user.name}</TableCell>
-										<TableCell align="right">
-											<ActionMenu user={user as User} />
-										</TableCell>
-									</TableRow>
-								)
-						)}
-					</TableBody>
-				</Table>
-			</TableContainer>
+			<div>
+				<Typography variant="h6">
+					<div style={{ display: 'flex' }}>
+						<div style={{ flexBasis: '25%' }}>Email</div>
+						<div style={{ flexGrow: '1' }}>Name</div>
+					</div>
+				</Typography>
+				{users.map(
+					user =>
+						!!user && (
+							<Accordion>
+								<AccordionSummary
+									expandIcon={<ExpandMoreIcon />}
+									aria-controls="panel1a-content"
+									id="panel1a-header"
+									sx={{ display: 'flex', flexWrap: 'wrap' }}>
+									<div style={{ flexBasis: '25%' }}>{user.email}</div>
+									<div style={{ flexGrow: '1' }}>{user.name}</div>
+								</AccordionSummary>
+								<AccordionDetails>
+									{user.permissions
+										?.filter(perm => perm && perm.name)
+										.map(perm => (
+											<Chip
+												icon={perm?.name === 'ADMIN' ? <VerifiedUserIcon /> : undefined}
+												label={perm?.name}
+												variant="outlined"
+												sx={{ ml: '1rem' }}
+											/>
+										))}
+								</AccordionDetails>
+							</Accordion>
+						)
+				)}
+			</div>
 		)
 	}
 }
