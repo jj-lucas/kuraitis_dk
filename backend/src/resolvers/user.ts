@@ -63,6 +63,12 @@ const resolvers: Resolvers = {
 			// return the user
 			return user
 		},
+		signOut: async (parent, {}, ctx: Context) => {
+			ctx.res.clearCookie('token')
+			return {
+				message: 'Goodbye',
+			}
+		},
 	},
 }
 

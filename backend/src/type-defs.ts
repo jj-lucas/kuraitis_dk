@@ -10,6 +10,10 @@ const typeDefs = gql`
 		name: String
 	}
 
+	type Result {
+		message: String
+	}
+
 	type User {
 		id: String
 		name: String
@@ -27,6 +31,7 @@ const typeDefs = gql`
 	type Mutation {
 		userCreate(name: String!, email: String!, password: String!): User
 		signIn(email: String!, password: String!): User
+		signOut: Result
 	}
 `
 

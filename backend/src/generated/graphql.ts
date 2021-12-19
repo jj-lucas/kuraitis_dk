@@ -23,6 +23,7 @@ export type Book = {
 export type Mutation = {
   __typename?: 'Mutation';
   signIn?: Maybe<User>;
+  signOut?: Maybe<Result>;
   userCreate?: Maybe<User>;
 };
 
@@ -56,6 +57,11 @@ export type Query = {
 export type QueryHelloArgs = {
   amount?: InputMaybe<Scalars['Int']>;
   name: Scalars['String'];
+};
+
+export type Result = {
+  __typename?: 'Result';
+  message?: Maybe<Scalars['String']>;
 };
 
 export type User = {
@@ -141,6 +147,7 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   Permission: ResolverTypeWrapper<Permission>;
   Query: ResolverTypeWrapper<{}>;
+  Result: ResolverTypeWrapper<Result>;
   String: ResolverTypeWrapper<Scalars['String']>;
   User: ResolverTypeWrapper<User>;
 };
@@ -153,6 +160,7 @@ export type ResolversParentTypes = {
   Mutation: {};
   Permission: Permission;
   Query: {};
+  Result: Result;
   String: Scalars['String'];
   User: User;
 };
@@ -165,6 +173,7 @@ export type BookResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   signIn?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationSignInArgs, 'email' | 'password'>>;
+  signOut?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType>;
   userCreate?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationUserCreateArgs, 'email' | 'name' | 'password'>>;
 };
 
@@ -180,6 +189,11 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
 };
 
+export type ResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['Result'] = ResolversParentTypes['Result']> = {
+  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -193,6 +207,7 @@ export type Resolvers<ContextType = any> = {
   Mutation?: MutationResolvers<ContextType>;
   Permission?: PermissionResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Result?: ResultResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };
 

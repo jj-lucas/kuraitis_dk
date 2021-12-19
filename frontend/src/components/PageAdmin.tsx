@@ -1,7 +1,7 @@
 import React from 'react'
 import { useCurrentUserQuery } from '../graphql-queries'
 import { Helmet } from 'react-helmet'
-import { SignIn } from '../components'
+import { SignIn, SignOut } from '../components'
 import {
 	Alert,
 	AppBar,
@@ -17,7 +17,6 @@ import {
 	ListItemIcon,
 	ListItemText,
 	Toolbar,
-	Typography,
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import InboxIcon from '@mui/icons-material/Inbox'
@@ -120,9 +119,7 @@ const PageAdmin: React.FC = props => {
 									<MenuIcon />
 								</IconButton>
 								<div style={{ flexGrow: 1 }}></div>
-								<Button variant="outlined" sx={{ color: 'white' }}>
-									Log out
-								</Button>
+								<SignOut />
 							</Toolbar>
 						</AppBar>
 						<Box
