@@ -38,8 +38,21 @@ mutation CreateUser($name: String!, $email: String!, $password: String!) {
 	}
 }
 
-mutation DeleteUser($id: String) {
+mutation DeleteUser($id: String!) {
 	deleteUser(id: $id) {
+		message
+	}
+}
+
+query Permissions {
+	permissions {
+		id
+		name
+	}
+}
+
+mutation AssignPermission($userId: String!, $permissionName: String!) {
+	assignPermission(userId: $userId, permissionName: $permissionName) {
 		message
 	}
 }

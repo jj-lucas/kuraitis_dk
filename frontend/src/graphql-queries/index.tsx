@@ -57,7 +57,7 @@ export type MutationDeletePermissionArgs = {
 
 
 export type MutationDeleteUserArgs = {
-  id?: InputMaybe<Scalars['String']>;
+  id: Scalars['String'];
 };
 
 
@@ -68,8 +68,8 @@ export type MutationSignInArgs = {
 
 export type Permission = {
   __typename?: 'Permission';
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  name: Scalars['String'];
 };
 
 export type Query = {
@@ -77,8 +77,8 @@ export type Query = {
   books?: Maybe<Array<Maybe<Book>>>;
   currentUser?: Maybe<User>;
   hello?: Maybe<Scalars['String']>;
-  permissions?: Maybe<Array<Maybe<Permission>>>;
-  users?: Maybe<Array<Maybe<User>>>;
+  permissions: Array<Maybe<Permission>>;
+  users: Array<Maybe<User>>;
 };
 
 
@@ -89,15 +89,15 @@ export type QueryHelloArgs = {
 
 export type Result = {
   __typename?: 'Result';
-  message?: Maybe<Scalars['String']>;
+  message: Scalars['String'];
 };
 
 export type User = {
   __typename?: 'User';
-  email?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  permissions?: Maybe<Array<Maybe<Permission>>>;
+  email: Scalars['String'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+  permissions: Array<Maybe<Permission>>;
 };
 
 export type ApolloQueryVariables = Exact<{
@@ -111,7 +111,7 @@ export type ApolloQuery = { __typename?: 'Query', hello?: string | null | undefi
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CurrentUserQuery = { __typename?: 'Query', currentUser?: { __typename?: 'User', id?: string | null | undefined, name?: string | null | undefined, email?: string | null | undefined, permissions?: Array<{ __typename?: 'Permission', name?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+export type CurrentUserQuery = { __typename?: 'Query', currentUser?: { __typename?: 'User', id: string, name: string, email: string, permissions: Array<{ __typename?: 'Permission', name: string } | null | undefined> } | null | undefined };
 
 export type SignInMutationVariables = Exact<{
   email: Scalars['String'];
@@ -119,17 +119,17 @@ export type SignInMutationVariables = Exact<{
 }>;
 
 
-export type SignInMutation = { __typename?: 'Mutation', signIn?: { __typename?: 'User', name?: string | null | undefined } | null | undefined };
+export type SignInMutation = { __typename?: 'Mutation', signIn?: { __typename?: 'User', name: string } | null | undefined };
 
 export type SignOutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SignOutMutation = { __typename?: 'Mutation', signOut?: { __typename?: 'Result', message?: string | null | undefined } | null | undefined };
+export type SignOutMutation = { __typename?: 'Mutation', signOut?: { __typename?: 'Result', message: string } | null | undefined };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UsersQuery = { __typename?: 'Query', users?: Array<{ __typename?: 'User', id?: string | null | undefined, name?: string | null | undefined, email?: string | null | undefined, permissions?: Array<{ __typename?: 'Permission', name?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined> | null | undefined };
+export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: string, name: string, email: string, permissions: Array<{ __typename?: 'Permission', name: string } | null | undefined> } | null | undefined> };
 
 export type CreateUserMutationVariables = Exact<{
   name: Scalars['String'];
@@ -138,14 +138,27 @@ export type CreateUserMutationVariables = Exact<{
 }>;
 
 
-export type CreateUserMutation = { __typename?: 'Mutation', createUser?: { __typename?: 'User', id?: string | null | undefined } | null | undefined };
+export type CreateUserMutation = { __typename?: 'Mutation', createUser?: { __typename?: 'User', id: string } | null | undefined };
 
 export type DeleteUserMutationVariables = Exact<{
-  id?: InputMaybe<Scalars['String']>;
+  id: Scalars['String'];
 }>;
 
 
-export type DeleteUserMutation = { __typename?: 'Mutation', deleteUser?: { __typename?: 'Result', message?: string | null | undefined } | null | undefined };
+export type DeleteUserMutation = { __typename?: 'Mutation', deleteUser?: { __typename?: 'Result', message: string } | null | undefined };
+
+export type PermissionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PermissionsQuery = { __typename?: 'Query', permissions: Array<{ __typename?: 'Permission', id: string, name: string } | null | undefined> };
+
+export type AssignPermissionMutationVariables = Exact<{
+  userId: Scalars['String'];
+  permissionName: Scalars['String'];
+}>;
+
+
+export type AssignPermissionMutation = { __typename?: 'Mutation', assignPermission?: { __typename?: 'Result', message: string } | null | undefined };
 
 
 export const ApolloDocument = gql`
@@ -362,7 +375,7 @@ export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutati
 export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
 export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
 export const DeleteUserDocument = gql`
-    mutation DeleteUser($id: String) {
+    mutation DeleteUser($id: String!) {
   deleteUser(id: $id) {
     message
   }
@@ -394,6 +407,75 @@ export function useDeleteUserMutation(baseOptions?: Apollo.MutationHookOptions<D
 export type DeleteUserMutationHookResult = ReturnType<typeof useDeleteUserMutation>;
 export type DeleteUserMutationResult = Apollo.MutationResult<DeleteUserMutation>;
 export type DeleteUserMutationOptions = Apollo.BaseMutationOptions<DeleteUserMutation, DeleteUserMutationVariables>;
+export const PermissionsDocument = gql`
+    query Permissions {
+  permissions {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __usePermissionsQuery__
+ *
+ * To run a query within a React component, call `usePermissionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePermissionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePermissionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePermissionsQuery(baseOptions?: Apollo.QueryHookOptions<PermissionsQuery, PermissionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PermissionsQuery, PermissionsQueryVariables>(PermissionsDocument, options);
+      }
+export function usePermissionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PermissionsQuery, PermissionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PermissionsQuery, PermissionsQueryVariables>(PermissionsDocument, options);
+        }
+export type PermissionsQueryHookResult = ReturnType<typeof usePermissionsQuery>;
+export type PermissionsLazyQueryHookResult = ReturnType<typeof usePermissionsLazyQuery>;
+export type PermissionsQueryResult = Apollo.QueryResult<PermissionsQuery, PermissionsQueryVariables>;
+export const AssignPermissionDocument = gql`
+    mutation AssignPermission($userId: String!, $permissionName: String!) {
+  assignPermission(userId: $userId, permissionName: $permissionName) {
+    message
+  }
+}
+    `;
+export type AssignPermissionMutationFn = Apollo.MutationFunction<AssignPermissionMutation, AssignPermissionMutationVariables>;
+
+/**
+ * __useAssignPermissionMutation__
+ *
+ * To run a mutation, you first call `useAssignPermissionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAssignPermissionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [assignPermissionMutation, { data, loading, error }] = useAssignPermissionMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      permissionName: // value for 'permissionName'
+ *   },
+ * });
+ */
+export function useAssignPermissionMutation(baseOptions?: Apollo.MutationHookOptions<AssignPermissionMutation, AssignPermissionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AssignPermissionMutation, AssignPermissionMutationVariables>(AssignPermissionDocument, options);
+      }
+export type AssignPermissionMutationHookResult = ReturnType<typeof useAssignPermissionMutation>;
+export type AssignPermissionMutationResult = Apollo.MutationResult<AssignPermissionMutation>;
+export type AssignPermissionMutationOptions = Apollo.BaseMutationOptions<AssignPermissionMutation, AssignPermissionMutationVariables>;
 
       export interface PossibleTypesResultData {
         possibleTypes: {

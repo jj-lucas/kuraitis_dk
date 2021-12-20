@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { UsersQuery, User, UsersDocument, useCreateUserMutation, useDeleteUserMutation } from '../../graphql-queries'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -7,12 +6,13 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import { Alert, Box, Chip, Collapse, Grid, IconButton, Stack, TextField, Typography } from '@mui/material'
-import Button from '@mui/material/Button'
+import { Alert, Box, Chip, Collapse, IconButton, Stack, TextField, Typography } from '@mui/material'
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import { LoadingButton } from '@mui/lab'
+import { UsersQuery, User, UsersDocument, useCreateUserMutation, useDeleteUserMutation } from '../../../graphql-queries'
+import { PermissionsModal } from './PermissionsModal'
 
 const Row: React.FC<{ user: User }> = ({ user }) => {
 	const [open, setOpen] = React.useState(false)
@@ -31,12 +31,10 @@ const Row: React.FC<{ user: User }> = ({ user }) => {
 			<TableRow>
 				<TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
 					<Collapse in={open} timeout="auto" unmountOnExit>
-						{user.permissions && user.permissions?.length > 0 && (
-							<Box sx={{ margin: 2 }}>
-								<Typography sx={{ mb: 2 }} component="div">
-									Permissions
-								</Typography>
-								{user.permissions
+						<Box sx={{ margin: 2 }}>
+							{user.permissions &&
+								user.permissions?.length > 0 &&
+								user.permissions
 									?.filter(perm => perm && perm.name)
 									.map(perm => (
 										<Chip
@@ -47,8 +45,8 @@ const Row: React.FC<{ user: User }> = ({ user }) => {
 											sx={{ mr: '1rem' }}
 										/>
 									))}
-							</Box>
-						)}
+							<PermissionsModal user={user} />
+						</Box>
 						<Box sx={{ margin: 2 }}>
 							<DeleteUser user={user} />
 						</Box>
@@ -125,12 +123,7 @@ const DeleteUser: React.FC<{ user: User }> = ({ user }) => {
 	}
 	return (
 		<>
-			<LoadingButton
-				variant="contained"
-				sx={{ mt: 3 }}
-				color={'error'}
-				loading={loading}
-				onClick={() => deleteUser(user.id || '')}>
+			<LoadingButton variant="contained" color={'error'} loading={loading} onClick={() => deleteUser(user.id)}>
 				Delete
 			</LoadingButton>
 			{error && <Alert severity="error">{error}</Alert>}
