@@ -24,57 +24,38 @@ import { Link } from 'gatsby'
 
 const NavigationLinks: React.FC = () => {
 	const currentUser = useContext(UserContext)
+	const path = window.location.pathname ? window.location.pathname : ''
+
+	const isActiveRoute = (route: string): boolean => {
+		if (path === route) {
+			return true
+		}
+		return false
+	}
+
+	const link = (route: string, label: string, Icon: JSX.Element) => (
+		<ListItem button component={Link} to={route} selected={isActiveRoute(route)}>
+			<ListItemIcon>{Icon}</ListItemIcon>
+			<ListItemText primary={label} />
+		</ListItem>
+	)
 
 	return (
 		<div>
 			<Toolbar />
 			<Divider />
 			<List>
-				<ListItem button component={Link} to="/admin">
-					<ListItemIcon>
-						<InboxIcon />
-					</ListItemIcon>
-					<ListItemText primary={'Dashboard'} />
-				</ListItem>
-				<ListItem button component={Link} to="/admin/orders">
-					<ListItemIcon>
-						<InboxIcon />
-					</ListItemIcon>
-					<ListItemText primary={'Orders'} />
-				</ListItem>
+				{link('/admin', 'Dashboard', <InboxIcon />)}
+				{link('/admin/orders', 'Orders', <InboxIcon />)}
 				<Divider />
-				<ListItem button component={Link} to="/admin/categories">
-					<ListItemIcon>
-						<InboxIcon />
-					</ListItemIcon>
-					<ListItemText primary={'Categories'} />
-				</ListItem>
-				<ListItem button component={Link} to="/admin/products">
-					<ListItemIcon>
-						<InboxIcon />
-					</ListItemIcon>
-					<ListItemText primary={'Prodcts'} />
-				</ListItem>
-				<ListItem button component={Link} to="/admin/markets">
-					<ListItemIcon>
-						<InboxIcon />
-					</ListItemIcon>
-					<ListItemText primary={'Markets'} />
-				</ListItem>
-				<ListItem button component={Link} to="/admin/reviews">
-					<ListItemIcon>
-						<InboxIcon />
-					</ListItemIcon>
-					<ListItemText primary={'Reviews'} />
-				</ListItem>
+				{link('/admin/categories', 'Categories', <InboxIcon />)}
+				{link('/admin/products', 'Products', <InboxIcon />)}
+				{link('/admin/markets', 'Markets', <InboxIcon />)}
+				{link('/admin/reviews', 'Reviews', <InboxIcon />)}
 				{hasPermission(currentUser, 'ADMIN') && (
 					<>
-						<ListItem button component={Link} to="/admin/users">
-							<ListItemIcon>
-								<InboxIcon />
-							</ListItemIcon>
-							<ListItemText primary={'Users'} />
-						</ListItem>
+						<Divider />
+						{link('/admin/users', 'Users', <InboxIcon />)}
 					</>
 				)}
 			</List>
