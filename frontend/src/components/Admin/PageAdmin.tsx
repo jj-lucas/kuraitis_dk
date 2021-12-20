@@ -26,15 +26,8 @@ const NavigationLinks: React.FC = () => {
 	const currentUser = useContext(UserContext)
 	const path = window.location.pathname ? window.location.pathname : ''
 
-	const isActiveRoute = (route: string): boolean => {
-		if (path === route) {
-			return true
-		}
-		return false
-	}
-
 	const link = (route: string, label: string, Icon: JSX.Element) => (
-		<ListItem button component={Link} to={route} selected={isActiveRoute(route)}>
+		<ListItem button component={Link} to={route} selected={route === path}>
 			<ListItemIcon>{Icon}</ListItemIcon>
 			<ListItemText primary={label} />
 		</ListItem>
