@@ -84,7 +84,9 @@ const AddUser: React.FC = () => {
 	const [password, setPassword] = useState('')
 	const [createUserMutation, { loading, error }] = useCreateUserMutation()
 
-	const createUser = () => {
+	const createUser = e => {
+		e.preventDefault()
+
 		createUserMutation({
 			variables: {
 				name,
@@ -100,10 +102,17 @@ const AddUser: React.FC = () => {
 	}
 
 	return (
-		<Box mt={10}>
+		<Box mt={10} component="form" onSubmit={createUser}>
 			<Typography variant="h6">Add a new user</Typography>
 			<Stack sx={{ width: { xs: '100%', sm: '400px' } }}>
-				<TextField id="name" variant="standard" label="Name" value={name} onChange={e => setName(e.target.value)} />
+				<TextField
+					id="name"
+					variant="standard"
+					label="Name"
+					value={name}
+					required
+					onChange={e => setName(e.target.value)}
+				/>
 
 				<TextField
 					id="email"
@@ -111,6 +120,7 @@ const AddUser: React.FC = () => {
 					type="email"
 					label="Email"
 					value={email}
+					required
 					onChange={e => setEmail(e.target.value)}
 				/>
 
@@ -119,10 +129,11 @@ const AddUser: React.FC = () => {
 					variant="standard"
 					label="Password"
 					value={password}
+					required
 					onChange={e => setPassword(e.target.value)}
 				/>
 
-				<LoadingButton variant="contained" sx={{ mt: 3 }} loading={loading} onClick={createUser}>
+				<LoadingButton variant="contained" sx={{ mt: 3 }} loading={loading} type="submit">
 					Create
 				</LoadingButton>
 				{error && <Alert severity="error">{error}</Alert>}
