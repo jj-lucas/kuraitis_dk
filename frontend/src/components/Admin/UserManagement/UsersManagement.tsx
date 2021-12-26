@@ -11,11 +11,20 @@ import VerifiedUserIcon from '@mui/icons-material/VerifiedUser'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import { LoadingButton } from '@mui/lab'
-import { UsersQuery, User, UsersDocument, useCreateUserMutation, useDeleteUserMutation } from '../../../graphql-queries'
+import {
+	UsersQuery,
+	User,
+	UsersDocument,
+	useCreateUserMutation,
+	useDeleteUserMutation,
+	useUnassignPermissionMutation,
+} from '../../../graphql-queries'
 import { PermissionsModal } from './PermissionsModal'
 
 const Row: React.FC<{ user: User }> = ({ user }) => {
 	const [open, setOpen] = React.useState(false)
+
+	const [unassignPermissionMutation] = useUnassignPermissionMutation()
 
 	return (
 		<React.Fragment>
@@ -36,15 +45,27 @@ const Row: React.FC<{ user: User }> = ({ user }) => {
 								user.permissions?.length > 0 &&
 								user.permissions
 									?.filter(perm => perm && perm.name)
-									.map(perm => (
-										<Chip
-											color="primary"
-											icon={perm?.name === 'ADMIN' ? <VerifiedUserIcon /> : undefined}
-											label={perm?.name}
-											variant="outlined"
-											sx={{ mr: '1rem' }}
-										/>
-									))}
+									.map(
+										perm =>
+											perm && (
+												<Chip
+													color="primary"
+													icon={perm.name === 'ADMIN' ? <VerifiedUserIcon /> : undefined}
+													label={perm.name}
+													variant="outlined"
+													onDelete={e => {
+														unassignPermissionMutation({
+															variables: {
+																userId: user.id,
+																permissionName: perm.name,
+															},
+															refetchQueries: [{ query: UsersDocument }],
+														})
+													}}
+													sx={{ mr: '1rem' }}
+												/>
+											)
+									)}
 							<PermissionsModal user={user} />
 						</Box>
 						<Box sx={{ margin: 2 }}>
@@ -123,7 +144,15 @@ const DeleteUser: React.FC<{ user: User }> = ({ user }) => {
 	}
 	return (
 		<>
-			<LoadingButton variant="contained" color={'error'} loading={loading} onClick={() => deleteUser(user.id)}>
+			<LoadingButton
+				variant="contained"
+				color={'error'}
+				loading={loading}
+				onClick={() => {
+					if (confirm('Are you sure you want to delete this user?') == true) {
+						deleteUser(user.id)
+					}
+				}}>
 				Delete
 			</LoadingButton>
 			{error && <Alert severity="error">{error}</Alert>}

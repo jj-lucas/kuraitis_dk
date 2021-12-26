@@ -42,6 +42,7 @@ const typeDefs = gql`
 		createPermission(name: String!): Permission
 		deletePermission(id: String!): Result
 		assignPermission(userId: String!, permissionName: String!): Result
+		unassignPermission(userId: String!, permissionName: String!): Result
 	}
 `
 

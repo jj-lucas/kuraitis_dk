@@ -42,6 +42,9 @@ const resolvers: Resolvers = {
 
 			const user = await ctx.prisma.user.create({
 				data: { name, email, password },
+				include: {
+					permissions: true,
+				},
 			})
 
 			return user
@@ -70,6 +73,9 @@ const resolvers: Resolvers = {
 			const user = await ctx.prisma.user.findUnique({
 				where: {
 					email: email.toLowerCase(),
+				},
+				include: {
+					permissions: true,
 				},
 			})
 
@@ -150,6 +156,45 @@ const resolvers: Resolvers = {
 					},
 				})
 			}
+
+			return {
+				message: 'Success',
+			}
+		},
+		unassignPermission: async (_, { userId, permissionName }, ctx: Context) => {
+			hasPermissions(ctx, 'ADMIN')
+
+			if (permissionName === 'ADMIN') {
+				// if we are trying to unassign admin permissions,
+				// ensure there is at least another admin in the system
+				const otherAdmins = await ctx.prisma.user.findMany({
+					where: {
+						id: { not: userId },
+						permissions: {
+							some: {
+								name: permissionName,
+							},
+						},
+					},
+				})
+
+				if (!otherAdmins.length) {
+					throw new Error('There must be at least another admin to do this')
+				}
+			}
+
+			await ctx.prisma.user.update({
+				where: {
+					id: userId,
+				},
+				data: {
+					permissions: {
+						disconnect: {
+							name: permissionName,
+						},
+					},
+				},
+			})
 
 			return {
 				message: 'Success',

@@ -30,6 +30,7 @@ export type Mutation = {
   deleteUser?: Maybe<Result>;
   signIn?: Maybe<User>;
   signOut?: Maybe<Result>;
+  unassignPermission?: Maybe<Result>;
 };
 
 
@@ -64,6 +65,12 @@ export type MutationDeleteUserArgs = {
 export type MutationSignInArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationUnassignPermissionArgs = {
+  permissionName: Scalars['String'];
+  userId: Scalars['String'];
 };
 
 export type Permission = {
@@ -159,6 +166,14 @@ export type AssignPermissionMutationVariables = Exact<{
 
 
 export type AssignPermissionMutation = { __typename?: 'Mutation', assignPermission?: { __typename?: 'Result', message: string } | null | undefined };
+
+export type UnassignPermissionMutationVariables = Exact<{
+  userId: Scalars['String'];
+  permissionName: Scalars['String'];
+}>;
+
+
+export type UnassignPermissionMutation = { __typename?: 'Mutation', unassignPermission?: { __typename?: 'Result', message: string } | null | undefined };
 
 
 export const ApolloDocument = gql`
@@ -476,6 +491,40 @@ export function useAssignPermissionMutation(baseOptions?: Apollo.MutationHookOpt
 export type AssignPermissionMutationHookResult = ReturnType<typeof useAssignPermissionMutation>;
 export type AssignPermissionMutationResult = Apollo.MutationResult<AssignPermissionMutation>;
 export type AssignPermissionMutationOptions = Apollo.BaseMutationOptions<AssignPermissionMutation, AssignPermissionMutationVariables>;
+export const UnassignPermissionDocument = gql`
+    mutation UnassignPermission($userId: String!, $permissionName: String!) {
+  unassignPermission(userId: $userId, permissionName: $permissionName) {
+    message
+  }
+}
+    `;
+export type UnassignPermissionMutationFn = Apollo.MutationFunction<UnassignPermissionMutation, UnassignPermissionMutationVariables>;
+
+/**
+ * __useUnassignPermissionMutation__
+ *
+ * To run a mutation, you first call `useUnassignPermissionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnassignPermissionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unassignPermissionMutation, { data, loading, error }] = useUnassignPermissionMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      permissionName: // value for 'permissionName'
+ *   },
+ * });
+ */
+export function useUnassignPermissionMutation(baseOptions?: Apollo.MutationHookOptions<UnassignPermissionMutation, UnassignPermissionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UnassignPermissionMutation, UnassignPermissionMutationVariables>(UnassignPermissionDocument, options);
+      }
+export type UnassignPermissionMutationHookResult = ReturnType<typeof useUnassignPermissionMutation>;
+export type UnassignPermissionMutationResult = Apollo.MutationResult<UnassignPermissionMutation>;
+export type UnassignPermissionMutationOptions = Apollo.BaseMutationOptions<UnassignPermissionMutation, UnassignPermissionMutationVariables>;
 
       export interface PossibleTypesResultData {
         possibleTypes: {

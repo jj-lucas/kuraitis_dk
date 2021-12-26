@@ -56,3 +56,9 @@ mutation AssignPermission($userId: String!, $permissionName: String!) {
 		message
 	}
 }
+
+mutation UnassignPermission($userId: String!, $permissionName: String!) {
+	unassignPermission(userId: $userId, permissionName: $permissionName) {
+		message
+	}
+}
