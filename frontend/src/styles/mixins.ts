@@ -30,7 +30,10 @@ export const min = Object.keys(theme.breakpoints).reduce((accumulator: Accumulat
 	`
 	return accumulator
 }, {}) as {
-	[key in keyof DefaultTheme['breakpoints']]: (key: TemplateStringsArray) => ThemedCssFunction<DefaultTheme>
+	[key in keyof DefaultTheme['breakpoints']]: (
+		strings: TemplateStringsArray,
+		...values: SimpleInterpolation[]
+	) => ThemedCssFunction<DefaultTheme>
 }
 
 export const max = Object.keys(theme.breakpoints).reduce((accumulator: Accumulator, label: string) => {
@@ -41,5 +44,8 @@ export const max = Object.keys(theme.breakpoints).reduce((accumulator: Accumulat
 	`
 	return accumulator
 }, {}) as {
-	[key in keyof DefaultTheme['breakpoints']]: (key: TemplateStringsArray) => ThemedCssFunction<DefaultTheme>
+	[key in keyof DefaultTheme['breakpoints']]: (
+		strings: TemplateStringsArray,
+		...values: SimpleInterpolation[]
+	) => ThemedCssFunction<DefaultTheme>
 }

@@ -25,8 +25,9 @@ const StatusBar = styled.ul`
 		color:blue;
 	`}
 
-	${min.sm`
-		color: red;
+	${p => min.md`
+		font-size: ${p.theme.typography.fs.h1};
+		font-weight: ${p.theme.typography.fw.bold};
 	`}
 
 	li {
