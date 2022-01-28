@@ -21,6 +21,10 @@ const StatusBar = styled.ul`
 
 	font-size: ${p => p.theme.typography.fs.sm};
 
+	${min.sm`
+		color:red;
+	`}
+
 	li {
 		display: none;
 		width: 100%;

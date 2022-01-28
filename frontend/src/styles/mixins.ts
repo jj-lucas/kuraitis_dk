@@ -1,16 +1,8 @@
-import { css } from 'styled-components'
+import { css, DefaultTheme, SimpleInterpolation } from 'styled-components'
 import { theme } from './Theme'
 
 interface Accumulator {
 	[key: string]: any
-}
-
-enum Breakpoints {
-	xs = 'xs', // 375px
-	sm = 'sm', // 680px
-	md = 'md', // 1024px
-	lg = 'lg', // 1260px
-	xl = 'xl', // 1600px
 }
 
 /*
@@ -27,10 +19,12 @@ const Component = styled.p`
 		color: var(--positive);
 	`}
 `
+
+first: TemplateStringsArray | CSSObject, ...interpolations: SimpleInterpolation[]
 */
 
 export const min = Object.keys(theme.breakpoints).reduce((accumulator: Accumulator, label: string) => {
-	accumulator[label] = (strings: string[], ...values: any) => {
+	accumulator[label] = (strings: string[], ...values: SimpleInterpolation[]) => {
 		let str = ''
 		strings.forEach((s: string, i: number) => {
 			str += s + (values[i] || '')
@@ -46,11 +40,11 @@ export const min = Object.keys(theme.breakpoints).reduce((accumulator: Accumulat
 	}
 	return accumulator
 }, {}) as {
-	[key in Breakpoints]: any
+	[key in keyof DefaultTheme['breakpoints']]: (key: TemplateStringsArray) => string
 }
 
 export const max = Object.keys(theme.breakpoints).reduce((accumulator: Accumulator, label: string) => {
-	accumulator[label] = (strings: string[], ...values: any) => {
+	accumulator[label] = (strings: string[], ...values: SimpleInterpolation[]) => {
 		let str = ''
 		strings.forEach((s: string, i: number) => {
 			str += s + (values[i] || '')
@@ -66,5 +60,5 @@ export const max = Object.keys(theme.breakpoints).reduce((accumulator: Accumulat
 	}
 	return accumulator
 }, {}) as {
-	[key in Breakpoints]: any
+	[key in keyof DefaultTheme['breakpoints']]: (key: TemplateStringsArray) => string
 }
