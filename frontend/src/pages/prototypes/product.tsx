@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { mq, mqMax } from '../../styles/mixins'
+import { mq, test } from '../../styles/mixins'
 
 const Header = styled.header`
 	background: #4db1b1;
@@ -20,7 +20,14 @@ const StatusBar = styled.ul`
 	justify-content: space-between;
 
 	font-size: ${p => p.theme.typography.fs.sm};
-	${p => mq.md(`font-size: ${p.theme.typography.fs.h1};`)}
+	${p => test.md`
+		font-size: ${p.theme.typography.fs.h1};
+		font-weight: ${p.theme.typography.fw.bold}
+	`}
+
+	${test.md`
+		color: red;
+	`}
 
 	li {
 		display: none;
