@@ -59,11 +59,6 @@ const theme: DefaultTheme = {
 			easeInOut: 'ease-in-out',
 		},
 	},
-	test: (content: string) => `
-		@media (min-width: 680px) {
-			${content}
-		}
-	`,
 }
 
 export { theme }

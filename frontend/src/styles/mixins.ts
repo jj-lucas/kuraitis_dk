@@ -6,39 +6,30 @@ interface Accumulator {
 }
 
 enum Breakpoints {
-	xs = 'xs',
-	sm = 'sm',
-	md = 'md',
-	lg = 'lg',
-	xl = 'xl',
+	xs = 'xs', // 375px
+	sm = 'sm', // 680px
+	md = 'md', // 1024px
+	lg = 'lg', // 1260px
+	xl = 'xl', // 1600px
 }
 
 /*
 Usage:
 
-import { mq } from '../../styles/mixins'
+import { min } from '../../styles/mixins'
 
 const Component = styled.p`
-	${mq.md`
-		color: red;
+	${p => min.md`
+		font-size: ${p.theme.typography.fs.h1};
+	`}
+
+	${min.md`
+		color: var(--positive);
 	`}
 `
 */
 
-export const mq = Object.keys(theme.breakpoints).reduce((accumulator: Accumulator, label: string) => {
-	accumulator[label] = (content: string) => css`
-		@media (min-width: ${(theme.breakpoints as Accumulator)[label]}) {
-			${css`
-				${content}
-			`};
-		}
-	`
-	return accumulator
-}, {}) as {
-	[key in Breakpoints]: any
-}
-
-export const test = Object.keys(theme.breakpoints).reduce((accumulator: Accumulator, label: string) => {
+export const min = Object.keys(theme.breakpoints).reduce((accumulator: Accumulator, label: string) => {
 	accumulator[label] = (strings: string[], ...values: any) => {
 		let str = ''
 		strings.forEach((s: string, i: number) => {
@@ -58,12 +49,21 @@ export const test = Object.keys(theme.breakpoints).reduce((accumulator: Accumula
 	[key in Breakpoints]: any
 }
 
-export const mqMax = Object.keys(theme.breakpoints).reduce((accumulator: Accumulator, label: string) => {
-	accumulator[label] = (content: TemplateStringsArray) => css`
-		@media (max-width: ${(theme.breakpoints as Accumulator)[label]}) {
-			${css(content)};
-		}
-	`
+export const max = Object.keys(theme.breakpoints).reduce((accumulator: Accumulator, label: string) => {
+	accumulator[label] = (strings: string[], ...values: any) => {
+		let str = ''
+		strings.forEach((s: string, i: number) => {
+			str += s + (values[i] || '')
+		})
+
+		return css`
+			@media (max-width: ${(theme.breakpoints as Accumulator)[label]}) {
+				${css`
+					${str}
+				`};
+			}
+		`
+	}
 	return accumulator
 }, {}) as {
 	[key in Breakpoints]: any

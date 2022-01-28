@@ -62,6 +62,5 @@ declare module 'styled-components' {
 				easeInOut: string
 			}
 		}
-		test: (content: string) => string
 	}
 }

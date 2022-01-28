@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const StyledHeader = styled.div`
 	width: 100%;
-	background-color: ${props => props.theme.colors.tertiary};
+	background-color: var(--tertiary);
 `
 
 const Header: React.FC = () => <></>

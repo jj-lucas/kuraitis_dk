@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { mq, test } from '../../styles/mixins'
+import { min } from '../../styles/mixins'
 
 const Header = styled.header`
 	background: #4db1b1;
@@ -20,14 +20,6 @@ const StatusBar = styled.ul`
 	justify-content: space-between;
 
 	font-size: ${p => p.theme.typography.fs.sm};
-	${p => test.md`
-		font-size: ${p.theme.typography.fs.h1};
-		font-weight: ${p.theme.typography.fw.bold}
-	`}
-
-	${test.md`
-		color: red;
-	`}
 
 	li {
 		display: none;
@@ -36,14 +28,17 @@ const StatusBar = styled.ul`
 		list-style: none;
 		text-align: center;
 
-		@media (min-width: 680px) {
-			display: block;
-		}
-		@media (min-width: 375px) {
+		${min.xs`
 			&.secondary {
 				display: block;
 			}
-		}
+		`}
+
+		${min.sm`
+			display: block;			
+		`}
+
+
 		&.primary {
 			display: block;
 		}
