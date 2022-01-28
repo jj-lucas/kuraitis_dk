@@ -23,40 +23,22 @@ const Component = styled.p`
 */
 
 export const min = Object.keys(theme.breakpoints).reduce((accumulator: Accumulator, label: string) => {
-	accumulator[label] = (strings: string[], ...values: SimpleInterpolation[]) => {
-		let str = ''
-		strings.forEach((s: string, i: number) => {
-			str += s + (values[i] || '')
-		})
-
-		return css`
-			@media (min-width: ${(theme.breakpoints as Accumulator)[label]}) {
-				${css`
-					${str}
-				`};
-			}
-		`
-	}
+	accumulator[label] = (strings: TemplateStringsArray, ...values: SimpleInterpolation[]) => css`
+		@media (min-width: ${(theme.breakpoints as Accumulator)[label]}) {
+			${css(strings, ...values)}
+		}
+	`
 	return accumulator
 }, {}) as {
 	[key in keyof DefaultTheme['breakpoints']]: (key: TemplateStringsArray) => ThemedCssFunction<DefaultTheme>
 }
 
 export const max = Object.keys(theme.breakpoints).reduce((accumulator: Accumulator, label: string) => {
-	accumulator[label] = (strings: string[], ...values: SimpleInterpolation[]) => {
-		let str = ''
-		strings.forEach((s: string, i: number) => {
-			str += s + (values[i] || '')
-		})
-
-		return css`
-			@media (max-width: ${(theme.breakpoints as Accumulator)[label]}) {
-				${css`
-					${str}
-				`};
-			}
-		`
-	}
+	accumulator[label] = (strings: TemplateStringsArray, ...values: SimpleInterpolation[]) => css`
+		@media (max-width: ${(theme.breakpoints as Accumulator)[label]}) {
+			${css(strings, ...values)}
+		}
+	`
 	return accumulator
 }, {}) as {
 	[key in keyof DefaultTheme['breakpoints']]: (key: TemplateStringsArray) => ThemedCssFunction<DefaultTheme>

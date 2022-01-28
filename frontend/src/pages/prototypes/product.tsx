@@ -25,6 +25,10 @@ const StatusBar = styled.ul`
 		color:blue;
 	`}
 
+	${min.sm`
+		color: red;
+	`}
+
 	li {
 		display: none;
 		width: 100%;
