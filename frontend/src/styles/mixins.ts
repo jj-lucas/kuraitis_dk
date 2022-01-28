@@ -1,4 +1,4 @@
-import { css, DefaultTheme, SimpleInterpolation } from 'styled-components'
+import { css, DefaultTheme, SimpleInterpolation, ThemedCssFunction } from 'styled-components'
 import { theme } from './Theme'
 
 interface Accumulator {
@@ -6,7 +6,7 @@ interface Accumulator {
 }
 
 /*
-Usage:
+Media queries:
 
 import { min } from '../../styles/mixins'
 
@@ -20,7 +20,6 @@ const Component = styled.p`
 	`}
 `
 
-first: TemplateStringsArray | CSSObject, ...interpolations: SimpleInterpolation[]
 */
 
 export const min = Object.keys(theme.breakpoints).reduce((accumulator: Accumulator, label: string) => {
@@ -40,7 +39,7 @@ export const min = Object.keys(theme.breakpoints).reduce((accumulator: Accumulat
 	}
 	return accumulator
 }, {}) as {
-	[key in keyof DefaultTheme['breakpoints']]: (key: TemplateStringsArray) => string
+	[key in keyof DefaultTheme['breakpoints']]: (key: TemplateStringsArray) => ThemedCssFunction<DefaultTheme>
 }
 
 export const max = Object.keys(theme.breakpoints).reduce((accumulator: Accumulator, label: string) => {
@@ -60,5 +59,5 @@ export const max = Object.keys(theme.breakpoints).reduce((accumulator: Accumulat
 	}
 	return accumulator
 }, {}) as {
-	[key in keyof DefaultTheme['breakpoints']]: (key: TemplateStringsArray) => string
+	[key in keyof DefaultTheme['breakpoints']]: (key: TemplateStringsArray) => ThemedCssFunction<DefaultTheme>
 }
