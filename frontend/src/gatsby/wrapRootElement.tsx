@@ -1,7 +1,7 @@
 import React from 'react'
 import { GatsbyBrowser, GatsbySSR } from 'gatsby'
 import { ThemeProvider } from 'styled-components'
-import { theme } from '../theme/Theme'
+import { theme } from '../styles/Theme'
 import { Helmet } from 'react-helmet'
 
 type WrapRootElement = GatsbyBrowser['wrapRootElement'] | GatsbySSR['wrapRootElement']

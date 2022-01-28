@@ -1,5 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
+import { mq, mqMax } from '../../styles/mixins'
 
 const Header = styled.header`
 	background: #4db1b1;
@@ -13,12 +14,13 @@ const StatusBar = styled.ul`
 	background-color: aqua;
 
 	display: flex;
-	justify-content: space-between;
-	max-width: 960px;
-	padding: 0;
 	margin: auto;
+	padding: 0;
+	max-width: ${p => p.theme.maxWidth.xs};
+	justify-content: space-between;
 
-	font-size: 12px;
+	font-size: ${p => p.theme.typography.fs.sm};
+	${p => mq.md(`font-size: ${p.theme.typography.fs.h1};`)}
 
 	li {
 		display: none;
