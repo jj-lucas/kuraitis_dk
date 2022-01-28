@@ -77,11 +77,16 @@ const drawerWidth = 240
 const PageAdmin: React.FC = props => {
 	const [mobileOpen, setMobileOpen] = React.useState(false)
 
+	const isBrowser = typeof window !== 'undefined'
+	if (!isBrowser) {
+		return null
+	}
+
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen)
 	}
 
-	const container = window.document.body
+	const container = window?.document.body
 
 	return (
 		<div>
