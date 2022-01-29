@@ -61,9 +61,9 @@ const theme: DefaultTheme = {
 	},
 	sizes: {
 		headerStatusHeight: '18px',
-		headerInnerHeight: '76px',
-		headerInnerHeightMin: '50px',
-		headerGap: '18px',
+		headerInnerHeightExpanded: '76px',
+		headerInnerHeightCollapsed: '40px',
+		headerGap: '50px',
 	},
 }
 

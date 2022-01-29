@@ -35,6 +35,12 @@ const px2num = (n: string): number => {
 }
 
 const StyledStickyHeader = styled.header`
+	--status: ${p => p.theme.sizes.headerStatusHeight};
+	--innerExpanded: ${p => p.theme.sizes.headerInnerHeightExpanded};
+	--innerCollapsed: ${p => p.theme.sizes.headerInnerHeightCollapsed};
+	--gap: ${p => p.theme.sizes.headerGap};
+	--smallGap: calc((var(--innerExpanded) - var(--innerCollapsed)) / 2);
+
 	display: flex;
 	background: #4db1b1;
 	align-items: center;
@@ -131,6 +137,8 @@ const StickyHeader: React.FC = props => {
 		setScrollPosition(position)
 	}
 
+	const gap = px2num(theme.sizes.headerGap)
+
 	useEffect(() => {
 		window.addEventListener('scroll', handleScroll, { passive: true })
 
@@ -147,7 +155,7 @@ const StickyHeader: React.FC = props => {
 					setIsCollapsed(false)
 				}
 			} else {
-				if (scrollPosition - 30 * 2 > 0) {
+				if (scrollPosition - gap * 2 > 0) {
 					setSwitching(true)
 					setIsCollapsed(true)
 					setSwitching(false)
@@ -158,7 +166,7 @@ const StickyHeader: React.FC = props => {
 
 	useEffect(() => {
 		if (switching && !isCollapsed) {
-			window.scrollTo(0, 60)
+			window.scrollTo(0, gap * 2)
 			setSwitching(false)
 		}
 	}, [isCollapsed])
