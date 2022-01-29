@@ -4,6 +4,13 @@ import 'styled-components'
 // and extend them!
 declare module 'styled-components' {
 	export interface DefaultTheme {
+		breakpoints: {
+			xs: string
+			sm: string
+			md: string
+			lg: string
+			xl: string
+		}
 		maxWidth: {
 			xs: string
 			sm: string
@@ -12,13 +19,6 @@ declare module 'styled-components' {
 			xl: string
 		}
 		maxLengthLine: {
-			xs: string
-			sm: string
-			md: string
-			lg: string
-			xl: string
-		}
-		breakpoints: {
 			xs: string
 			sm: string
 			md: string
@@ -61,6 +61,12 @@ declare module 'styled-components' {
 				cubic: string
 				easeInOut: string
 			}
+		}
+		sizes: {
+			headerStatusHeight: string
+			headerInnerHeight: string
+			headerInnerHeightMin: string
+			headerGap: string
 		}
 	}
 }

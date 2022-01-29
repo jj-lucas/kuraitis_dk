@@ -15,11 +15,17 @@ export const GlobalStyles = createGlobalStyle`
 	--warning: #ffad1e;
 	--tan: #de905f;
 	--lightTan: #de905f85;
+
+	--status: 18px;
+	--innerExpanded: 76px;
+	--innerCollapsed: 50px;
+	--gap: 20px;
 }
 html {
 	font-size: 10px;
 }
 body {
+	margin: 0;
 	background-color: var(--lightGray);
 	font-family: ${props => props.theme.typography.ff.noto};
 	font-weight: ${props => props.theme.typography.fw.regular};

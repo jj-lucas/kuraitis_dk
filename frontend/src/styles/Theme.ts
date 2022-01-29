@@ -1,6 +1,13 @@
 import { DefaultTheme } from 'styled-components'
 
 const theme: DefaultTheme = {
+	breakpoints: {
+		xs: '320px', // mobile
+		sm: '480px', // tablet
+		md: '768px', // tablet / small screen
+		lg: '1200px', // large screen
+		xl: '1600px', // huge screen
+	},
 	maxWidth: {
 		xs: '960px',
 		sm: '960px',
@@ -14,13 +21,6 @@ const theme: DefaultTheme = {
 		md: '800px',
 		lg: '800px',
 		xl: '800px',
-	},
-	breakpoints: {
-		xs: '375px',
-		sm: '680px',
-		md: '1024px',
-		lg: '1260px',
-		xl: '1600px',
 	},
 	typography: {
 		fs: {
@@ -58,6 +58,12 @@ const theme: DefaultTheme = {
 			cubic: 'cubic-bezier(0.73, 0.09, 0.21, 0.96)',
 			easeInOut: 'ease-in-out',
 		},
+	},
+	sizes: {
+		headerStatusHeight: '18px',
+		headerInnerHeight: '76px',
+		headerInnerHeightMin: '50px',
+		headerGap: '20px',
 	},
 }
 

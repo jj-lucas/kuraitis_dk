@@ -1,63 +1,6 @@
-import * as React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { min } from '../../styles/mixins'
-
-const Header = styled.header`
-	background: #4db1b1;
-
-	position: fixed;
-	top: 0;
-	width: 100%;
-`
-
-const StatusBar = styled.ul`
-	background-color: aqua;
-
-	display: flex;
-	margin: auto;
-	padding: 0;
-	max-width: ${p => p.theme.maxWidth.xs};
-	justify-content: space-between;
-
-	font-size: ${p => p.theme.typography.fs.sm};
-
-	${min.sm`
-		color:blue;
-	`}
-
-	${p => min.md`
-		font-size: ${p.theme.typography.fs.h1};
-		font-weight: ${p.theme.typography.fw.bold};
-	`}
-
-	li {
-		display: none;
-		width: 100%;
-
-		list-style: none;
-		text-align: center;
-
-		${min.xs`
-			&.secondary {
-				display: block;
-			}
-		`}
-
-		${min.sm`
-			display: block;			
-		`}
-
-
-		&.primary {
-			display: block;
-		}
-	}
-`
-
-const HeaderContent = styled.div`
-	max-width: 960px;
-	margin: auto;
-`
+import { min, theme } from '../../styles'
 
 const StyledLogo = styled.a`
 	background: #ffff003d;
@@ -87,13 +30,123 @@ const Logo: React.FC = () => (
 	</StyledLogo>
 )
 
+const px2num = (n: string): number => {
+	return parseInt(n.replace('px', ''), 10)
+}
+
+const StyledStickyHeader = styled.header`
+	display: flex;
+	background: #4db1b1;
+	align-items: center;
+	position: sticky;
+	flex-direction: column;
+	top: calc(
+		${p => p.theme.sizes.headerGap} * -2
+	); /* Equal to the height difference between header-outer and header-inner */
+	height: calc(
+		${p => p.theme.sizes.headerStatusHeight} + ${p => p.theme.sizes.headerInnerHeight} + ${p => p.theme.sizes.headerGap} *
+			2
+	);
+
+	&.collapsed {
+	}
+
+	.status-bar {
+		background: #ac9acad2;
+		height: ${p => p.theme.sizes.headerStatusHeight};
+		width: 100%;
+		position: sticky;
+		top: 0;
+
+		.status-bar-inner {
+			background-color: aqua;
+			display: flex;
+			margin: auto;
+			padding: 0;
+			max-width: 960px;
+			justify-content: space-between;
+
+			font-size: ${p => p.theme.typography.fs.sm};
+
+			li {
+				display: none;
+				width: 100%;
+
+				list-style: none;
+				text-align: center;
+
+				&.primary {
+					display: block;
+				}
+
+				${min.sm`display: block;`}
+
+				${min.xs`
+					&.secondary {
+						display: block;
+					}
+				`}
+			}
+		}
+	}
+
+	.header-inner {
+		background: #9acacad3;
+		height: calc(${p => p.theme.sizes.headerInnerHeight});
+		width: 100%;
+		position: sticky;
+		top: calc(${p => p.theme.sizes.headerStatusHeight} + ${p => p.theme.sizes.headerGap});
+		max-width: 960px;
+		margin: auto;
+	}
+`
+
 const Content = styled.div`
 	max-width: 960px;
 	margin: 100px auto 0;
 `
 
+const StickyHeader: React.FC = props => {
+	const [scrollPosition, setScrollPosition] = useState(0)
+
+	const handleScroll = () => {
+		const position = window.pageYOffset
+		setScrollPosition(position)
+	}
+
+	useEffect(() => {
+		window.addEventListener('scroll', handleScroll, { passive: true })
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll)
+		}
+	}, [])
+
+	const shrink = scrollPosition - px2num(theme.sizes.headerGap) * 2 > 0 ? true : false
+
+	return (
+		<StyledStickyHeader className={shrink ? 'collapsed' : ''}>
+			<div className="status-bar">
+				<ul className="status-bar-inner">
+					<li>Handmade exclusive design</li>
+					<li className="primary">Free delivery in Denmark</li>
+					<li className="secondary">30 days return right*</li>
+				</ul>
+			</div>
+			<div className="header-inner responsive-wrapper">
+				<Logo />
+				<span>
+					{scrollPosition} - {shrink.toString()}
+				</span>
+			</div>
+		</StyledStickyHeader>
+	)
+}
+
 const ProductPage: React.FC = () => (
 	<>
+		<StickyHeader />
+		{/*
 		<Header>
 			<StatusBar>
 				<li>Handmade exclusive design</li>
@@ -104,6 +157,7 @@ const ProductPage: React.FC = () => (
 				<Logo />
 			</HeaderContent>
 		</Header>
+			*/}
 		<Content>
 			<h1>Lorem ipsum dolor sit amet</h1>
 			<p>
