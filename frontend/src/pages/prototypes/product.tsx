@@ -4,24 +4,46 @@ import { min, theme } from '../../styles'
 
 const StyledLogo = styled.a`
 	background: #ffff003d;
+	height: 100%;
 	display: inline-flex;
+	height: 100%;
+	position: relative;
 
 	> span {
 		margin: 0;
 
-		display: inline-flex;
-		flex-direction: column;
-		align-items: flex-start;
-		justify-content: center;
+		display: none;
 
 		.sergio {
 			text-transform: uppercase;
 		}
+
+		${min.sm`
+			display: inline-flex;
+			flex-direction: column;
+			align-items: flex-start;
+			justify-content: center;
+		`}
+	}
+
+	&.collapsed {
+		> span > span {
+			display: none;
+
+			&.sergio {
+				display: inline-flex;
+				align-self: flex-start;
+			}
+		}
+	}
+
+	img {
+		height: 100%;
 	}
 `
 
-const Logo: React.FC = () => (
-	<StyledLogo href="#">
+const Logo: React.FC<{ collapsed: boolean }> = ({ collapsed }) => (
+	<StyledLogo href="#" className={collapsed ? 'collapsed' : ''}>
 		<img src="https://d33wubrfki0l68.cloudfront.net/8e679f4eacde819d4909fbad17a6aa8b5786dd8b/49226/logo.png"></img>
 		<span>
 			<span className="sergio">Sergio Kuraitis</span>
@@ -52,11 +74,11 @@ const StyledStickyHeader = styled.header`
 	&.collapsed {
 		top: calc(var(--smallGap) * -2); /* Equal to twice the scrollable gap */
 		height: calc(var(--status) + var(--innerCollapsed) + var(--smallGap) * 2);
+
 		.header-inner {
-			display: none;
-		}
-		.header-inner-collapsed {
-			display: block;
+			height: var(--innerCollapsed);
+			max-height: 100%;
+			top: calc(var(--status) + var(--smallGap));
 		}
 	}
 
@@ -69,17 +91,14 @@ const StyledStickyHeader = styled.header`
 		position: sticky;
 		max-width: 960px;
 		margin: 0 auto;
-	}
-	.header-inner-collapsed {
-		height: var(--innerCollapsed);
-		top: calc(var(--status) + var(--smallGap));
 
-		display: none;
-		background: #9f9acad2;
-		width: 100%;
-		position: sticky;
-		max-width: 960px;
-		margin: auto;
+		text-align: center;
+
+		${min.sm`
+			text-align: left;
+		`}
+
+		transition: all ease-in-out 0.2s;
 	}
 
 	.status-bar {
@@ -88,6 +107,7 @@ const StyledStickyHeader = styled.header`
 		width: 100%;
 		position: sticky;
 		top: 0;
+		z-index: 10;
 
 		.status-bar-inner {
 			background-color: aqua;
@@ -110,12 +130,14 @@ const StyledStickyHeader = styled.header`
 					display: block;
 				}
 
-				${min.sm`display: block;`}
-
 				${min.xs`
 					&.secondary {
 						display: block;
 					}
+				`}
+
+				${min.md`
+					display: block;
 				`}
 			}
 		}
@@ -127,9 +149,11 @@ const Content = styled.div`
 	margin: 100px auto 0;
 `
 
-const StickyHeader: React.FC = props => {
+const ScrollerManager: React.FC<{
+	collapsed: boolean
+	setCollapsed: (next: boolean) => void
+}> = ({ collapsed, setCollapsed }) => {
 	const [scrollPosition, setScrollPosition] = useState(0)
-	const [isCollapsed, setIsCollapsed] = useState(false)
 	const [switching, setSwitching] = useState(false)
 
 	const handleScroll = () => {
@@ -149,15 +173,15 @@ const StickyHeader: React.FC = props => {
 
 	useEffect(() => {
 		if (!switching) {
-			if (isCollapsed) {
+			if (collapsed) {
 				if (!scrollPosition) {
 					setSwitching(true)
-					setIsCollapsed(false)
+					setCollapsed(false)
 				}
 			} else {
 				if (scrollPosition - gap * 2 > 0) {
 					setSwitching(true)
-					setIsCollapsed(true)
+					setCollapsed(true)
 					setSwitching(false)
 				}
 			}
@@ -165,32 +189,38 @@ const StickyHeader: React.FC = props => {
 	}, [scrollPosition])
 
 	useEffect(() => {
-		if (switching && !isCollapsed) {
+		if (switching && !collapsed) {
 			window.scrollTo(0, gap * 2)
 			setSwitching(false)
 		}
-	}, [isCollapsed])
+	}, [collapsed])
+
+	return null
+}
+
+const StickyHeader: React.FC<{ collapsed?: boolean }> = props => {
+	const [collapsed, setCollapsed] = useState(props.collapsed || false)
+
+	const setCollapsedControlled = (next: boolean) => {
+		setCollapsed(props.collapsed || next)
+	}
 
 	return (
-		<StyledStickyHeader className={isCollapsed ? 'collapsed' : ''}>
-			<div className="status-bar">
-				<ul className="status-bar-inner">
-					<li>Handmade exclusive design</li>
-					<li className="primary">Free delivery in Denmark</li>
-					<li className="secondary">30 days return right*</li>
-				</ul>
-			</div>
-			<div className="header-inner">
-				<Logo />
-				<span>{scrollPosition}</span>
-			</div>
-			<div className="header-inner-collapsed">
-				<h3>
-					I am collapsed!
-					<span>{scrollPosition}</span>
-				</h3>
-			</div>
-		</StyledStickyHeader>
+		<>
+			<ScrollerManager collapsed={collapsed} setCollapsed={setCollapsedControlled} />
+			<StyledStickyHeader className={collapsed ? 'collapsed' : ''}>
+				<div className="status-bar">
+					<ul className="status-bar-inner">
+						<li>Handmade exclusive design</li>
+						<li className="primary">Free delivery in Denmark</li>
+						<li className="secondary">30 days return right*</li>
+					</ul>
+				</div>
+				<div className="header-inner">
+					<Logo collapsed={collapsed} />
+				</div>
+			</StyledStickyHeader>
+		</>
 	)
 }
 

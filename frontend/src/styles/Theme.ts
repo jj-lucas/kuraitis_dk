@@ -62,7 +62,7 @@ const theme: DefaultTheme = {
 	sizes: {
 		headerStatusHeight: '18px',
 		headerInnerHeightExpanded: '76px',
-		headerInnerHeightCollapsed: '40px',
+		headerInnerHeightCollapsed: '60px',
 		headerGap: '50px',
 	},
 }

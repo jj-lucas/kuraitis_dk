@@ -64,8 +64,8 @@ declare module 'styled-components' {
 		}
 		sizes: {
 			headerStatusHeight: string
-			headerInnerHeight: string
-			headerInnerHeightMin: string
+			headerInnerHeightExpanded: string
+			headerInnerHeightCollapsed: string
 			headerGap: string
 		}
 	}
