@@ -40,20 +40,45 @@ const StyledStickyHeader = styled.header`
 	align-items: center;
 	position: sticky;
 	flex-direction: column;
-	top: calc(
-		${p => p.theme.sizes.headerGap} * -2
-	); /* Equal to the height difference between header-outer and header-inner */
-	height: calc(
-		${p => p.theme.sizes.headerStatusHeight} + ${p => p.theme.sizes.headerInnerHeight} + ${p => p.theme.sizes.headerGap} *
-			2
-	);
+	top: calc(var(--gap) * -2); /* Equal to twice the scrollable gap */
+	height: calc(var(--status) + var(--innerExpanded) + var(--gap) * 2);
 
 	&.collapsed {
+		top: calc(var(--smallGap) * -2); /* Equal to twice the scrollable gap */
+		height: calc(var(--status) + var(--innerCollapsed) + var(--smallGap) * 2);
+		.header-inner {
+			display: none;
+		}
+		.header-inner-collapsed {
+			display: block;
+		}
+	}
+
+	.header-inner {
+		height: var(--innerExpanded);
+		top: calc(var(--status) + var(--gap));
+
+		background: #9acacad3;
+		width: 100%;
+		position: sticky;
+		max-width: 960px;
+		margin: 0 auto;
+	}
+	.header-inner-collapsed {
+		height: var(--innerCollapsed);
+		top: calc(var(--status) + var(--smallGap));
+
+		display: none;
+		background: #9f9acad2;
+		width: 100%;
+		position: sticky;
+		max-width: 960px;
+		margin: auto;
 	}
 
 	.status-bar {
 		background: #ac9acad2;
-		height: ${p => p.theme.sizes.headerStatusHeight};
+		height: var(--status);
 		width: 100%;
 		position: sticky;
 		top: 0;
@@ -89,16 +114,6 @@ const StyledStickyHeader = styled.header`
 			}
 		}
 	}
-
-	.header-inner {
-		background: #9acacad3;
-		height: calc(${p => p.theme.sizes.headerInnerHeight});
-		width: 100%;
-		position: sticky;
-		top: calc(${p => p.theme.sizes.headerStatusHeight} + ${p => p.theme.sizes.headerGap});
-		max-width: 960px;
-		margin: auto;
-	}
 `
 
 const Content = styled.div`
@@ -108,6 +123,8 @@ const Content = styled.div`
 
 const StickyHeader: React.FC = props => {
 	const [scrollPosition, setScrollPosition] = useState(0)
+	const [isCollapsed, setIsCollapsed] = useState(false)
+	const [switching, setSwitching] = useState(false)
 
 	const handleScroll = () => {
 		const position = window.pageYOffset
@@ -122,10 +139,32 @@ const StickyHeader: React.FC = props => {
 		}
 	}, [])
 
-	const shrink = scrollPosition - px2num(theme.sizes.headerGap) * 2 > 0 ? true : false
+	useEffect(() => {
+		if (!switching) {
+			if (isCollapsed) {
+				if (!scrollPosition) {
+					setSwitching(true)
+					setIsCollapsed(false)
+				}
+			} else {
+				if (scrollPosition - 30 * 2 > 0) {
+					setSwitching(true)
+					setIsCollapsed(true)
+					setSwitching(false)
+				}
+			}
+		}
+	}, [scrollPosition])
+
+	useEffect(() => {
+		if (switching && !isCollapsed) {
+			window.scrollTo(0, 60)
+			setSwitching(false)
+		}
+	}, [isCollapsed])
 
 	return (
-		<StyledStickyHeader className={shrink ? 'collapsed' : ''}>
+		<StyledStickyHeader className={isCollapsed ? 'collapsed' : ''}>
 			<div className="status-bar">
 				<ul className="status-bar-inner">
 					<li>Handmade exclusive design</li>
@@ -133,11 +172,15 @@ const StickyHeader: React.FC = props => {
 					<li className="secondary">30 days return right*</li>
 				</ul>
 			</div>
-			<div className="header-inner responsive-wrapper">
+			<div className="header-inner">
 				<Logo />
-				<span>
-					{scrollPosition} - {shrink.toString()}
-				</span>
+				<span>{scrollPosition}</span>
+			</div>
+			<div className="header-inner-collapsed">
+				<h3>
+					I am collapsed!
+					<span>{scrollPosition}</span>
+				</h3>
 			</div>
 		</StyledStickyHeader>
 	)

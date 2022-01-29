@@ -17,9 +17,10 @@ export const GlobalStyles = createGlobalStyle`
 	--lightTan: #de905f85;
 
 	--status: 18px;
-	--innerExpanded: 76px;
+	--innerExpanded: 80px;	// 76
 	--innerCollapsed: 50px;
-	--gap: 20px;
+	--gap: 30px;
+	--smallGap: 15px;
 }
 html {
 	font-size: 10px;

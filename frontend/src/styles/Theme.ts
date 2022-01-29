@@ -63,7 +63,7 @@ const theme: DefaultTheme = {
 		headerStatusHeight: '18px',
 		headerInnerHeight: '76px',
 		headerInnerHeightMin: '50px',
-		headerGap: '20px',
+		headerGap: '18px',
 	},
 }
 
