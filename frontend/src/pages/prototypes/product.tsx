@@ -15,7 +15,10 @@ const StyledLogo = styled.a`
 	text-decoration: none;
 
 	${p => min.sm`
-		font-size: ${p.theme.typography.fs.lg};
+		.sergio {
+			font-size: ${p.theme.typography.fs.lg};
+		}
+		font-size: ${p.theme.typography.fs.h3};
 	`}
 
 	> span {
@@ -29,7 +32,7 @@ const StyledLogo = styled.a`
 			text-transform: uppercase;
 			font-weight: ${p => p.theme.typography.fw.bold};
 
-			transition: margin ease-in-out 0.3s;
+			transition: margin ease-in-out 0.2s;
 		}
 
 		${min.xs`
@@ -44,7 +47,7 @@ const StyledLogo = styled.a`
 		> span > span {
 			${min.sm`
 				opacity: 0;
-				transition: none;
+				transition: all ease-in 0.3s;
 			`}
 
 			&.sergio {
@@ -188,7 +191,7 @@ const StyledStickyHeader = styled.header`
 
 		text-align: center;
 
-		transition: all ease-in-out 0.1s;
+		transition: all ease-out 0.5s;
 
 		${min.sm`
 			text-align: left;
@@ -244,6 +247,10 @@ const StyledBurgerMenu = styled.div`
 	background: #b14d84;
 
 	width: 20%;
+
+	${min.sm`
+		display: none;
+	`}
 `
 const BurgerMenu: React.FC = () => <StyledBurgerMenu>=</StyledBurgerMenu>
 
