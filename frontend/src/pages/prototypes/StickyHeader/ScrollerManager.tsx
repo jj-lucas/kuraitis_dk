@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { theme } from '../../../styles'
+import { theme } from '@/styles'
 import { throttle } from 'lodash'
-import { useViewportSize } from '../../../utils'
+import { useViewportSize } from '@/utils'
 
 const px2num = (n: string): number => {
 	return parseInt(n.replace('px', ''), 10)

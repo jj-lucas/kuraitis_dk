@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { min } from '../../../styles'
+import { min } from '@/styles'
 
 const StyledLogo = styled.a`
 	position: relative;

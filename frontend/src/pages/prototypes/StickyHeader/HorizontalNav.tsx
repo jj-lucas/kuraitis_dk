@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { max } from '../../../styles'
+import { max } from '@/styles'
 import { Link } from 'gatsby'
 
 const StyledHorizontalNav = styled.ul`

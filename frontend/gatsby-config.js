@@ -1,4 +1,5 @@
 const dotenv = require('dotenv')
+const path = require('path')
 
 dotenv.config({
 	path: '.env',
@@ -19,6 +20,12 @@ module.exports = {
 				fieldName: 'kuraitis',
 				// Url to query from
 				url: process.env.GATSBY_GRAPHQL_ENDPOINT,
+			},
+		},
+		{
+			resolve: 'gatsby-plugin-root-import',
+			options: {
+				'@': path.join(__dirname, 'src'),
 			},
 		},
 		'gatsby-plugin-styled-components',

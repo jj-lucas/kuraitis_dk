@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { min, max } from '../../../styles'
+import { min, max } from '@/styles'
 import Logo from './Logo'
 import ScrollerManager from './ScrollerManager'
 import HorizontalNav from './HorizontalNav'
