@@ -37,12 +37,13 @@ const theme: DefaultTheme = {
 		fw: {
 			light: 300,
 			regular: 400,
-			semibold: 600,
+			semibold: 500,
 			bold: 700,
 		},
 		ff: {
 			noto: "'Noto Sans', sans-serif",
 			roboto: "'Roboto', sans-serif",
+			stick: "'Stick No Bills', sans-serif",
 		},
 	},
 	boxShadow: {

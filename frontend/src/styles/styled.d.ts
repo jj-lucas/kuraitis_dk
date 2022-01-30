@@ -46,6 +46,7 @@ declare module 'styled-components' {
 			ff: {
 				noto: string
 				roboto: string
+				stick: string
 			}
 		}
 		boxShadow: {

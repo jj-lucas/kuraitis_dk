@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { min, max, theme } from '../../styles'
+import { min, max, theme, hoverUnderlineReveal } from '../../styles'
 import { throttle } from 'lodash'
 import { useViewportSize } from '../../utils'
 import { Link } from 'gatsby'
@@ -12,7 +12,7 @@ const StyledLogo = styled.a`
 	flex-shrink: 0;
 
 	color: var(--black);
-	font-family: ${p => p.theme.typography.ff.roboto};
+	font-family: ${p => p.theme.typography.ff.stick};
 	font-size: ${p => p.theme.typography.fs.base};
 	text-decoration: none;
 
@@ -56,6 +56,7 @@ const StyledLogo = styled.a`
 		> span > span {
 			${min.sm`
 				opacity: 0;
+				pointer-events: none;
 				transition: all ease-in 0.3s;
 			`}
 
@@ -65,7 +66,7 @@ const StyledLogo = styled.a`
 
 				${min.sm`
 					opacity: 1;
-					margin-top: 30px;	
+					margin-top: 25px;	
 				`}
 			}
 		}
@@ -250,12 +251,6 @@ const StyledStickyHeader = styled.header`
 			}
 		}
 	}
-
-	.nav-tray {
-		background: #ac9acad2;
-
-		width: 100%;
-	}
 `
 
 const StyledBurgerMenu = styled.div`
@@ -286,12 +281,14 @@ const StyledHorizontalNav = styled.ul`
 	padding: 0;
 	display: flex;
 	flex-wrap: wrap;
-	gap: 12px;
+	gap: 2rem;
 	align-content: center;
 	flex-grow: 1;
 	justify-content: center;
 
 	text-transform: uppercase;
+	font-family: ${p => p.theme.typography.ff.roboto};
+	font-weight: ${p => p.theme.typography.fw.semibold};
 
 	li {
 		list-style: none;
@@ -299,6 +296,40 @@ const StyledHorizontalNav = styled.ul`
 
 	a {
 		text-decoration: none;
+		color: var(--black);
+
+		& {
+			display: inline-block;
+			vertical-align: middle;
+			transform: perspective(1px) translateZ(0);
+			box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+			position: relative;
+			overflow: hidden;
+		}
+		&:before {
+			content: '';
+			position: absolute;
+			z-index: -1;
+
+			// left: 51%;	// middle
+			// right: 51%;	// middle
+
+			left: 0; // left
+			right: 100%; // left
+
+			bottom: 0;
+			background: var(--black);
+			height: 2px;
+			transition-property: left, right;
+			transition-duration: 0.2s;
+			transition-timing-function: ease-out;
+		}
+		&:hover:before,
+		&:focus:before,
+		&:active:before {
+			left: 0;
+			right: 0;
+		}
 	}
 
 	${max.sm`
