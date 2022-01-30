@@ -1,24 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { min, theme } from '../../styles'
+import { min, max, theme } from '../../styles'
+import { throttle } from 'lodash'
+import { useViewportSize } from '../../utils'
 
 const StyledLogo = styled.a`
-	background: #ffff003d;
-	height: 100%;
+	position: relative;
 	display: inline-flex;
 	height: 100%;
-	position: relative;
+
+	color: var(--black);
+	font-family: ${p => p.theme.typography.ff.roboto};
+	font-size: ${p => p.theme.typography.fs.base};
+	text-decoration: none;
+
+	${p => min.sm`
+		font-size: ${p.theme.typography.fs.lg};
+	`}
 
 	> span {
-		margin: 0;
-
 		display: none;
 
 		.sergio {
 			text-transform: uppercase;
+			font-weight: ${p => p.theme.typography.fw.bold};
 		}
 
-		${min.sm`
+		${min.xs`
 			display: inline-flex;
 			flex-direction: column;
 			align-items: flex-start;
@@ -28,7 +36,9 @@ const StyledLogo = styled.a`
 
 	&.collapsed {
 		> span > span {
-			display: none;
+			${min.sm`
+				display: none;
+			`}
 
 			&.sergio {
 				display: inline-flex;
@@ -56,6 +66,64 @@ const px2num = (n: string): number => {
 	return parseInt(n.replace('px', ''), 10)
 }
 
+const Content = styled.div`
+	max-width: 960px;
+	margin: 100px auto 0;
+`
+
+const ScrollerManager: React.FC<{
+	collapsed: boolean
+	setCollapsed: (next: boolean) => void
+}> = ({ collapsed, setCollapsed }) => {
+	const [scrollPosition, setScrollPosition] = useState(0)
+	const [switching, setSwitching] = useState(false)
+	const { matchesSize } = useViewportSize()
+
+	const gap = px2num(theme.sizes.headerGap)
+
+	useEffect(() => {
+		const handleScroll = throttle(() => {
+			const position = window.pageYOffset
+			setScrollPosition(position)
+		}, 50)
+
+		window.addEventListener('scroll', handleScroll, { passive: true })
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll)
+		}
+	}, [])
+
+	useEffect(() => {
+		if (!switching) {
+			if (collapsed) {
+				if (!scrollPosition) {
+					setSwitching(true)
+					setCollapsed(false)
+				}
+			} else {
+				if (scrollPosition - gap * 2 > 0) {
+					setSwitching(true)
+					setCollapsed(true)
+					setSwitching(false)
+				}
+			}
+		}
+	}, [scrollPosition])
+
+	useEffect(() => {
+		if (switching && !collapsed) {
+			if (!matchesSize(['xs'])) {
+				console.log('jump!')
+				window.scrollTo(0, gap * 2)
+			}
+			setSwitching(false)
+		}
+	}, [collapsed])
+
+	return null
+}
+
 const StyledStickyHeader = styled.header`
 	--status: ${p => p.theme.sizes.headerStatusHeight};
 	--innerExpanded: ${p => p.theme.sizes.headerInnerHeightExpanded};
@@ -63,58 +131,74 @@ const StyledStickyHeader = styled.header`
 	--gap: ${p => p.theme.sizes.headerGap};
 	--smallGap: calc((var(--innerExpanded) - var(--innerCollapsed)) / 2);
 
-	display: flex;
 	background: #4db1b1;
-	align-items: center;
+
 	position: sticky;
-	flex-direction: column;
 	top: calc(var(--gap) * -2); /* Equal to twice the scrollable gap */
 	height: calc(var(--status) + var(--innerExpanded) + var(--gap) * 2);
+	display: flex;
+	align-items: center;
+	flex-direction: column;
 
 	&.collapsed {
 		top: calc(var(--smallGap) * -2); /* Equal to twice the scrollable gap */
 		height: calc(var(--status) + var(--innerCollapsed) + var(--smallGap) * 2);
 
-		.header-inner {
+		.inner {
 			height: var(--innerCollapsed);
 			max-height: 100%;
 			top: calc(var(--status) + var(--smallGap));
 		}
 	}
 
-	.header-inner {
-		height: var(--innerExpanded);
-		top: calc(var(--status) + var(--gap));
+	${max.sm`
+		top: 0 !important; /* Equal to twice the scrollable gap */
+		height: calc(var(--status) + var(--innerCollapsed)) !important;
 
+		.inner {
+			height: var(--innerCollapsed) !important;
+			max-height: 100% !important;
+			top: calc(var(--status) + var(--smallGap)) !important;
+		}
+	`}
+
+	.inner {
 		background: #9acacad3;
-		width: 100%;
+
 		position: sticky;
+		top: calc(var(--status) + var(--gap));
+		height: var(--innerExpanded);
 		max-width: 960px;
+		width: 100%;
 		margin: 0 auto;
+		display: flex;
+		justify-content: space-between;
 
 		text-align: center;
+
+		transition: all ease-in-out 0.2s;
 
 		${min.sm`
 			text-align: left;
 		`}
-
-		transition: all ease-in-out 0.2s;
 	}
 
 	.status-bar {
 		background: #ac9acad2;
-		height: var(--status);
-		width: 100%;
+
 		position: sticky;
 		top: 0;
+		height: var(--status);
+		width: 100%;
 		z-index: 10;
 
 		.status-bar-inner {
 			background-color: aqua;
+
+			max-width: 960px;
 			display: flex;
 			margin: auto;
 			padding: 0;
-			max-width: 960px;
 			justify-content: space-between;
 
 			font-size: ${p => p.theme.typography.fs.sm};
@@ -144,59 +228,19 @@ const StyledStickyHeader = styled.header`
 	}
 `
 
-const Content = styled.div`
-	max-width: 960px;
-	margin: 100px auto 0;
+const StyledBurgerMenu = styled.div`
+	background: #b14d84;
+
+	width: 20%;
 `
+const BurgerMenu: React.FC = () => <StyledBurgerMenu>=</StyledBurgerMenu>
 
-const ScrollerManager: React.FC<{
-	collapsed: boolean
-	setCollapsed: (next: boolean) => void
-}> = ({ collapsed, setCollapsed }) => {
-	const [scrollPosition, setScrollPosition] = useState(0)
-	const [switching, setSwitching] = useState(false)
+const StyledUtils = styled.div`
+	background: #5f4db1;
 
-	const handleScroll = () => {
-		const position = window.pageYOffset
-		setScrollPosition(position)
-	}
-
-	const gap = px2num(theme.sizes.headerGap)
-
-	useEffect(() => {
-		window.addEventListener('scroll', handleScroll, { passive: true })
-
-		return () => {
-			window.removeEventListener('scroll', handleScroll)
-		}
-	}, [])
-
-	useEffect(() => {
-		if (!switching) {
-			if (collapsed) {
-				if (!scrollPosition) {
-					setSwitching(true)
-					setCollapsed(false)
-				}
-			} else {
-				if (scrollPosition - gap * 2 > 0) {
-					setSwitching(true)
-					setCollapsed(true)
-					setSwitching(false)
-				}
-			}
-		}
-	}, [scrollPosition])
-
-	useEffect(() => {
-		if (switching && !collapsed) {
-			window.scrollTo(0, gap * 2)
-			setSwitching(false)
-		}
-	}, [collapsed])
-
-	return null
-}
+	width: 20%;
+`
+const Utils: React.FC = () => <StyledUtils>ipiscing elit, sed </StyledUtils>
 
 const StickyHeader: React.FC<{ collapsed?: boolean }> = props => {
 	const [collapsed, setCollapsed] = useState(props.collapsed || false)
@@ -216,8 +260,10 @@ const StickyHeader: React.FC<{ collapsed?: boolean }> = props => {
 						<li className="secondary">30 days return right*</li>
 					</ul>
 				</div>
-				<div className="header-inner">
+				<div className="inner">
+					<BurgerMenu />
 					<Logo collapsed={collapsed} />
+					<Utils />
 				</div>
 			</StyledStickyHeader>
 		</>
@@ -227,18 +273,6 @@ const StickyHeader: React.FC<{ collapsed?: boolean }> = props => {
 const ProductPage: React.FC = () => (
 	<>
 		<StickyHeader />
-		{/*
-		<Header>
-			<StatusBar>
-				<li>Handmade exclusive design</li>
-				<li className="primary">Free delivery in Denmark</li>
-				<li className="secondary">30 days return right*</li>
-			</StatusBar>
-			<HeaderContent>
-				<Logo />
-			</HeaderContent>
-		</Header>
-			*/}
 		<Content>
 			<h1>Lorem ipsum dolor sit amet</h1>
 			<p>

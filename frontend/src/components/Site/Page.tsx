@@ -1,8 +1,9 @@
 import React from 'react'
-import { Header } from '../../components'
+import { Header, Meta } from '../../components'
 
 const Page: React.FC = props => (
 	<div>
+		<Meta />
 		<Header />
 		<div>{props.children}</div>
 	</div>

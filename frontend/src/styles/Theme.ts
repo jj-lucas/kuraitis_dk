@@ -42,6 +42,7 @@ const theme: DefaultTheme = {
 		},
 		ff: {
 			noto: "'Noto Sans', sans-serif",
+			roboto: "'Roboto', sans-serif",
 		},
 	},
 	boxShadow: {
