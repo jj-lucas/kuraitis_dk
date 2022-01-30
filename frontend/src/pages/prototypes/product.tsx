@@ -3,11 +3,13 @@ import styled from 'styled-components'
 import { min, max, theme } from '../../styles'
 import { throttle } from 'lodash'
 import { useViewportSize } from '../../utils'
+import { Link } from 'gatsby'
 
 const StyledLogo = styled.a`
 	position: relative;
 	display: inline-flex;
 	height: 100%;
+	flex-shrink: 0;
 
 	color: var(--black);
 	font-family: ${p => p.theme.typography.ff.roboto};
@@ -19,6 +21,13 @@ const StyledLogo = styled.a`
 			font-size: ${p.theme.typography.fs.lg};
 		}
 		font-size: ${p.theme.typography.fs.h3};
+	`}
+
+	${min.sm`
+		height: 40px;
+	`}
+	${min.md`
+		height: 100%;
 	`}
 
 	> span {
@@ -187,7 +196,7 @@ const StyledStickyHeader = styled.header`
 		margin: 0 auto;
 		display: flex;
 		justify-content: space-between;
-		overflow: hidden;
+		flex-wrap: wrap;
 
 		text-align: center;
 
@@ -241,6 +250,12 @@ const StyledStickyHeader = styled.header`
 			}
 		}
 	}
+
+	.nav-tray {
+		background: #ac9acad2;
+
+		width: 100%;
+	}
 `
 
 const StyledBurgerMenu = styled.div`
@@ -257,9 +272,64 @@ const BurgerMenu: React.FC = () => <StyledBurgerMenu>=</StyledBurgerMenu>
 const StyledUtils = styled.div`
 	background: #5f4db1;
 
+	page-break-after: always; /* CSS 2.1 syntax */
+	break-after: always; /* New syntax */
+
 	width: 20%;
 `
 const Utils: React.FC = () => <StyledUtils>ipiscing elit, sed </StyledUtils>
+
+const StyledHorizontalNav = styled.ul`
+	background: #d9d6e476;
+
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	align-content: center;
+	flex-grow: 1;
+	justify-content: center;
+
+	text-transform: uppercase;
+
+	li {
+		list-style: none;
+	}
+
+	a {
+		text-decoration: none;
+	}
+
+	${max.sm`
+		display: none;
+	`}
+
+	${max.md`
+		order: 1;
+		width: 100%;
+	`}
+`
+
+const HorizontalNav: React.FC<{ className?: string }> = ({ className }) => (
+	<StyledHorizontalNav className={className}>
+		<li>
+			<Link to="#">Products</Link>
+		</li>
+		<li>
+			<Link to="#">About</Link>
+		</li>
+		<li>
+			<Link to="#">Materials</Link>
+		</li>
+		<li>
+			<Link to="#">Markets</Link>
+		</li>
+		<li>
+			<Link to="#">FAQ</Link>
+		</li>
+	</StyledHorizontalNav>
+)
 
 const StickyHeader: React.FC<{ collapsed?: boolean }> = props => {
 	const [collapsed, setCollapsed] = useState(props.collapsed || false)
@@ -282,6 +352,7 @@ const StickyHeader: React.FC<{ collapsed?: boolean }> = props => {
 				<div className="inner">
 					<BurgerMenu />
 					<Logo collapsed={collapsed} />
+					<HorizontalNav />
 					<Utils />
 				</div>
 			</StyledStickyHeader>
