@@ -21,9 +21,15 @@ const StyledLogo = styled.a`
 	> span {
 		display: none;
 
+		> span {
+			transition: opacity ease-in-out 0.3s;
+		}
+
 		.sergio {
 			text-transform: uppercase;
 			font-weight: ${p => p.theme.typography.fw.bold};
+
+			transition: margin ease-in-out 0.3s;
 		}
 
 		${min.xs`
@@ -37,12 +43,18 @@ const StyledLogo = styled.a`
 	&.collapsed {
 		> span > span {
 			${min.sm`
-				display: none;
+				opacity: 0;
+				transition: none;
 			`}
 
 			&.sergio {
 				display: inline-flex;
 				align-self: flex-start;
+
+				${min.sm`
+					opacity: 1;
+					margin-top: 30px;	
+				`}
 			}
 		}
 	}
@@ -114,7 +126,6 @@ const ScrollerManager: React.FC<{
 	useEffect(() => {
 		if (switching && !collapsed) {
 			if (!matchesSize(['xs'])) {
-				console.log('jump!')
 				window.scrollTo(0, gap * 2)
 			}
 			setSwitching(false)
@@ -173,10 +184,11 @@ const StyledStickyHeader = styled.header`
 		margin: 0 auto;
 		display: flex;
 		justify-content: space-between;
+		overflow: hidden;
 
 		text-align: center;
 
-		transition: all ease-in-out 0.2s;
+		transition: all ease-in-out 0.1s;
 
 		${min.sm`
 			text-align: left;
