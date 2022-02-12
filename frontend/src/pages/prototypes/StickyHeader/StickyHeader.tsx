@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { min, max } from '@/styles'
 import Logo from './Logo'
 import ScrollerManager from './ScrollerManager'
 import HorizontalNav from './HorizontalNav'
+import { ScrollContext } from '@/components'
 
 const StyledStickyHeader = styled.header`
 	--status: ${p => p.theme.sizes.headerStatusHeight};
@@ -131,16 +132,19 @@ const StyledUtils = styled.div`
 `
 const Utils: React.FC = () => <StyledUtils>ipiscing elit, sed </StyledUtils>
 
-const StickyHeader: React.FC<{ collapsed?: boolean }> = props => {
-	const [collapsed, setCollapsed] = useState(props.collapsed || false)
+const StickyHeader: React.FC<{ defaultCollapsed?: boolean }> = props => {
+	const collapsed = useContext(ScrollContext)
 
+	/*
 	const setCollapsedControlled = (next: boolean) => {
 		setCollapsed(props.collapsed || next)
 	}
+	*/
+
+	console.log('render heder')
 
 	return (
 		<>
-			<ScrollerManager collapsed={collapsed} setCollapsed={setCollapsedControlled} />
 			<StyledStickyHeader className={collapsed ? 'collapsed' : ''}>
 				<div className="status-bar">
 					<ul className="status-bar-inner">

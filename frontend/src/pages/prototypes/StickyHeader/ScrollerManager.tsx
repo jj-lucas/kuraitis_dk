@@ -15,13 +15,14 @@ const ScrollerManager: React.FC<{
 	const [switching, setSwitching] = useState(false)
 	const { matchesSize } = useViewportSize()
 
-	const gap = px2num(theme.sizes.headerGap)
+	const thresholdCollapse = px2num(theme.sizes.headerGap)
+	const thresholdExpand = px2num(theme.sizes.headerStatusHeight) + px2num(theme.sizes.headerInnerHeightExpanded)
 
 	useEffect(() => {
 		const handleScroll = throttle(() => {
 			const position = window.pageYOffset
 			setScrollPosition(position)
-		}, 50)
+		}, 20)
 
 		window.addEventListener('scroll', handleScroll, { passive: true })
 
@@ -33,12 +34,12 @@ const ScrollerManager: React.FC<{
 	useEffect(() => {
 		if (!switching) {
 			if (collapsed) {
-				if (!scrollPosition) {
+				if (scrollPosition < thresholdExpand) {
 					setSwitching(true)
 					setCollapsed(false)
 				}
 			} else {
-				if (scrollPosition - gap * 2 > 0) {
+				if (scrollPosition - thresholdCollapse * 2 > 0) {
 					setSwitching(true)
 					setCollapsed(true)
 					setSwitching(false)
@@ -50,7 +51,7 @@ const ScrollerManager: React.FC<{
 	useEffect(() => {
 		if (switching && !collapsed) {
 			if (!matchesSize(['xs'])) {
-				window.scrollTo(0, gap * 2)
+				window.scrollTo(0, thresholdCollapse * 2)
 			}
 			setSwitching(false)
 		}
