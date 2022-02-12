@@ -12,8 +12,8 @@ const theme: DefaultTheme = {
 		xs: '960px',
 		sm: '960px',
 		md: '960px',
-		lg: '960px',
-		xl: '960px',
+		lg: '1100px',
+		xl: '1500px',
 	},
 	maxLengthLine: {
 		xs: '800px',
@@ -63,9 +63,10 @@ const theme: DefaultTheme = {
 	},
 	sizes: {
 		headerStatusHeight: '18px',
-		headerInnerHeightExpanded: '76px',
+		headerInnerHeightExpanded: '60px',
 		headerInnerHeightCollapsed: '60px',
 		headerGap: '50px',
+		productTopDockingGap: '0',
 	},
 }
 

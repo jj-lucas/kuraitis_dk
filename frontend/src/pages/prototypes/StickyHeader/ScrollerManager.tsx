@@ -11,7 +11,7 @@ const ScrollerManager: React.FC<{
 	collapsed: boolean
 	setCollapsed: (next: boolean) => void
 }> = ({ collapsed, setCollapsed }) => {
-	const [scrollPosition, setScrollPosition] = useState(0)
+	const [scrollPosition, setScrollPosition] = useState(window.pageYOffset)
 	const [switching, setSwitching] = useState(false)
 	const { matchesSize } = useViewportSize()
 
@@ -22,9 +22,11 @@ const ScrollerManager: React.FC<{
 		const handleScroll = throttle(() => {
 			const position = window.pageYOffset
 			setScrollPosition(position)
-		}, 20)
+		}, 50)
 
 		window.addEventListener('scroll', handleScroll, { passive: true })
+
+		handleScroll()
 
 		return () => {
 			window.removeEventListener('scroll', handleScroll)

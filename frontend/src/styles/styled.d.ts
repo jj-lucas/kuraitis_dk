@@ -69,6 +69,7 @@ declare module 'styled-components' {
 			headerInnerHeightExpanded: string
 			headerInnerHeightCollapsed: string
 			headerGap: string
+			productTopDockingGap: string
 		}
 	}
 }

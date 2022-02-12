@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { min, max } from '@/styles'
 import Logo from './Logo'
-import ScrollerManager from './ScrollerManager'
 import HorizontalNav from './HorizontalNav'
 import { ScrollContext } from '@/components'
 
@@ -21,6 +20,7 @@ const StyledStickyHeader = styled.header`
 	display: flex;
 	align-items: center;
 	flex-direction: column;
+	z-index: 10;
 
 	&.collapsed {
 		top: calc(var(--smallGap) * -2); /* Equal to twice the scrollable gap */
@@ -50,8 +50,10 @@ const StyledStickyHeader = styled.header`
 		position: sticky;
 		top: calc(var(--status) + var(--gap));
 		height: var(--innerExpanded);
-		max-width: 960px;
 		width: 100%;
+
+		max-width: var(--maxWidth);
+
 		margin: 0 auto;
 		display: flex;
 		justify-content: space-between;
@@ -78,7 +80,8 @@ const StyledStickyHeader = styled.header`
 		.status-bar-inner {
 			background-color: aqua;
 
-			max-width: 960px;
+			max-width: var(--maxWidth);
+
 			display: flex;
 			margin: auto;
 			padding: 0;

@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
+import { min } from '@/styles'
 
 export const GlobalStyles = createGlobalStyle`
 :root {
@@ -16,6 +17,19 @@ export const GlobalStyles = createGlobalStyle`
 	--tan: #de905f;
 	--lightTan: #de905f85;
 
+	--maxWidth: ${p => p.theme.maxWidth.xs};
+	${p => min.sm`
+		--maxWidth:  ${p.theme.maxWidth.sm}
+	`}
+	${p => min.md`
+		--maxWidth:  ${p.theme.maxWidth.md}
+	`}
+	${p => min.lg`
+		--maxWidth:  ${p.theme.maxWidth.lg}
+	`}
+	${p => min.xl`
+		--maxWidth:  ${p.theme.maxWidth.xl}
+	`}
 	
 }
 html {
@@ -47,19 +61,6 @@ h4 {
 	font-size: ${props => props.theme.typography.fs.h4};
 }
 p, ul {
-	max-width: ${props => props.theme.maxLengthLine.xs};
-	
-	@media (min-width: ${props => props.theme.breakpoints.sm}) {
-		max-width: ${props => props.theme.maxLengthLine.sm};
-	}
-	@media (min-width: ${props => props.theme.breakpoints.md}) {
-		max-width: ${props => props.theme.maxLengthLine.md};
-	}
-	@media (min-width: ${props => props.theme.breakpoints.lg}) {
-		max-width: ${props => props.theme.maxLengthLine.lg};
-	}
-	@media (min-width: ${props => props.theme.breakpoints.xl}) {
-		max-width: ${props => props.theme.maxLengthLine.sm};
-	}
+	max-width: var(--maxWidth);
 }
 `
