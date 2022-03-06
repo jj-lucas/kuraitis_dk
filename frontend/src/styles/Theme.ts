@@ -62,8 +62,8 @@ const theme: DefaultTheme = {
 		},
 	},
 	sizes: {
-		headerCollapse: '200px',
-		productTopDockingGap: '0',
+		headerCollapse: '2200px',
+		productPageContentStart: '13rem',
 	},
 }
 

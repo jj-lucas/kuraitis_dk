@@ -1,9 +1,12 @@
-import ScrollerManager from '@/pages/prototypes/product/StickyHeader/ScrollerManager'
 import React, { createContext, useState } from 'react'
 import styled from 'styled-components'
 import { Meta } from '../../components'
+import Header from './Header'
 
-export const ScrollContext = createContext(false)
+export const CollapseHeaderContext = createContext({
+	collapsed: false,
+	setCollapsed: (collapsed: boolean) => {},
+})
 
 const StyledPage = styled.div``
 
@@ -12,11 +15,11 @@ const Page: React.FC = props => {
 
 	return (
 		<StyledPage className={collapsed ? 'collapsed' : ''}>
-			<ScrollerManager collapsed={collapsed} setCollapsed={setCollapsed} />
-			<ScrollContext.Provider value={collapsed}>
+			<CollapseHeaderContext.Provider value={{ collapsed, setCollapsed: setCollapsed as any }}>
 				<Meta />
+				<Header collapsed={collapsed} />
 				<div>{props.children}</div>
-			</ScrollContext.Provider>
+			</CollapseHeaderContext.Provider>
 		</StyledPage>
 	)
 }

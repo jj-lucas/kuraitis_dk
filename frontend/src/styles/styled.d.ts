@@ -66,7 +66,7 @@ declare module 'styled-components' {
 		}
 		sizes: {
 			headerCollapse: string
-			productTopDockingGap: string
+			productPageContentStart: string
 		}
 	}
 }
