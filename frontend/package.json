@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "dev": "yarn codegen && gatsby develop",
+    "dev:network": "yarn codegen && gatsby develop -H 0.0.0.0",
     "start": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
