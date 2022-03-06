@@ -65,10 +65,7 @@ declare module 'styled-components' {
 			}
 		}
 		sizes: {
-			headerStatusHeight: string
-			headerInnerHeightExpanded: string
-			headerInnerHeightCollapsed: string
-			headerGap: string
+			headerCollapse: string
 			productTopDockingGap: string
 		}
 	}

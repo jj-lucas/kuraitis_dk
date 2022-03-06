@@ -62,10 +62,7 @@ const theme: DefaultTheme = {
 		},
 	},
 	sizes: {
-		headerStatusHeight: '18px',
-		headerInnerHeightExpanded: '60px',
-		headerInnerHeightCollapsed: '60px',
-		headerGap: '50px',
+		headerCollapse: '200px',
 		productTopDockingGap: '0',
 	},
 }

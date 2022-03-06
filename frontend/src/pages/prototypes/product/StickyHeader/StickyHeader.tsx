@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { min, max } from '@/styles'
-import Logo from './Logo'
-import HorizontalNav from './HorizontalNav'
+import Logo from '../../product2/Logo'
+import HorizontalNav from '../../product2/HorizontalNav'
 import { ScrollContext } from '@/components'
 
 const StyledStickyHeader = styled.header`

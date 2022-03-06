@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { min } from '@/styles'
+import { min, max } from '@/styles'
 
 const StyledLogo = styled.a`
 	position: relative;
@@ -20,15 +20,12 @@ const StyledLogo = styled.a`
 		font-size: ${p.theme.typography.fs.h3};
 	`}
 
-	${min.sm`
-		height: 40px;
-	`}
-	${min.md`
-		height: 100%;
+	${max.md`
+		// height: 40px;
 	`}
 
 	> span {
-		display: none;
+		opacity: 0;
 
 		> span {
 			transition: opacity ease-in-out 0.3s;
@@ -38,10 +35,12 @@ const StyledLogo = styled.a`
 			text-transform: uppercase;
 			font-weight: ${p => p.theme.typography.fw.bold};
 
-			transition: margin ease-in-out 0.2s;
+			margin-top: 0;
+			transition: margin ease-in-out 0.3s;
 		}
 
 		${min.xs`
+			opacity: 1;
 			display: inline-flex;
 			flex-direction: column;
 			align-items: flex-start;
@@ -50,20 +49,24 @@ const StyledLogo = styled.a`
 	}
 
 	&.collapsed {
+		background-color: red;
+
 		> span > span {
 			${min.sm`
 				opacity: 0;
 				pointer-events: none;
-				transition: all ease-in 0.3s;
+				transition: all ease-in-out 0.3s;
 			`}
 
 			&.sergio {
 				display: inline-flex;
 				align-self: flex-start;
+				margin-top: 0;
+				transition: all ease-in-out 0.3s;
 
 				${min.sm`
 					opacity: 1;
-					margin-top: 25px;	
+					margin-top: 25px;
 				`}
 			}
 		}
@@ -79,7 +82,7 @@ const Logo: React.FC<{ collapsed: boolean }> = ({ collapsed }) => (
 		<img src="https://d33wubrfki0l68.cloudfront.net/8e679f4eacde819d4909fbad17a6aa8b5786dd8b/49226/logo.png"></img>
 		<span>
 			<span className="sergio">Sergio Kuraitis</span>
-			<span>Naturligt Design</span>
+			<span className="slogan">Naturligt Design</span>
 		</span>
 	</StyledLogo>
 )

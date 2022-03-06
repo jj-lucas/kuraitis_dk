@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { theme } from '@/styles'
 import { throttle } from 'lodash'
-import { useViewportSize } from '@/utils'
 
 const px2num = (n: string): number => {
 	return parseInt(n.replace('px', ''), 10)
@@ -12,11 +11,8 @@ const ScrollerManager: React.FC<{
 	setCollapsed: (next: boolean) => void
 }> = ({ collapsed, setCollapsed }) => {
 	const [scrollPosition, setScrollPosition] = useState(window.pageYOffset)
-	const [switching, setSwitching] = useState(false)
-	const { matchesSize } = useViewportSize()
 
-	const thresholdCollapse = px2num(theme.sizes.headerGap)
-	const thresholdExpand = px2num(theme.sizes.headerStatusHeight) + px2num(theme.sizes.headerInnerHeightExpanded)
+	const threshold = px2num(theme.sizes.headerCollapse)
 
 	useEffect(() => {
 		const handleScroll = throttle(() => {
@@ -34,30 +30,16 @@ const ScrollerManager: React.FC<{
 	}, [])
 
 	useEffect(() => {
-		if (!switching) {
-			if (collapsed) {
-				if (scrollPosition < thresholdExpand) {
-					setSwitching(true)
-					setCollapsed(false)
-				}
-			} else {
-				if (scrollPosition - thresholdCollapse * 2 > 0) {
-					setSwitching(true)
-					setCollapsed(true)
-					setSwitching(false)
-				}
+		if (collapsed) {
+			if (scrollPosition < threshold) {
+				setCollapsed(false)
+			}
+		} else {
+			if (scrollPosition > threshold) {
+				setCollapsed(true)
 			}
 		}
 	}, [scrollPosition])
-
-	useEffect(() => {
-		if (switching && !collapsed) {
-			if (!matchesSize(['xs'])) {
-				window.scrollTo(0, thresholdCollapse * 2)
-			}
-			setSwitching(false)
-		}
-	}, [collapsed])
 
 	return null
 }
