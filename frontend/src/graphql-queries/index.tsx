@@ -5,7 +5,7 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
+const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -113,12 +113,12 @@ export type ApolloQueryVariables = Exact<{
 }>;
 
 
-export type ApolloQuery = { __typename?: 'Query', hello?: string | null | undefined };
+export type ApolloQuery = { __typename?: 'Query', hello?: string | null };
 
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CurrentUserQuery = { __typename?: 'Query', currentUser?: { __typename?: 'User', id: string, name: string, email: string, permissions: Array<{ __typename?: 'Permission', name: string } | null | undefined> } | null | undefined };
+export type CurrentUserQuery = { __typename?: 'Query', currentUser?: { __typename?: 'User', id: string, name: string, email: string, permissions: Array<{ __typename?: 'Permission', name: string } | null> } | null };
 
 export type SignInMutationVariables = Exact<{
   email: Scalars['String'];
@@ -126,17 +126,17 @@ export type SignInMutationVariables = Exact<{
 }>;
 
 
-export type SignInMutation = { __typename?: 'Mutation', signIn?: { __typename?: 'User', name: string } | null | undefined };
+export type SignInMutation = { __typename?: 'Mutation', signIn?: { __typename?: 'User', name: string } | null };
 
 export type SignOutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SignOutMutation = { __typename?: 'Mutation', signOut?: { __typename?: 'Result', message: string } | null | undefined };
+export type SignOutMutation = { __typename?: 'Mutation', signOut?: { __typename?: 'Result', message: string } | null };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: string, name: string, email: string, permissions: Array<{ __typename?: 'Permission', name: string } | null | undefined> } | null | undefined> };
+export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: string, name: string, email: string, permissions: Array<{ __typename?: 'Permission', name: string } | null> } | null> };
 
 export type CreateUserMutationVariables = Exact<{
   name: Scalars['String'];
@@ -145,19 +145,19 @@ export type CreateUserMutationVariables = Exact<{
 }>;
 
 
-export type CreateUserMutation = { __typename?: 'Mutation', createUser?: { __typename?: 'User', id: string } | null | undefined };
+export type CreateUserMutation = { __typename?: 'Mutation', createUser?: { __typename?: 'User', id: string } | null };
 
 export type DeleteUserMutationVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type DeleteUserMutation = { __typename?: 'Mutation', deleteUser?: { __typename?: 'Result', message: string } | null | undefined };
+export type DeleteUserMutation = { __typename?: 'Mutation', deleteUser?: { __typename?: 'Result', message: string } | null };
 
 export type PermissionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PermissionsQuery = { __typename?: 'Query', permissions: Array<{ __typename?: 'Permission', id: string, name: string } | null | undefined> };
+export type PermissionsQuery = { __typename?: 'Query', permissions: Array<{ __typename?: 'Permission', id: string, name: string } | null> };
 
 export type AssignPermissionMutationVariables = Exact<{
   userId: Scalars['String'];
@@ -165,7 +165,7 @@ export type AssignPermissionMutationVariables = Exact<{
 }>;
 
 
-export type AssignPermissionMutation = { __typename?: 'Mutation', assignPermission?: { __typename?: 'Result', message: string } | null | undefined };
+export type AssignPermissionMutation = { __typename?: 'Mutation', assignPermission?: { __typename?: 'Result', message: string } | null };
 
 export type UnassignPermissionMutationVariables = Exact<{
   userId: Scalars['String'];
@@ -173,7 +173,7 @@ export type UnassignPermissionMutationVariables = Exact<{
 }>;
 
 
-export type UnassignPermissionMutation = { __typename?: 'Mutation', unassignPermission?: { __typename?: 'Result', message: string } | null | undefined };
+export type UnassignPermissionMutation = { __typename?: 'Mutation', unassignPermission?: { __typename?: 'Result', message: string } | null };
 
 
 export const ApolloDocument = gql`
