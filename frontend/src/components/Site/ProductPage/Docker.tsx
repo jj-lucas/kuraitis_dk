@@ -4,9 +4,13 @@ import { theme } from '@/styles'
 import { rem2num } from '@/utils'
 
 const Docker: React.FC<{ docked: boolean; setDocked: (next: boolean) => void }> = ({ docked, setDocked }) => {
-	const [scrollPosition, setScrollPosition] = useState(window.pageYOffset)
+	const [scrollPosition, setScrollPosition] = useState(0)
 
 	useEffect(() => {
+		if (window) {
+			setScrollPosition(window.pageYOffset)
+		}
+
 		const handleScroll = throttle(() => {
 			const position = window.pageYOffset
 			setScrollPosition(position)
