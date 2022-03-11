@@ -4,7 +4,7 @@ import { min } from '@/styles'
 export const GlobalStyles = createGlobalStyle`
 :root {
 	--lightGray: #f8f8f8;
-	--lightGrayEmphasized: #e5e3e3;
+	--lightGrayEmphasized: #e4e4e4;
 	--lightishGray: #aaaaaa;
 	--gray: #1a1a1a99;
 	--darkGray: #1a1a1a;
@@ -37,7 +37,6 @@ html {
 }
 body {
 	margin: 0;
-	background-color: var(--lightGray);
 	font-family: ${props => props.theme.typography.ff.noto};
 	font-weight: ${props => props.theme.typography.fw.regular};
 	font-style: normal;

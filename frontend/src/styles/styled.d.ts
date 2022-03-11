@@ -4,6 +4,9 @@ import 'styled-components'
 // and extend them!
 declare module 'styled-components' {
 	export interface DefaultTheme {
+		colors: {
+			accent: string
+		}
 		breakpoints: {
 			xs: string
 			sm: string
@@ -67,6 +70,11 @@ declare module 'styled-components' {
 		sizes: {
 			headerCollapse: string
 			productPageContentStart: string
+		}
+		spacing: {
+			sm: string
+			base: string
+			lg: string
 		}
 	}
 }

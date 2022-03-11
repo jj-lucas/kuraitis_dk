@@ -1,6 +1,9 @@
 import { DefaultTheme } from 'styled-components'
 
 const theme: DefaultTheme = {
+	colors: {
+		accent: '#e4e4e4',
+	},
 	breakpoints: {
 		xs: '320px', // mobile
 		sm: '480px', // tablet
@@ -27,12 +30,12 @@ const theme: DefaultTheme = {
 			h1: '36px',
 			h2: '24px',
 			h3: '16px',
-			h4: '16px',
+			h4: '14px',
 
 			lg: '20px',
-			base: '14px',
-			sm: '12px',
-			xs: '10px',
+			base: '12px',
+			sm: '10px',
+			xs: '8px',
 		},
 		fw: {
 			light: 300,
@@ -64,6 +67,11 @@ const theme: DefaultTheme = {
 	sizes: {
 		headerCollapse: '2200px',
 		productPageContentStart: '13rem',
+	},
+	spacing: {
+		sm: '1rem',
+		base: '3rem',
+		lg: '5rem',
 	},
 }
 

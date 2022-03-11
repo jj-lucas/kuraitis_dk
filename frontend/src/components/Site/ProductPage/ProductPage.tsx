@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Details from './Details'
 import Gallery from './Gallery'
-import { CollapseHeaderContext, LoremIpsum } from '@/components'
+import { LoremIpsum } from '@/components'
 import { Docker } from './Docker'
 
 const StyledContent = styled.div`
@@ -14,30 +14,27 @@ const StyledContent = styled.div`
 	.top {
 		display: flex;
 
-		> div {
-			width: 50%;
+		.details {
+			width: 40%;
+		}
+
+		.gallery {
+			width: 60%;
 		}
 	}
 `
 
 const ProductPage: React.FC = () => {
-	const [docked, setDocked] = useState(false)
 	console.log('Render content')
-
-	const { setCollapsed } = useContext(CollapseHeaderContext)
-
-	useEffect(() => {
-		setCollapsed(docked)
-	}, [docked])
 
 	return (
 		<>
 			<StyledContent>
 				<section className="top" id="top">
-					<Details docked={docked} />
+					<Details />
 					<Gallery />
 				</section>
-				<Docker docked={docked} setDocked={setDocked} />
+				<Docker />
 				<LoremIpsum />
 				<LoremIpsum />
 				<LoremIpsum />

@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { throttle } from 'lodash'
-import { theme } from '@/styles'
-import { rem2num } from '@/utils'
+import { CollapseHeaderContext } from '..'
 
-const Docker: React.FC<{ docked: boolean; setDocked: (next: boolean) => void }> = ({ docked, setDocked }) => {
+const Docker: React.FC = () => {
 	const [scrollPosition, setScrollPosition] = useState(0)
+	const [docked, setDocked] = useState(false)
+
+	const { setCollapsed } = useContext(CollapseHeaderContext)
+
+	useEffect(() => {
+		setCollapsed(docked)
+	}, [docked])
 
 	useEffect(() => {
 		if (window) {
@@ -25,22 +31,33 @@ const Docker: React.FC<{ docked: boolean; setDocked: (next: boolean) => void }> 
 		}
 	}, [])
 
-	useEffect(() => {
+	const checkDocking = () => {
 		const top = document?.getElementById('docked')?.getBoundingClientRect()
 		const end = document?.getElementById('end')?.getBoundingClientRect()
+
 		if (end?.top && top?.bottom) {
 			if (!docked) {
 				// content floating, check when to dock
 				if (end.top - top.bottom <= 0) {
+					document?.getElementById('docked')?.classList.add('docked')
 					setDocked(true)
 				}
 			} else {
 				// content docked, check when to undock
-				if (top.top > rem2num(theme.sizes.productPageContentStart)) {
+				if (top.top > window.innerHeight / 2 - top.height / 2) {
+					document?.getElementById('docked')?.classList.remove('docked')
 					setDocked(false)
 				}
 			}
 		}
+	}
+
+	useEffect(() => {
+		checkDocking()
+	}, [scrollPosition])
+
+	useEffect(() => {
+		setTimeout(checkDocking, 500) // race condition
 	}, [scrollPosition])
 
 	return <div id="end" />
