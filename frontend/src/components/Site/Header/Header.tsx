@@ -68,16 +68,56 @@ const StyledBurgerMenu = styled.div`
 `
 const BurgerMenu: React.FC = () => <StyledBurgerMenu>=</StyledBurgerMenu>
 
+const StatusBar = styled.div`
+	background: #ca9a9ad2;
+
+	.status-bar-inner {
+		background-color: aqua;
+		max-width: 960px;
+		display: flex;
+		margin: auto;
+		padding: 0;
+		justify-content: space-between;
+		font-size: ${p => p.theme.typography.fs.sm};
+		li {
+			display: none;
+			width: 100%;
+			list-style: none;
+			text-align: center;
+			&.primary {
+				display: block;
+			}
+			${min.xs`
+				&.secondary {
+					display: block;
+				}
+			`}
+			${min.md`
+				display: block;
+			`}
+		}
+	}
+`
+
 const Header: React.FC<{ collapsed: boolean }> = ({ collapsed }) => {
 	return (
-		<StyledHeader className={collapsed ? 'collapsed' : ''}>
-			<div className={`headerInner ${collapsed ? 'collapsed' : ''}`}>
-				<BurgerMenu />
-				<Logo collapsed={collapsed} />
-				<HorizontalNav />
-				<Utils />
-			</div>
-		</StyledHeader>
+		<>
+			<StyledHeader className={collapsed ? 'collapsed' : ''}>
+				<StatusBar>
+					<ul className="status-bar-inner">
+						<li>Handmade exclusive design</li>
+						<li className="primary">Free delivery in Denmark</li>
+						<li className="secondary">30 days return right*</li>
+					</ul>
+				</StatusBar>
+				<div className={`headerInner ${collapsed ? 'collapsed' : ''}`}>
+					<BurgerMenu />
+					<Logo collapsed={collapsed} />
+					<HorizontalNav />
+					<Utils />
+				</div>
+			</StyledHeader>
+		</>
 	)
 }
 
