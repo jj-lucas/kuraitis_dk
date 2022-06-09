@@ -5,6 +5,7 @@ import Gallery from './Gallery'
 import { LoremIpsum } from '@/components'
 import { Docker } from './Docker'
 import { min } from '@/styles'
+import Parallax from './Parallax'
 
 const StyledContent = styled.div`
 	--productPageContentStart: ${p => p.theme.sizes.productPageContentStart};
@@ -33,20 +34,6 @@ const StyledContent = styled.div`
 			`}
 		}
 	}
-`
-
-const Parallax = styled.div<{ src: string }>`
-	/* The image used */
-	background-image: url(${p => p.src});
-
-	/* Set a specific height */
-	min-height: 500px;
-
-	/* Create the parallax scrolling effect */
-	background-attachment: fixed;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
 `
 
 const ProductPage: React.FC = () => {

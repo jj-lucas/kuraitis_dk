@@ -73,7 +73,7 @@ const StatusBar = styled.div`
 
 	.status-bar-inner {
 		background-color: aqua;
-		max-width: 960px;
+		max-width: var(--maxWidth);
 		display: flex;
 		margin: auto;
 		padding: 0;
