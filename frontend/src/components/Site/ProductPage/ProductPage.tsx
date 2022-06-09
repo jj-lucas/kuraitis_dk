@@ -6,14 +6,14 @@ import { LoremIpsum } from '@/components'
 import { Docker } from './Docker'
 import { min } from '@/styles'
 import Parallax from './Parallax'
+import ColorVariations from './ColorVariations'
+import Wrapper from '../Wrapper'
 
 const StyledContent = styled.div`
 	--productPageContentStart: ${p => p.theme.sizes.productPageContentStart};
 
 	.top {
-		max-width: var(--maxWidth);
 		margin: var(--productPageContentStart) auto 0;
-		padding: 1rem;
 		margin-bottom: 2rem;
 		${min.md`
 			display: flex;
@@ -42,17 +42,28 @@ const ProductPage: React.FC = () => {
 	return (
 		<>
 			<StyledContent>
-				<section className="top" id="top">
-					<Details />
-					<Gallery />
-				</section>
+				<Wrapper>
+					<section className="top" id="top">
+						<Details />
+						<Gallery />
+					</section>
+				</Wrapper>
 				<Docker />
+				<Wrapper>
+					<ColorVariations />
+				</Wrapper>
 				<Parallax src="https://previews.123rf.com/images/mtoome/mtoome1609/mtoome160900099/63492873-leather-handbag-craftsman-at-work-in-a-workshop.jpg" />
-				<LoremIpsum />
-				<LoremIpsum />
+
+				<Wrapper>
+					<LoremIpsum />
+					<LoremIpsum />
+				</Wrapper>
 				<Parallax src="https://previews.123rf.com/images/mtoome/mtoome1608/mtoome160800129/62612777-leather-handbag-craftsman-at-work-in-a-workshop.jpg" />
-				<LoremIpsum />
-				<LoremIpsum />
+
+				<Wrapper>
+					<LoremIpsum />
+					<LoremIpsum />
+				</Wrapper>
 			</StyledContent>
 		</>
 	)

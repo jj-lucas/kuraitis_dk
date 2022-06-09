@@ -1,13 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-const StyledLoremIpsum = styled.div`
-	--productPageContentStart: ${p => p.theme.sizes.productPageContentStart};
-
-	max-width: var(--maxWidth);
-	margin: 0 auto 0;
-	padding: 1rem;
-`
+const StyledLoremIpsum = styled.div``
 const LoremIpsum = () => (
 	<StyledLoremIpsum>
 		<p>
