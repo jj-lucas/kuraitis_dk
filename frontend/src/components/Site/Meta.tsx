@@ -10,6 +10,7 @@ const Meta: React.FC = props => (
 			href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Roboto:wght@400;500;700&family=Stick+No+Bills&display=swap"
 			rel="stylesheet"
 		/>
+		<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css"></link>
 
 		{props.children}
 	</Helmet>

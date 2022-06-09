@@ -8,6 +8,10 @@ const StyledPicture = styled.div`
 	width: 100%;
 	height: calc(100vh - var(--productPageContentStart));
 
+	@media (orientation: portrait) {
+		max-height: 500px;
+	}
+
 	&:last-of-type {
 		height: auto;
 	}

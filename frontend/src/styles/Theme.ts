@@ -67,6 +67,7 @@ const theme: DefaultTheme = {
 	sizes: {
 		headerCollapse: '2200px',
 		productPageContentStart: '13rem',
+		productPageMobileGalleryHeight: '20rem',
 	},
 	spacing: {
 		sm: '1rem',

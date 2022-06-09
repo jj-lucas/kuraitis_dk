@@ -4,22 +4,34 @@ import Details from './Details'
 import Gallery from './Gallery'
 import { LoremIpsum } from '@/components'
 import { Docker } from './Docker'
+import { min } from '@/styles'
 
 const StyledContent = styled.div`
 	--productPageContentStart: ${p => p.theme.sizes.productPageContentStart};
 
 	max-width: var(--maxWidth);
 	margin: var(--productPageContentStart) auto 0;
+	padding: 1rem;
 
 	.top {
-		display: flex;
+		margin-bottom: 2rem;
+		${min.md`
+			display: flex;
+		`}
 
 		.details {
-			width: 40%;
+			${min.md`
+				width: 40%;
+			`}
 		}
 
 		.gallery {
-			width: 60%;
+			display: none;
+
+			${min.md`
+				width: 60%;
+				display: block;
+			`}
 		}
 	}
 `

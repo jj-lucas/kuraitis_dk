@@ -70,6 +70,7 @@ declare module 'styled-components' {
 		sizes: {
 			headerCollapse: string
 			productPageContentStart: string
+			productPageMobileGalleryHeight: string
 		}
 		spacing: {
 			sm: string
