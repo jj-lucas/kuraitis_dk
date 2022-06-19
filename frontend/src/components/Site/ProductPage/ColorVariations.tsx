@@ -18,6 +18,7 @@ const StyledCard = styled.li`
 
 	a {
 		display: block;
+		box-shadow: none;
 
 		img {
 			transition: all ${props => `${props.theme.transition.duration.sm} ${props.theme.transition.type.easeInOut}`};

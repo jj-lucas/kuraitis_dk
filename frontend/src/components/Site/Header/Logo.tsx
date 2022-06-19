@@ -12,7 +12,8 @@ const StyledLogo = styled.a`
 	color: var(--black);
 	font-family: ${p => p.theme.typography.ff.stick};
 	font-size: ${p => p.theme.typography.fs.base};
-	text-decoration: none;
+
+	box-shadow: none;
 
 	${p => min.sm`
 		.sergio {

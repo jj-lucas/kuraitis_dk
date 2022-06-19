@@ -46,4 +46,11 @@ h4 {
 p, ul {
 	max-width: var(--maxWidth);
 }
+
+a {
+	color: var(--blue);
+	text-decoration: none;
+	box-shadow: 0 1px var(--blue);
+	padding-bottom: 0x;
+}
 `

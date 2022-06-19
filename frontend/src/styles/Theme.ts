@@ -67,7 +67,7 @@ const theme: DefaultTheme = {
 	},
 	sizes: {
 		headerCollapse: '2200px',
-		productPageContentStart: '13rem',
+		productPageContentStart: '15rem',
 		productPageMobileGalleryHeight: '20rem',
 	},
 	spacing: {
