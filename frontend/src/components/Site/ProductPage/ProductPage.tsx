@@ -53,13 +53,13 @@ const ProductPage: React.FC = () => {
 			</Wrapper>
 			<Parallax src="https://previews.123rf.com/images/mtoome/mtoome1609/mtoome160900099/63492873-leather-handbag-craftsman-at-work-in-a-workshop.jpg" />
 
-			<Wrapper>
+			<Wrapper topMargin={true}>
 				<LoremIpsum />
 				<LoremIpsum />
 			</Wrapper>
 			<Parallax src="https://previews.123rf.com/images/mtoome/mtoome1608/mtoome160800129/62612777-leather-handbag-craftsman-at-work-in-a-workshop.jpg" />
 
-			<Wrapper>
+			<Wrapper topMargin={true}>
 				<LoremIpsum />
 				<LoremIpsum />
 			</Wrapper>

@@ -18,7 +18,7 @@ const Docker: React.FC = () => {
 		}
 
 		const handleScroll = throttle(() => {
-			const position = window.pageYOffset
+			const position = Math.round(window.pageYOffset)
 			setScrollPosition(position)
 		}, 50)
 
