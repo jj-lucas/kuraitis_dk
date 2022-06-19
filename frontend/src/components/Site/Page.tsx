@@ -1,25 +1,33 @@
 import React, { createContext, useState } from 'react'
 import styled from 'styled-components'
-import { Meta } from '../../components'
-import Header from './Header'
+import { Meta, Header, MenuDrawer } from '@/components'
 
-export const CollapseHeaderContext = createContext({
+export const HeaderCollapsedContext = createContext({
 	collapsed: false,
 	setCollapsed: (collapsed: boolean) => {},
 })
 
+export const SideMenuContext = createContext({
+	expanded: false,
+	setExpanded: (expanded: boolean) => {},
+})
+
 const StyledPage = styled.div``
 
-const Page: React.FC = props => {
-	const [collapsed, setCollapsed] = useState(false)
+const Page: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+	const [headerCollapsed, setHeaderCollapsed] = useState(false)
+	const [sideMenuExpanded, setSideMenuExpanded] = useState(false)
 
 	return (
-		<StyledPage className={collapsed ? 'collapsed' : ''}>
-			<CollapseHeaderContext.Provider value={{ collapsed, setCollapsed: setCollapsed as any }}>
-				<Meta />
-				<Header collapsed={collapsed} />
-				<div>{props.children}</div>
-			</CollapseHeaderContext.Provider>
+		<StyledPage className={headerCollapsed ? 'collapsed' : ''}>
+			<Meta />
+			<HeaderCollapsedContext.Provider value={{ collapsed: headerCollapsed, setCollapsed: setHeaderCollapsed }}>
+				<SideMenuContext.Provider value={{ expanded: sideMenuExpanded, setExpanded: setSideMenuExpanded }}>
+					<Header collapsed={headerCollapsed} />
+					<div>{children}</div>
+					<MenuDrawer />
+				</SideMenuContext.Provider>
+			</HeaderCollapsedContext.Provider>
 		</StyledPage>
 	)
 }

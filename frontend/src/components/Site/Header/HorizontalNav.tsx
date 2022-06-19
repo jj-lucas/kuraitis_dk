@@ -74,7 +74,7 @@ const StyledHorizontalNav = styled.ul`
 const HorizontalNav: React.FC<{ className?: string }> = ({ className }) => (
 	<StyledHorizontalNav className={className}>
 		<li>
-			<Link to="#">Products</Link>
+			<Link to="/prototypes/product">Products</Link>
 		</li>
 		<li>
 			<Link to="#">About</Link>

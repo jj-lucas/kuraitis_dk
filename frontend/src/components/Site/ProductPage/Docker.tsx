@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { throttle } from 'lodash'
-import { CollapseHeaderContext } from '..'
+import { HeaderCollapsedContext } from '../Page'
 
 const Docker: React.FC = () => {
 	const [scrollPosition, setScrollPosition] = useState(0)
 	const [docked, setDocked] = useState(false)
 
-	const { setCollapsed } = useContext(CollapseHeaderContext)
+	const { setCollapsed } = useContext(HeaderCollapsedContext)
 
 	useEffect(() => {
 		setCollapsed(docked)

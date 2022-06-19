@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { min, max, theme } from '@/styles'
 import Logo from './Logo'
 import HorizontalNav from './HorizontalNav'
+import { SideMenuContext } from '../Page'
 
 const StyledHeader = styled.div`
 	background: #9d9dda;
@@ -66,7 +67,19 @@ const StyledBurgerMenu = styled.div`
 		display: none;
 	`}
 `
-const BurgerMenu: React.FC = () => <StyledBurgerMenu>=</StyledBurgerMenu>
+const BurgerMenu: React.FC = () => {
+	const { setExpanded } = useContext(SideMenuContext)
+	const onClick = () => {
+		console.log('expanded')
+		setExpanded(true)
+	}
+
+	return (
+		<StyledBurgerMenu>
+			<button onClick={onClick}>=</button>
+		</StyledBurgerMenu>
+	)
+}
 
 const StatusBar = styled.div`
 	background: #ca9a9ad2;
@@ -121,4 +134,4 @@ const Header: React.FC<{ collapsed: boolean }> = ({ collapsed }) => {
 	)
 }
 
-export default Header
+export { Header }
