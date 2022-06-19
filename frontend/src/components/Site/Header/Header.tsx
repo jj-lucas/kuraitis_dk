@@ -3,19 +3,17 @@ import styled from 'styled-components'
 import { min, max, theme } from '@/styles'
 import Logo from './Logo'
 import HorizontalNav from './HorizontalNav'
-import { SideMenuContext } from '../Page'
+import { HeaderCollapsedContext, SideMenuContext } from '@/components'
 
 const StyledHeader = styled.div`
-	background: #9d9dda;
+	background: var(--white);
 
 	position: fixed;
 	top: 0;
 	width: 100%;
 	z-index: 10;
 
-	&.collapsed {
-		background: #b14d84;
-	}
+	box-shadow: 1px 5px 4px -3px rgba(0, 0, 0, 0.2);
 
 	.headerInner {
 		padding: 2rem 2rem 3rem;
@@ -49,18 +47,14 @@ const StyledHeader = styled.div`
 `
 
 const StyledUtils = styled.div`
-	background: #5f4db1;
-
 	page-break-after: always; /* CSS 2.1 syntax */
 	break-after: always; /* New syntax */
 
 	width: 20%;
 `
-const Utils: React.FC = () => <StyledUtils>ipiscing elit, sed </StyledUtils>
+const Utils: React.FC = () => <StyledUtils>Cart</StyledUtils>
 
 const StyledBurgerMenu = styled.div`
-	background: #b14d84;
-
 	width: 20%;
 
 	${min.sm`
@@ -82,24 +76,28 @@ const BurgerMenu: React.FC = () => {
 }
 
 const StatusBar = styled.div`
-	background: #ca9a9ad2;
+	background-color: var(--green);
 
 	.status-bar-inner {
-		background-color: aqua;
-		max-width: var(--maxWidth);
 		display: flex;
 		margin: auto;
-		padding: 0;
+		padding: ${p => p.theme.spacing.sm};
+		max-width: var(--maxWidth);
 		justify-content: space-between;
-		font-size: ${p => p.theme.typography.fs.sm};
+
+		font-size: ${p => p.theme.typography.fs.base};
+		color: white;
+
 		li {
 			display: none;
 			width: 100%;
 			list-style: none;
 			text-align: center;
+
 			&.primary {
 				display: block;
 			}
+
 			${min.xs`
 				&.secondary {
 					display: block;
@@ -112,7 +110,8 @@ const StatusBar = styled.div`
 	}
 `
 
-const Header: React.FC<{ collapsed: boolean }> = ({ collapsed }) => {
+const Header: React.FC = () => {
+	const { collapsed } = useContext(HeaderCollapsedContext)
 	return (
 		<>
 			<StyledHeader className={collapsed ? 'collapsed' : ''}>

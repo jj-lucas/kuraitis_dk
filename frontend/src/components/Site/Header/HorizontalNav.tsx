@@ -4,8 +4,6 @@ import { max } from '@/styles'
 import { Link } from 'gatsby'
 
 const StyledHorizontalNav = styled.ul`
-	background: #d9d6e476;
-
 	margin: 0;
 	padding: 0;
 	display: flex;

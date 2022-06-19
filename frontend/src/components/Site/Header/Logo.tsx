@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { min, max } from '@/styles'
+import { HeaderCollapsedContext } from '@/components'
 
 const StyledLogo = styled.a`
 	position: relative;
@@ -49,8 +50,6 @@ const StyledLogo = styled.a`
 	}
 
 	&.collapsed {
-		background-color: red;
-
 		> span > span {
 			${min.sm`
 				opacity: 0;
@@ -77,14 +76,18 @@ const StyledLogo = styled.a`
 	}
 `
 
-const Logo: React.FC<{ collapsed: boolean }> = ({ collapsed }) => (
-	<StyledLogo href="#" className={collapsed ? 'collapsed' : ''}>
-		<img src="https://d33wubrfki0l68.cloudfront.net/8e679f4eacde819d4909fbad17a6aa8b5786dd8b/49226/logo.png"></img>
-		<span>
-			<span className="sergio">Sergio Kuraitis</span>
-			<span className="slogan">Naturligt Design</span>
-		</span>
-	</StyledLogo>
-)
+const Logo: React.FC = () => {
+	const { collapsed } = useContext(HeaderCollapsedContext)
+
+	return (
+		<StyledLogo href="#" className={collapsed ? 'collapsed' : ''}>
+			<img src="https://d33wubrfki0l68.cloudfront.net/8e679f4eacde819d4909fbad17a6aa8b5786dd8b/49226/logo.png"></img>
+			<span>
+				<span className="sergio">Sergio Kuraitis</span>
+				<span className="slogan">Naturligt Design</span>
+			</span>
+		</StyledLogo>
+	)
+}
 
 export default Logo

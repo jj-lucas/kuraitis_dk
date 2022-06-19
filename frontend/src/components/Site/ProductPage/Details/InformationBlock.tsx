@@ -1,8 +1,8 @@
 import classNames from 'classnames'
-import React, { useRef, useState } from 'react'
+import React, { ReactNode, useRef, useState } from 'react'
 import styled from 'styled-components'
 
-const Tab: React.FC<{ name: string; activeTab: string; onClick: (name: string) => void }> = ({
+const Tab: React.FC<{ name: string; activeTab: string; onClick: (name: string) => void; children: ReactNode }> = ({
 	name,
 	onClick,
 	activeTab,
@@ -16,7 +16,7 @@ const Tab: React.FC<{ name: string; activeTab: string; onClick: (name: string) =
 const StyledInformationBlock = styled.div`
 	.topic-selector {
 		display: flex;
-		margin: ${p => p.theme.spacing.base} 0 0;
+		margin: ${p => p.theme.spacing.lg} 0 0;
 		padding: 0;
 
 		list-style: none;
@@ -47,7 +47,7 @@ const InformationBlock: React.FC = () => {
 	const ref = useRef<HTMLDivElement>(null)
 	const [activeTab, setActiveTab] = useState('details')
 
-	const doStuff = (e: any) => {
+	const onClickTab = (e: any) => {
 		const infoBlock = ref.current
 		if (infoBlock) {
 			if (!infoBlock.classList.contains('locked')) {
@@ -89,13 +89,13 @@ const InformationBlock: React.FC = () => {
 	return (
 		<StyledInformationBlock ref={ref}>
 			<ul className="topic-selector">
-				<Tab name="details" onClick={doStuff} activeTab={activeTab}>
+				<Tab name="details" onClick={onClickTab} activeTab={activeTab}>
 					Details
 				</Tab>
-				<Tab name="sizing" onClick={doStuff} activeTab={activeTab}>
+				<Tab name="sizing" onClick={onClickTab} activeTab={activeTab}>
 					Sizing
 				</Tab>
-				<Tab name="shipping" onClick={doStuff} activeTab={activeTab}>
+				<Tab name="shipping" onClick={onClickTab} activeTab={activeTab}>
 					Shipping & returns
 				</Tab>
 			</ul>

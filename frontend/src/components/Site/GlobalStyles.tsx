@@ -3,19 +3,15 @@ import { min } from '@/styles'
 
 export const GlobalStyles = createGlobalStyle`
 :root {
-	--lightGray: #f8f8f8;
-	--lightGrayEmphasized: #e4e4e4;
-	--lightishGray: #aaaaaa;
-	--gray: #1a1a1a99;
-	--darkGray: #1a1a1a;
-	--black: #393939;
-	--blue: #0394fc;
-	--negative: #ff421e;
-	--positive: #9adb60;
-	--info: #fbd01e;
-	--warning: #ffad1e;
-	--tan: #de905f;
-	--lightTan: #de905f85;
+	--white: #FFFDFD;
+	--lightGray: #CBD2D0;
+	--spaceCadet: #29335C;
+	--liverChestnut: #856A5D;
+	--rifleGreen: #3E442B;
+	
+	--blue: var(--spaceCadet);
+	--green: var(--rifleGreen);
+	--brown: var(--liverChestnut);
 
 	--maxWidth: ${p => p.theme.maxWidth.xs};
 	${p => min.sm`

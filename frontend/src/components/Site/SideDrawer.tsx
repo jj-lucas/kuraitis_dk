@@ -3,13 +3,14 @@ import styled from 'styled-components'
 import { SideMenuContext } from './Page'
 
 const StyledDrawer = styled.div`
-	width: 80%;
-	background: white;
 	position: fixed;
+	width: 80%;
 	top: 0;
 	bottom: 0;
 	left: -80%;
 	z-index: 100;
+
+	background: white;
 	transition: left ${p => p.theme.transition.duration.sm} ${p => p.theme.transition.type.easeInOut};
 
 	&.right {
@@ -29,11 +30,7 @@ const Drawer: React.FC<{ side: 'left' | 'right'; children: ReactNode; expanded: 
 	children,
 	expanded,
 }) => {
-	return (
-		<StyledDrawer className={`${side} ${expanded ? 'expanded' : ''}`}>
-			<h1> HEllo</h1>
-		</StyledDrawer>
-	)
+	return <StyledDrawer className={`${side} ${expanded ? 'expanded' : ''}`}>{children}</StyledDrawer>
 }
 
 const StyledOverlay = styled.div`

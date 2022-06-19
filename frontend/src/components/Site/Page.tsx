@@ -23,7 +23,7 @@ const Page: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 			<Meta />
 			<HeaderCollapsedContext.Provider value={{ collapsed: headerCollapsed, setCollapsed: setHeaderCollapsed }}>
 				<SideMenuContext.Provider value={{ expanded: sideMenuExpanded, setExpanded: setSideMenuExpanded }}>
-					<Header collapsed={headerCollapsed} />
+					<Header />
 					<div>{children}</div>
 					<MenuDrawer />
 				</SideMenuContext.Provider>
