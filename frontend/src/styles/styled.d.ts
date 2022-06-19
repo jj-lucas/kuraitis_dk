@@ -53,6 +53,7 @@ declare module 'styled-components' {
 			}
 		}
 		boxShadow: {
+			xs: string
 			sm: string
 			md: string
 			lg: string

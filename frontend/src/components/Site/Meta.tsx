@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { Helmet } from 'react-helmet'
 
 const Meta: React.FC = props => (
@@ -11,8 +11,6 @@ const Meta: React.FC = props => (
 			rel="stylesheet"
 		/>
 		<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css"></link>
-
-		{props.children}
 	</Helmet>
 )
 

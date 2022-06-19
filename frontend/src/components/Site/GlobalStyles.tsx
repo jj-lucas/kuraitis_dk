@@ -14,18 +14,6 @@ export const GlobalStyles = createGlobalStyle`
 	--brown: var(--liverChestnut);
 
 	--maxWidth: ${p => p.theme.maxWidth.xs};
-	${p => min.sm`
-		--maxWidth:  ${p.theme.maxWidth.sm}
-	`}
-	${p => min.md`
-		--maxWidth:  ${p.theme.maxWidth.md}
-	`}
-	${p => min.lg`
-		--maxWidth:  ${p.theme.maxWidth.lg}
-	`}
-	${p => min.xl`
-		--maxWidth:  ${p.theme.maxWidth.xl}
-	`}
 	
 }
 html {

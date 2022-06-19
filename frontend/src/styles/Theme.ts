@@ -50,7 +50,8 @@ const theme: DefaultTheme = {
 		},
 	},
 	boxShadow: {
-		sm: '0 0 5px 3px rgba(0, 0, 0, 0.05)',
+		xs: '0 0 5px 3px rgba(0, 0, 0, 0.05)',
+		sm: '1px 5px 4px -3px rgba(0, 0, 0, 0.2)',
 		md: '0 0 8px 0 rgba(0, 0, 0, 0.2);',
 		lg: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
 	},

@@ -18,7 +18,6 @@ const StyledCard = styled.li`
 
 	a {
 		display: block;
-		color: var(--black);
 
 		img {
 			transition: all ${props => `${props.theme.transition.duration.sm} ${props.theme.transition.type.easeInOut}`};
@@ -31,27 +30,17 @@ const StyledCard = styled.li`
 	img {
 		width: 100%;
 	}
-	.meta {
-		padding: 0 2rem;
-		//font-weight: ${props => props.theme.typography.fw.semibold};
-
-		p {
-			margin: 0;
-			//font-size: ${props => props.theme.typography.fs.base};
-			//font-weight: ${props => props.theme.typography.fw.regular};
-		}
-	}
 `
 
 const ColorVariations: React.FC = () => {
 	return (
 		<div>
 			<h3>Also available in other colors</h3>
-			<StyledList className="ProductsList__StyledList-k6tm6c-0 iQRkmy">
-				<StyledCard className="ProductsList__StyledCard-k6tm6c-1 kelpnm">
+			<StyledList>
+				<StyledCard>
 					<a href="/da/produkt/oe/brilleetui-oe">
 						<div>
-							<picture className="Picture__StyledPicture-sc-1y92jz2-0 jqKWba">
+							<picture>
 								<img
 									src="https://res.cloudinary.com/kuraitis/image/upload/v1641724594/products/l3xco11gwlqk71oe8nal.jpg"
 									alt="Klassisk brilleetui i læder"
@@ -61,10 +50,10 @@ const ColorVariations: React.FC = () => {
 					</a>
 				</StyledCard>
 
-				<StyledCard className="ProductsList__StyledCard-k6tm6c-1 kelpnm">
+				<StyledCard>
 					<a href="/da/produkt/oe/brilleetui-oe">
 						<div>
-							<picture className="Picture__StyledPicture-sc-1y92jz2-0 jqKWba">
+							<picture>
 								<img
 									src="https://res.cloudinary.com/kuraitis/image/upload/v1641727554/products/khyuhmmmaxhzmepk7cws.jpg"
 									alt="Klassisk brilleetui i læder"

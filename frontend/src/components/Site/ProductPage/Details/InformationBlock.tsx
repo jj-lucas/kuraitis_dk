@@ -40,7 +40,7 @@ const StyledInformationBlock = styled.div`
 	}
 
 	&.locked {
-		background: #cab8b8;
+		// background: #cab8b8;
 	}
 `
 const InformationBlock: React.FC = () => {
@@ -65,6 +65,9 @@ const InformationBlock: React.FC = () => {
 			case 'shipping':
 				return (
 					<p>
+						<li>Lorem ipsum dolor sit amet</li>
+						<li>Lorem ipsum dolor sit amet</li>
+						<li>Lorem ipsum dolor sit amet</li>
 						<li>Lorem ipsum dolor sit amet</li>
 						<li>Lorem ipsum dolor sit amet</li>
 						<li>Lorem ipsum dolor sit amet</li>

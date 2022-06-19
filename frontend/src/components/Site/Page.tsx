@@ -2,12 +2,12 @@ import React, { createContext, useState } from 'react'
 import styled from 'styled-components'
 import { Meta, Header, MenuDrawer } from '@/components'
 
-export const HeaderCollapsedContext = createContext({
+const HeaderCollapsedContext = createContext({
 	collapsed: false,
 	setCollapsed: (collapsed: boolean) => {},
 })
 
-export const SideMenuContext = createContext({
+const SideMenuContext = createContext({
 	expanded: false,
 	setExpanded: (expanded: boolean) => {},
 })
@@ -32,4 +32,4 @@ const Page: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	)
 }
 
-export { Page }
+export { Page, HeaderCollapsedContext, SideMenuContext }

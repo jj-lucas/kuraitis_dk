@@ -1,6 +1,6 @@
 import React, { ReactNode, useContext } from 'react'
 import styled from 'styled-components'
-import { SideMenuContext } from './Page'
+import { SideMenuContext } from '@/components'
 
 const StyledDrawer = styled.div`
 	position: fixed;
