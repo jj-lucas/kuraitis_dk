@@ -15,8 +15,9 @@ const StyledParallax = styled.div<{ src: string }>`
 	background-size: cover;
 `
 const StyledSpacer = styled.div`
+	display: inline-block;
 	width: 100%;
-	height: 50vh;
+	padding: 50vh 0 0; // iOS has collapsing margins
 `
 
 // important: if using more than one parallax in a page, ensure there is at least 100vh of content between them
