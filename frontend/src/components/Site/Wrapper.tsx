@@ -10,6 +10,10 @@ const StyledWrapper = styled.div`
 		margin-top: 50rem;
 	}
 
+	&.bottomMargin {
+		margin-bottom: 50rem;
+	}
+
 	.innerWrapper {
 		max-width: var(--maxWidth);
 		padding: 1rem;
@@ -17,8 +21,8 @@ const StyledWrapper = styled.div`
 	}
 `
 
-const Wrapper: React.FC<{ children: ReactNode; topMargin?: boolean }> = ({ children, topMargin }) => (
-	<StyledWrapper className={topMargin ? 'topMargin' : ''}>
+const Wrapper: React.FC<{ children: ReactNode; margin?: 'top' | 'bottom' }> = ({ children, margin }) => (
+	<StyledWrapper className={margin ? `${margin}Margin` : ''}>
 		<div className="innerWrapper">{children}</div>
 	</StyledWrapper>
 )

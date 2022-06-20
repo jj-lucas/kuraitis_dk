@@ -48,18 +48,21 @@ const ProductPage: React.FC = () => {
 				</section>
 			</Wrapper>
 			<Docker />
-			<Wrapper>
+			<Wrapper margin={'bottom'}>
 				<ColorVariations />
 			</Wrapper>
-			<Parallax zindex={1} src="https://previews.123rf.com/images/mtoome/mtoome1609/mtoome160900099/63492873-leather-handbag-craftsman-at-work-in-a-workshop.jpg" />
+			<Parallax
+				zindex={1}
+				src="https://previews.123rf.com/images/mtoome/mtoome1609/mtoome160900099/63492873-leather-handbag-craftsman-at-work-in-a-workshop.jpg"
+			/>
 
-			<Wrapper topMargin={true}>
+			<Wrapper margin={'bottom'}>
 				<LoremIpsum />
 				<LoremIpsum />
 			</Wrapper>
 			<Parallax src="https://previews.123rf.com/images/mtoome/mtoome1608/mtoome160800129/62612777-leather-handbag-craftsman-at-work-in-a-workshop.jpg" />
 
-			<Wrapper topMargin={true}>
+			<Wrapper>
 				<LoremIpsum />
 				<LoremIpsum />
 			</Wrapper>
