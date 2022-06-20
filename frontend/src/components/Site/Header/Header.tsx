@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { min, max } from '@/styles'
 import Logo from './Logo'
 import HorizontalNav from './HorizontalNav'
@@ -8,6 +8,17 @@ import { StatusBar } from './StatusBar'
 import { Utils } from './Utils'
 import { BurgerMenu } from './BurgerMenu'
 
+const collapsedHeader = css`
+	padding: 1rem 2rem 3rem;
+	height: 40px;
+
+	${min.md`
+		padding: 1rem 2rem;
+	`}
+	${max.sm`
+		padding: 1rem 2rem;
+	`}
+`
 const StyledHeader = styled.div`
 	background: var(--white);
 
@@ -36,15 +47,11 @@ const StyledHeader = styled.div`
 		`}
 
 		&.collapsed {
-			padding: 1rem 2rem 3rem;
-			height: 40px;
+			${collapsedHeader}
+		}
 
-			${min.md`
-				padding: 1rem 2rem;
-			`}
-			${max.sm`
-				padding: 1rem 2rem;
-			`}
+		${p => p.theme.media.minScreenHeightForCollapsedHeader} {
+			${collapsedHeader}
 		}
 	}
 `

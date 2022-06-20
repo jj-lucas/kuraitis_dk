@@ -57,6 +57,7 @@ const theme: DefaultTheme = {
 	},
 	transition: {
 		duration: {
+			xs: '0.2s',
 			sm: '0.2s',
 			lg: '0.8s',
 		},
@@ -67,6 +68,7 @@ const theme: DefaultTheme = {
 	},
 	sizes: {
 		headerCollapse: '2200px',
+		minScreenHeightForExpandedHeader: '880px',
 		productPageContentStart: '15rem',
 		productPageMobileGalleryHeight: '20rem',
 	},
@@ -74,6 +76,9 @@ const theme: DefaultTheme = {
 		sm: '1rem',
 		base: '3rem',
 		lg: '5rem',
+	},
+	media: {
+		minScreenHeightForCollapsedHeader: '@media (max-height: 888px)',
 	},
 }
 

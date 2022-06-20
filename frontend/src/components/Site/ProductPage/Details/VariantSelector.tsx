@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { maxHeight } from '@/styles'
 
 const StyledVariantSelector = styled.div`
 	h4 {
@@ -7,12 +8,12 @@ const StyledVariantSelector = styled.div`
 	}
 	.sizes {
 		display: inline-flex;
-		margin: 0;
+		margin: 1rem 0 0;
 		padding: 0;
 
 		li {
 			list-style: none;
-			margin: 1rem 1rem 0 0;
+			margin: 0 1rem 0 0;
 			padding: 1rem 2rem;
 			border: 1px solid gray;
 
@@ -23,6 +24,22 @@ const StyledVariantSelector = styled.div`
 			&:hover {
 				background-color: ${p => p.theme.colors.accent};
 			}
+		}
+	}
+	input[type='text'] {
+		margin: 1rem 1rem 0 0;
+		padding: 1rem;
+		width: 46px;
+		text-align: center;
+	}
+
+	button {
+		margin: ${p => p.theme.spacing.base} 0 0;
+	}
+
+	@media (max-height: 870px) {
+		.customization {
+			display: none;
 		}
 	}
 `
@@ -43,6 +60,12 @@ const VariantSelector = () => {
 						))}
 					</ul>
 					<a href="#">Size chart</a>
+					<div className="customization">
+						<h4>Customization</h4>
+						<input type="text" />
+						<a href="#">?</a>
+					</div>
+					<button className="primary">Add to cart</button>
 				</>
 			)}
 		</StyledVariantSelector>

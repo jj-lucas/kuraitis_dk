@@ -93,13 +93,19 @@ const InformationBlock: React.FC = () => {
 		<StyledInformationBlock ref={ref}>
 			<ul className="topic-selector">
 				<Tab name="details" onClick={onClickTab} activeTab={activeTab}>
-					Details
+					<a href="#" className="button">
+						Details
+					</a>
 				</Tab>
 				<Tab name="sizing" onClick={onClickTab} activeTab={activeTab}>
-					Sizing
+					<a href="#" className="button">
+						Sizing
+					</a>
 				</Tab>
 				<Tab name="shipping" onClick={onClickTab} activeTab={activeTab}>
-					Shipping & returns
+					<a href="#" className="button">
+						Shipping & returns
+					</a>
 				</Tab>
 			</ul>
 			<div>{getContent()}</div>

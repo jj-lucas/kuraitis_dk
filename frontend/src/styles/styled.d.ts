@@ -60,6 +60,7 @@ declare module 'styled-components' {
 		}
 		transition: {
 			duration: {
+				xs: string
 				sm: string
 				lg: string
 			}
@@ -70,6 +71,7 @@ declare module 'styled-components' {
 		}
 		sizes: {
 			headerCollapse: string
+			minScreenHeightForExpandedHeader: string
 			productPageContentStart: string
 			productPageMobileGalleryHeight: string
 		}
@@ -77,6 +79,9 @@ declare module 'styled-components' {
 			sm: string
 			base: string
 			lg: string
+		}
+		media: {
+			minScreenHeightForCollapsedHeader: string
 		}
 	}
 }

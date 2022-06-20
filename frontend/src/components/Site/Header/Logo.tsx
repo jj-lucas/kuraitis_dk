@@ -1,8 +1,29 @@
 import React, { useContext } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { min, max } from '@/styles'
 import { HeaderCollapsedContext } from '@/components'
 
+const collapsedLogo = css`
+	> span > span {
+		${min.sm`
+				opacity: 0;
+				pointer-events: none;
+				transition: all ease-in-out 0.3s;
+			`}
+
+		&.sergio {
+			display: inline-flex;
+			align-self: flex-start;
+			margin-top: 0;
+			transition: all ease-in-out 0.3s;
+
+			${min.sm`
+					opacity: 1;
+					margin-top: 25px;
+				`}
+		}
+	}
+`
 const StyledLogo = styled.a`
 	position: relative;
 	display: inline-flex;
@@ -51,25 +72,11 @@ const StyledLogo = styled.a`
 	}
 
 	&.collapsed {
-		> span > span {
-			${min.sm`
-				opacity: 0;
-				pointer-events: none;
-				transition: all ease-in-out 0.3s;
-			`}
+		${collapsedLogo}
+	}
 
-			&.sergio {
-				display: inline-flex;
-				align-self: flex-start;
-				margin-top: 0;
-				transition: all ease-in-out 0.3s;
-
-				${min.sm`
-					opacity: 1;
-					margin-top: 25px;
-				`}
-			}
-		}
+	${p => p.theme.media.minScreenHeightForCollapsedHeader} {
+		${collapsedLogo}
 	}
 
 	img {
@@ -81,7 +88,7 @@ const Logo: React.FC = () => {
 	const { collapsed } = useContext(HeaderCollapsedContext)
 
 	return (
-		<StyledLogo href="#" className={collapsed ? 'collapsed' : ''}>
+		<StyledLogo href="#" className={`button ${collapsed ? 'collapsed' : ''}`}>
 			<img src="https://d33wubrfki0l68.cloudfront.net/8e679f4eacde819d4909fbad17a6aa8b5786dd8b/49226/logo.png"></img>
 			<span>
 				<span className="sergio">Sergio Kuraitis</span>
