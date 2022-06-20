@@ -14,7 +14,7 @@ const StyledHeader = styled.div`
 	position: fixed;
 	top: 0;
 	width: 100%;
-	z-index: 10;
+	z-index: 20;
 
 	box-shadow: ${p => p.theme.boxShadow.sm};
 

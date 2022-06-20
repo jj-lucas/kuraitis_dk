@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const StyledWrapper = styled.div`
 	position: relative;
-	z-index: 1;
+	z-index: 10;
 	background: white;
 
 	&.topMargin {
