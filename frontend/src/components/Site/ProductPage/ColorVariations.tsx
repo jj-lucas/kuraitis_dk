@@ -33,9 +33,13 @@ const StyledCard = styled.li`
 	}
 `
 
+const StyledColorVariations = styled.div`
+	margin-bottom: ${p => p.theme.spacing.base};
+`
+
 const ColorVariations: React.FC = () => {
 	return (
-		<div>
+		<StyledColorVariations>
 			<h3>Also available in other colors</h3>
 			<StyledList>
 				<StyledCard>
@@ -64,7 +68,7 @@ const ColorVariations: React.FC = () => {
 					</a>
 				</StyledCard>
 			</StyledList>
-		</div>
+		</StyledColorVariations>
 	)
 }
 

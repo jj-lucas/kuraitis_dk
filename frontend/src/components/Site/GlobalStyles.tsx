@@ -15,6 +15,18 @@ export const GlobalStyles = createGlobalStyle`
 
 	--maxWidth: ${p => p.theme.maxWidth.xs};
 	
+	${p => min.sm`
+		--maxWidth: ${p => p.theme.maxWidth.sm};
+	`}
+	${p => min.md`
+		--maxWidth: ${p => p.theme.maxWidth.md};
+	`}
+	${p => min.lg`
+		--maxWidth: ${p => p.theme.maxWidth.lg};
+	`}
+	${p => min.xl`
+		--maxWidth: ${p => p.theme.maxWidth.xl};
+	`}
 }
 html {
 	font-size: 10px;

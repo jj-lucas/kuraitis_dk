@@ -1,17 +1,31 @@
+import React from 'react'
 import styled from 'styled-components'
 
-const Parallax = styled.div<{ src: string; zindex?: number }>`
+const StyledParallax = styled.div<{ src: string }>`
 	margin-top: -100vh;
 	width: 100vw;
 	height: 100vh;
 	position: -webkit-sticky; /* Safari */
 	position: sticky;
 	top: 0;
-	z-index: ${p => (p.zindex ? p.zindex : 0)};
+	z-index: 0;
 	background-image: url(${p => p.src});
 	background-position: left top;
 	background-repeat: no-repeat;
 	background-size: cover;
 `
+const StyledSpacer = styled.div`
+	width: 100%;
+	height: 50vh;
+`
+
+// important: if using more than one parallax in a page, ensure there is at least 100vh of content between them
+// or the two will overlap in massive screens
+const Parallax: React.FC<{ src: string }> = ({ src }) => (
+	<>
+		<StyledParallax src={src} />
+		<StyledSpacer />
+	</>
+)
 
 export default Parallax
