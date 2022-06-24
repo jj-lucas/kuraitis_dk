@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import React, { ReactNode, useRef, useState } from 'react'
 import styled from 'styled-components'
+import { max } from '@/styles'
 
 const Tab: React.FC<{ name: string; activeTab: string; onClick: (name: string) => void; children: ReactNode }> = ({
 	name,
@@ -16,10 +17,14 @@ const Tab: React.FC<{ name: string; activeTab: string; onClick: (name: string) =
 const StyledInformationBlock = styled.div`
 	.topic-selector {
 		display: flex;
-		margin: ${p => p.theme.spacing.lg} 0 0;
+		margin: ${p => p.theme.spacing.sm} 0 0;
 		padding: 0;
 
 		list-style: none;
+
+		${max.md`
+			margin-top: 5rem;
+		`}
 
 		li {
 			margin-right: 1rem;

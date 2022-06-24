@@ -53,7 +53,7 @@ const VariantSelector = () => {
 		<StyledVariantSelector>
 			{variants.size && (
 				<>
-					<h4>Size</h4>
+					<h4>Choose size</h4>
 					<ul className="sizes">
 						{variants.size.map(size => (
 							<li key={size}>{size}</li>

@@ -1,7 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const StyledDetailsTop = styled.div``
+const StyledDetailsTop = styled.div`
+	${p => p.theme.media.minScreenHeightForCollapsedHeader} {
+		padding-top: ${p => p.theme.spacing.sm};
+	}
+
+	.price {
+		font-size: ${p => p.theme.typography.fs.h3};
+	}
+`
 const DetailsTop: React.FC = () => (
 	<StyledDetailsTop>
 		<small className="breadcrumbs">

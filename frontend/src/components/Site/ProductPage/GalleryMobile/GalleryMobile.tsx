@@ -20,7 +20,7 @@ const StyledGalleryMobile = styled.div`
 `
 
 const GalleryMobile: React.FC = () => {
-	const flickityOptions = { setGallerySize: false }
+	const flickityOptions = { setGallerySize: true }
 
 	return (
 		<StyledGalleryMobile>
