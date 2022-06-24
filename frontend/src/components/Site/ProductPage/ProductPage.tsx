@@ -4,10 +4,10 @@ import Details from './Details'
 import Gallery from './Gallery'
 import { Docker } from './Docker'
 import { min } from '@/styles'
-import Parallax from './Parallax'
 import ColorVariations from './ColorVariations'
-import Wrapper from '../Wrapper'
+import { Wrapper, Parallax } from '@/components'
 import LongDescription from './LongDescription'
+import Sergio from './Sergio'
 
 const StyledProductPage = styled.div`
 	--productPageContentStart: ${p => p.theme.sizes.productPageContentStart};
@@ -56,6 +56,7 @@ const ProductPage: React.FC = () => {
 			<Wrapper>
 				<LongDescription />
 			</Wrapper>
+			<Sergio />
 		</StyledProductPage>
 	)
 }

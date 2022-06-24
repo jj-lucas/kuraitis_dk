@@ -6,6 +6,10 @@ const StyledWrapper = styled.div`
 	z-index: 10;
 	background: white;
 
+	&.transparent {
+		background: none;
+	}
+
 	&.topMargin {
 		margin-top: 50rem;
 	}
@@ -21,9 +25,13 @@ const StyledWrapper = styled.div`
 	}
 `
 
-const Wrapper: React.FC<{ children: ReactNode; margin?: 'top' | 'bottom' }> = ({ children, margin }) => (
-	<StyledWrapper className={margin ? `${margin}Margin` : ''}>
+const Wrapper: React.FC<{ children: ReactNode; margin?: 'top' | 'bottom'; transparent?: boolean }> = ({
+	children,
+	margin,
+	transparent,
+}) => (
+	<StyledWrapper className={`${transparent ? 'transparent' : ''} ${margin ? `${margin}Margin` : ''}`}>
 		<div className="innerWrapper">{children}</div>
 	</StyledWrapper>
 )
-export default Wrapper
+export { Wrapper }

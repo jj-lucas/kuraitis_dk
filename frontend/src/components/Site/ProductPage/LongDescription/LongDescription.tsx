@@ -7,6 +7,7 @@ import { max, min } from '@/styles'
 const StyledLongDescription = styled.section`
 	display: flex;
 	flex-wrap: wrap;
+	margin-bottom: ${p => p.theme.spacing.base};
 
 	> div {
 		flex-grow: 1;
@@ -14,6 +15,8 @@ const StyledLongDescription = styled.section`
 	}
 
 	${min.sm`
+		margin-bottom: 10rem;
+
 		.general-info {
 			margin-top: 2rem;
 		}

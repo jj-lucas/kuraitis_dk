@@ -29,4 +29,4 @@ const Parallax: React.FC<{ src: string }> = ({ src }) => (
 	</>
 )
 
-export default Parallax
+export { Parallax }

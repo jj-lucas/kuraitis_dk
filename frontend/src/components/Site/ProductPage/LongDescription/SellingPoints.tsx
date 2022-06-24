@@ -12,6 +12,7 @@ const StyledSellingPoints = styled.div`
 	> div {
 		display: flex;
 		margin: 2rem 0 0;
+
 		& > * {
 			align-self: center;
 		}
