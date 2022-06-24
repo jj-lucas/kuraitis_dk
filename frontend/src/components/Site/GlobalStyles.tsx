@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 import { min } from '@/styles'
-import { lighten, darken, cssVar } from 'polished'
+import { lighten, darken } from 'polished'
 
 const paletteColors = {
 	spaceCadet: '#29335C',
@@ -8,35 +8,30 @@ const paletteColors = {
 	rifleGreen: '#3E442B',
 }
 
-const primaryColors = {
+const colors = {
 	blue: paletteColors.spaceCadet,
 	brown: paletteColors.liverChestnut,
 	green: paletteColors.rifleGreen,
 }
 
-const colors: { [key: string]: string } = {
-	...primaryColors,
-}
-
-Object.entries(primaryColors).map(color => {
-	colors[`light${color[0].charAt(0).toUpperCase() + color[0].slice(1)}`] = lighten(0.5, color[1])
-	colors[`dark${color[0].charAt(0).toUpperCase() + color[0].slice(1)}`] = darken(0.2, color[1])
-})
-
 export const GlobalStyles = createGlobalStyle`
 :root {
 	--white: #FFFDFD;
 	--lightGray: #CBD2D0;
+	
+	--gray30: ${darken(0.3, '#FFF')};
+	--gray50: ${darken(0.5, '#FFF')};
+	--gray100: ${darken(1, '#FFF')};
 
 	--blue: ${colors.blue};
-	--lightBlue: ${colors.lightBlue};
-	--darkBlue: ${colors.darkBlue};
+	--lightBlue: ${lighten(0.5, colors.blue)};
+	--darkBlue: ${darken(0.2, colors.blue)};
 	--green: ${colors.green};
-	--lightGreen: ${colors.lightGreen};
-	--darkGreen: ${colors.darkGreen};
+	--lightGreen: ${lighten(0.5, colors.green)};
+	--darkGreen: ${darken(0.2, colors.green)};
 	--brown: ${colors.brown};
-	--lightBrown: ${colors.lightBrown};
-	--darkBrown: ${colors.darkBrown};
+	--lightBrown: ${lighten(0.5, colors.brown)};
+	--darkBrown: ${darken(0.2, colors.brown)};
 
 	--maxWidth: ${p => p.theme.maxWidth.xs};
 	
@@ -79,6 +74,7 @@ h2 {
 }
 h3 {
 	font-size: ${props => props.theme.typography.fs.h3};
+	margin-bottom: ${props => props.theme.spacing.sm};
 }
 h4 {
 	font-size: ${props => props.theme.typography.fs.h4};
