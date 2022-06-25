@@ -154,7 +154,12 @@ module.exports = {
 		'gatsby-transformer-remark',
 		'gatsby-plugin-sharp',
 		'gatsby-transformer-sharp',
-		//`gatsby-plugin-graphql-codegen`,
+		{
+			resolve: `gatsby-plugin-graphql-codegen`,
+			options: {
+				documentPaths: ['./src/**/*.{ts,tsx}'],
+			},
+		},
 		{
 			resolve: 'gatsby-plugin-apollo',
 			options: {
