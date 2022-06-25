@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react'
 import styled from 'styled-components'
-import { Meta, Header, MenuDrawer } from '@/components'
+import { Meta, Header, MenuDrawer, Footer } from '@/components'
 
 const HeaderCollapsedContext = createContext({
 	collapsed: false,
@@ -25,6 +25,7 @@ const Page: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 				<SideMenuContext.Provider value={{ expanded: sideMenuExpanded, setExpanded: setSideMenuExpanded }}>
 					<Header />
 					<div>{children}</div>
+					<Footer />
 					<MenuDrawer />
 				</SideMenuContext.Provider>
 			</HeaderCollapsedContext.Provider>
