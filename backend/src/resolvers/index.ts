@@ -27,6 +27,12 @@ const resolvers = merge(
 			hello: async (parent, args, ctx: Context) => {
 				return `Hello ${args.name}, ${args.amount} times!`
 			},
+
+			review: () => {
+				return {
+					da: 'I love this key organizer. Great craftsmanship & shipped pretty quickly. I would definitely purchase from Sergio again.',
+				}
+			},
 		},
 		Mutation: {},
 	} as Resolvers,

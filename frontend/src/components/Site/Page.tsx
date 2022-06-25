@@ -1,16 +1,7 @@
-import React, { createContext, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Meta, Header, MenuDrawer, Footer } from '@/components'
-
-const HeaderCollapsedContext = createContext({
-	collapsed: false,
-	setCollapsed: (collapsed: boolean) => {},
-})
-
-const SideMenuContext = createContext({
-	expanded: false,
-	setExpanded: (expanded: boolean) => {},
-})
+import { HeaderCollapsedContext, SideMenuContext } from '@/contexts'
 
 const StyledPage = styled.div``
 

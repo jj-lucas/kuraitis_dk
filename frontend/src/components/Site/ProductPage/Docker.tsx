@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { throttle } from 'lodash'
-import { HeaderCollapsedContext } from '@/components'
+import { HeaderCollapsedContext } from '@/contexts'
 
 const Docker: React.FC = () => {
 	const [scrollPosition, setScrollPosition] = useState(0)

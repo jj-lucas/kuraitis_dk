@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { AiFillStar as StarIcon } from 'react-icons/ai'
 import { Wrapper } from '@/components'
 import { useStaticQuery, graphql } from 'gatsby'
 import { FooterQuery } from '../../../graphql-types'
+import { useReviewQuery } from '@/graphql-queries'
+import { translate } from '@/utils'
 
 const Review: React.FC = () => {
-	const site = {
-		siteMetadata: { mocks: { review: 'test' } },
-	}
+	const { data, loading } = useReviewQuery({})
 
-	if (!site) return null
+	if (loading) return null
 
 	return (
 		<p className="review">
@@ -20,7 +20,7 @@ const Review: React.FC = () => {
 			<StarIcon />
 			<StarIcon />
 			<br />
-			{site.siteMetadata?.mocks?.review}
+			{translate(data?.review)}
 			<br />
 			<a href="#">Læs mere feedback</a>
 		</p>
@@ -41,11 +41,16 @@ const Footer: React.FC = () => {
 			site {
 				siteMetadata {
 					mocks {
-						review
 						translations {
-							footer
-							footer_cookie
-							footer_privatlivs
+							footer {
+								da
+							}
+							footer_cookie {
+								da
+							}
+							footer_privatlivs {
+								da
+							}
 						}
 					}
 				}
@@ -53,15 +58,17 @@ const Footer: React.FC = () => {
 		}
 	`)
 
+	const mock = site?.siteMetadata?.mocks
+
 	return (
 		<Wrapper>
 			<StyledFooter>
 				<Review />
-				<div className="address">{site?.siteMetadata?.mocks?.translations?.footer}</div>
+				<div className="address">{translate(mock?.translations?.footer)}</div>
 				<div className="links">
-					<a href="#">{site?.siteMetadata?.mocks?.translations?.footer_privatlivs}</a>
+					<a href="#">{translate(mock?.translations?.footer_privatlivs)}</a>
 					{' | '}
-					<a href="#">{site?.siteMetadata?.mocks?.translations?.footer_cookie}</a>
+					<a href="#">{translate(mock?.translations?.footer_cookie)}</a>
 				</div>
 			</StyledFooter>
 		</Wrapper>

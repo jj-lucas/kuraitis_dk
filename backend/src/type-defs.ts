@@ -22,6 +22,11 @@ const typeDefs = gql`
 		permissions: [Permission]!
 	}
 
+	type NationalizedString {
+		da: String
+		en: String
+	}
+
 	type Query {
 		books: [Book]
 		hello(name: String!, amount: Int): String
@@ -30,6 +35,8 @@ const typeDefs = gql`
 		currentUser: User
 
 		permissions: [Permission]!
+
+		review: NationalizedString
 	}
 
 	type Mutation {

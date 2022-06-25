@@ -1,15 +1,15 @@
 import React, { useContext } from 'react'
 import styled, { css } from 'styled-components'
 import { min, max } from '@/styles'
-import { HeaderCollapsedContext } from '@/components'
+import { HeaderCollapsedContext } from '@/contexts'
 
 const collapsedLogo = css`
 	> span > span {
 		${min.sm`
-				opacity: 0;
-				pointer-events: none;
-				transition: all ease-in-out 0.3s;
-			`}
+			opacity: 0;
+			pointer-events: none;
+			transition: all ease-in-out 0.3s;
+		`}
 
 		&.sergio {
 			display: inline-flex;

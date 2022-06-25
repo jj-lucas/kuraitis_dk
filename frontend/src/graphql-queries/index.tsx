@@ -73,6 +73,12 @@ export type MutationUnassignPermissionArgs = {
   userId: Scalars['String'];
 };
 
+export type NationalizedString = {
+  __typename?: 'NationalizedString';
+  da?: Maybe<Scalars['String']>;
+  en?: Maybe<Scalars['String']>;
+};
+
 export type Permission = {
   __typename?: 'Permission';
   id: Scalars['String'];
@@ -85,6 +91,7 @@ export type Query = {
   currentUser?: Maybe<User>;
   hello?: Maybe<Scalars['String']>;
   permissions: Array<Maybe<Permission>>;
+  review?: Maybe<NationalizedString>;
   users: Array<Maybe<User>>;
 };
 
@@ -114,6 +121,11 @@ export type ApolloQueryVariables = Exact<{
 
 
 export type ApolloQuery = { __typename?: 'Query', hello?: string | null };
+
+export type ReviewQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ReviewQuery = { __typename?: 'Query', review?: { __typename?: 'NationalizedString', da?: string | null } | null };
 
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -210,6 +222,40 @@ export function useApolloLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Apo
 export type ApolloQueryHookResult = ReturnType<typeof useApolloQuery>;
 export type ApolloLazyQueryHookResult = ReturnType<typeof useApolloLazyQuery>;
 export type ApolloQueryResult = Apollo.QueryResult<ApolloQuery, ApolloQueryVariables>;
+export const ReviewDocument = gql`
+    query Review {
+  review {
+    da
+  }
+}
+    `;
+
+/**
+ * __useReviewQuery__
+ *
+ * To run a query within a React component, call `useReviewQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReviewQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReviewQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useReviewQuery(baseOptions?: Apollo.QueryHookOptions<ReviewQuery, ReviewQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ReviewQuery, ReviewQueryVariables>(ReviewDocument, options);
+      }
+export function useReviewLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReviewQuery, ReviewQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ReviewQuery, ReviewQueryVariables>(ReviewDocument, options);
+        }
+export type ReviewQueryHookResult = ReturnType<typeof useReviewQuery>;
+export type ReviewLazyQueryHookResult = ReturnType<typeof useReviewLazyQuery>;
+export type ReviewQueryResult = Apollo.QueryResult<ReviewQuery, ReviewQueryVariables>;
 export const CurrentUserDocument = gql`
     query CurrentUser {
   currentUser {
