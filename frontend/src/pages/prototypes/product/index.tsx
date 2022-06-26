@@ -26,6 +26,15 @@ export const pageQuery = graphql`
 						images {
 							parallax
 						}
+						breadcrumbs {
+							label {
+								da
+							}
+							url
+						}
+						title {
+							da
+						}
 					}
 				}
 			}

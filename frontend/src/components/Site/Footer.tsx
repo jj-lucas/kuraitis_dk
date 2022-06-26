@@ -5,7 +5,7 @@ import { Wrapper } from '@/components'
 import { useStaticQuery, graphql } from 'gatsby'
 import { FooterQuery } from '../../../graphql-types'
 import { useReviewQuery } from '@/graphql-queries'
-import { translate } from '@/utils'
+import { nationalize } from '@/utils'
 
 const Review: React.FC = () => {
 	const { data, loading } = useReviewQuery({})
@@ -20,7 +20,7 @@ const Review: React.FC = () => {
 			<StarIcon />
 			<StarIcon />
 			<br />
-			{translate(data?.review)}
+			{nationalize(data?.review)}
 			<br />
 			<a href="#">Læs mere feedback</a>
 		</p>
@@ -64,11 +64,11 @@ const Footer: React.FC = () => {
 		<Wrapper>
 			<StyledFooter>
 				<Review />
-				<div className="address">{translate(mock?.translations?.footer)}</div>
+				<div className="address">{nationalize(mock?.translations?.footer)}</div>
 				<div className="links">
-					<a href="#">{translate(mock?.translations?.footer_privatlivs)}</a>
+					<a href="#">{nationalize(mock?.translations?.footer_privatlivs)}</a>
 					{' | '}
-					<a href="#">{translate(mock?.translations?.footer_cookie)}</a>
+					<a href="#">{nationalize(mock?.translations?.footer_cookie)}</a>
 				</div>
 			</StyledFooter>
 		</Wrapper>

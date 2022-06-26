@@ -9,7 +9,7 @@ export const rem2num = (n: string): number => {
 	return parseInt(n.replace('rem', ''), 10) * 10
 }
 
-export const translate = (
+export const nationalize = (
 	strObj:
 		| {
 				[key: string]: Maybe<Scalars['String']>

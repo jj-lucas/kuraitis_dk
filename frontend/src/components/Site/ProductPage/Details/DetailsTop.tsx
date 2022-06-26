@@ -1,4 +1,6 @@
-import React from 'react'
+import { ProductContext } from '@/contexts'
+import { nationalize } from '@/utils'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 
 const StyledDetailsTop = styled.div`
@@ -10,16 +12,27 @@ const StyledDetailsTop = styled.div`
 		font-size: ${p => p.theme.typography.fs.h3};
 	}
 `
-const DetailsTop: React.FC = () => (
-	<StyledDetailsTop>
-		<small className="breadcrumbs">
-			<a href="#">Lorem</a> {'>'} <a href="#">Ipsum</a>
-		</small>
-		<h1>Lorem ipsum dolor sit amet</h1>
-		<p>
-			<span className="price">430,- DKK</span>
-		</p>
-	</StyledDetailsTop>
-)
+const DetailsTop: React.FC = () => {
+	const product = useContext(ProductContext)
+
+	return (
+		<StyledDetailsTop>
+			<small className="breadcrumbs">
+				{product?.breadcrumbs
+					?.map(crumb => (
+						<a key={crumb?.url || ''} href={crumb?.url || ''}>
+							{nationalize(crumb?.label)}
+						</a>
+					))
+					.flatMap(x => [x, ' > '])
+					.slice(0, -1)}
+			</small>
+			<h1>{nationalize(product?.title)}</h1>
+			<p>
+				<span className="price">430,- DKK</span>
+			</p>
+		</StyledDetailsTop>
+	)
+}
 
 export default DetailsTop
