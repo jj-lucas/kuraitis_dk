@@ -5,7 +5,7 @@ import { ProductPageQuery } from '../../../../graphql-types'
 import { ProductContext } from '@/contexts'
 
 const Prototype: React.FC<PageProps<ProductPageQuery>> = ({ data }) => {
-	const product = data.site?.siteMetadata?.mocks?.product
+	const product = data.kuraitis.product
 	if (!product) return null
 
 	return (
@@ -19,23 +19,15 @@ export default Prototype
 
 export const pageQuery = graphql`
 	query ProductPage {
-		site {
-			siteMetadata {
-				mocks {
-					product {
-						images {
-							parallax
-						}
-						breadcrumbs {
-							label {
-								da
-							}
-							url
-						}
-						title {
-							da
-						}
-					}
+		kuraitis {
+			product(lang: "da") {
+				title
+				images {
+					parallax
+				}
+				breadcrumbs {
+					label
+					url
 				}
 			}
 		}

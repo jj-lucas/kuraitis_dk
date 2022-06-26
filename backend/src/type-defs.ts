@@ -27,6 +27,19 @@ const typeDefs = gql`
 		en: String
 	}
 
+	type ProductImages {
+		parallax: String
+	}
+	type ProductBreadcrumbs {
+		label: String!
+		url: String!
+	}
+	type Product {
+		images: ProductImages!
+		breadcrumbs: [ProductBreadcrumbs!]!
+		title: String!
+	}
+
 	type Query {
 		books: [Book]
 		hello(name: String!, amount: Int): String
@@ -37,6 +50,8 @@ const typeDefs = gql`
 		permissions: [Permission]!
 
 		review: NationalizedString
+
+		product(lang: String!): Product
 	}
 
 	type Mutation {

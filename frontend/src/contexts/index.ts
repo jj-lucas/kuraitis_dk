@@ -13,9 +13,6 @@ const SideMenuContext = createContext({
 	setExpanded: (expanded: boolean) => {},
 })
 
-const ProductContext =
-	createContext<NonNullable<NonNullable<NonNullable<ProductPageQuery['site']>['siteMetadata']>['mocks']>['product']>(
-		undefined
-	)
+const ProductContext = createContext<NonNullable<NonNullable<ProductPageQuery['kuraitis']>>['product']>(undefined)
 
 export { LanguageContext, HeaderCollapsedContext, SideMenuContext, ProductContext }

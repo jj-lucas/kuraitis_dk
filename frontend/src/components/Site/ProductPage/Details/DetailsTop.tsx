@@ -1,5 +1,4 @@
 import { ProductContext } from '@/contexts'
-import { nationalize } from '@/utils'
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 
@@ -21,13 +20,13 @@ const DetailsTop: React.FC = () => {
 				{product?.breadcrumbs
 					?.map(crumb => (
 						<a key={crumb?.url || ''} href={crumb?.url || ''}>
-							{nationalize(crumb?.label)}
+							{crumb?.label}
 						</a>
 					))
 					.flatMap(x => [x, ' > '])
 					.slice(0, -1)}
 			</small>
-			<h1>{nationalize(product?.title)}</h1>
+			<h1>{product?.title}</h1>
 			<p>
 				<span className="price">430,- DKK</span>
 			</p>

@@ -41,6 +41,8 @@ const StyledProductPage = styled.div`
 const ProductPage: React.FC = () => {
 	const product = useContext(ProductContext)
 
+	console.log({ product })
+
 	return (
 		<StyledProductPage>
 			<Wrapper>

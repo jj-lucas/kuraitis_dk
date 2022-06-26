@@ -33,6 +33,27 @@ const resolvers = merge(
 					da: 'I love this key organizer. Great craftsmanship & shipped pretty quickly. I would definitely purchase from Sergio again.',
 				}
 			},
+
+			product: async (_, args, ctx: Context) => {
+				console.log(args)
+				return {
+					images: {
+						parallax:
+							'https://previews.123rf.com/images/mtoome/mtoome1609/mtoome160900099/63492873-leather-handbag-craftsman-at-work-in-a-workshop.jpg',
+					},
+					breadcrumbs: [
+						{
+							label: 'Lorem',
+							url: '/lorem',
+						},
+						{
+							label: 'Ipsum',
+							url: '/ipsum',
+						},
+					],
+					title: 'Lorem ipsum dolors',
+				}
+			},
 		},
 		Mutation: {},
 	} as Resolvers,

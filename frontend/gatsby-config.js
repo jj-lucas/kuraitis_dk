@@ -25,23 +25,6 @@ module.exports = {
 				],
 				sizes: ['S', 'L'],
 				customizable: true,
-				breadcrumbs: [
-					{
-						label: {
-							da: 'Lorem',
-						},
-						url: '/lorem',
-					},
-					{
-						label: {
-							da: 'Ipsum',
-						},
-						url: '/ipsum',
-					},
-				],
-				title: {
-					da: 'Lorem ipsum dolor',
-				},
 				long_title: {
 					da: 'Lorem ipsum dolor sit amet consectetur',
 				},
@@ -77,8 +60,6 @@ module.exports = {
 						'https://res.cloudinary.com/kuraitis/image/upload/v1617901813/products/to8omylzrz4hmg6mwhn5.jpg',
 						'https://res.cloudinary.com/kuraitis/image/upload/v1617901792/products/wokipe2phwvvuqois6rt.jpg',
 					],
-					parallax:
-						'https://previews.123rf.com/images/mtoome/mtoome1609/mtoome160900099/63492873-leather-handbag-craftsman-at-work-in-a-workshop.jpg',
 				},
 			},
 			translations: {

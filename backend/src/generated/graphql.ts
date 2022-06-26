@@ -72,10 +72,34 @@ export type MutationUnassignPermissionArgs = {
   userId: Scalars['String'];
 };
 
+export type NationalizedString = {
+  __typename?: 'NationalizedString';
+  da?: Maybe<Scalars['String']>;
+  en?: Maybe<Scalars['String']>;
+};
+
 export type Permission = {
   __typename?: 'Permission';
   id: Scalars['String'];
   name: Scalars['String'];
+};
+
+export type Product = {
+  __typename?: 'Product';
+  breadcrumbs: Array<ProductBreadcrumbs>;
+  images: ProductImages;
+  title: Scalars['String'];
+};
+
+export type ProductBreadcrumbs = {
+  __typename?: 'ProductBreadcrumbs';
+  label: Scalars['String'];
+  url: Scalars['String'];
+};
+
+export type ProductImages = {
+  __typename?: 'ProductImages';
+  parallax?: Maybe<Scalars['String']>;
 };
 
 export type Query = {
@@ -84,6 +108,8 @@ export type Query = {
   currentUser?: Maybe<User>;
   hello?: Maybe<Scalars['String']>;
   permissions: Array<Maybe<Permission>>;
+  product?: Maybe<Product>;
+  review?: Maybe<NationalizedString>;
   users: Array<Maybe<User>>;
 };
 
@@ -91,6 +117,11 @@ export type Query = {
 export type QueryHelloArgs = {
   amount?: InputMaybe<Scalars['Int']>;
   name: Scalars['String'];
+};
+
+
+export type QueryProductArgs = {
+  lang: Scalars['String'];
 };
 
 export type Result = {
@@ -179,7 +210,11 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Mutation: ResolverTypeWrapper<{}>;
+  NationalizedString: ResolverTypeWrapper<NationalizedString>;
   Permission: ResolverTypeWrapper<Permission>;
+  Product: ResolverTypeWrapper<Product>;
+  ProductBreadcrumbs: ResolverTypeWrapper<ProductBreadcrumbs>;
+  ProductImages: ResolverTypeWrapper<ProductImages>;
   Query: ResolverTypeWrapper<{}>;
   Result: ResolverTypeWrapper<Result>;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -192,7 +227,11 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   Int: Scalars['Int'];
   Mutation: {};
+  NationalizedString: NationalizedString;
   Permission: Permission;
+  Product: Product;
+  ProductBreadcrumbs: ProductBreadcrumbs;
+  ProductImages: ProductImages;
   Query: {};
   Result: Result;
   String: Scalars['String'];
@@ -216,9 +255,33 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   unassignPermission?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType, RequireFields<MutationUnassignPermissionArgs, 'permissionName' | 'userId'>>;
 };
 
+export type NationalizedStringResolvers<ContextType = any, ParentType extends ResolversParentTypes['NationalizedString'] = ResolversParentTypes['NationalizedString']> = {
+  da?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  en?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type PermissionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Permission'] = ResolversParentTypes['Permission']> = {
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProductResolvers<ContextType = any, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
+  breadcrumbs?: Resolver<Array<ResolversTypes['ProductBreadcrumbs']>, ParentType, ContextType>;
+  images?: Resolver<ResolversTypes['ProductImages'], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProductBreadcrumbsResolvers<ContextType = any, ParentType extends ResolversParentTypes['ProductBreadcrumbs'] = ResolversParentTypes['ProductBreadcrumbs']> = {
+  label?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProductImagesResolvers<ContextType = any, ParentType extends ResolversParentTypes['ProductImages'] = ResolversParentTypes['ProductImages']> = {
+  parallax?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -227,6 +290,8 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   currentUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   hello?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<QueryHelloArgs, 'name'>>;
   permissions?: Resolver<Array<Maybe<ResolversTypes['Permission']>>, ParentType, ContextType>;
+  product?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryProductArgs, 'lang'>>;
+  review?: Resolver<Maybe<ResolversTypes['NationalizedString']>, ParentType, ContextType>;
   users?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>;
 };
 
@@ -246,7 +311,11 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 export type Resolvers<ContextType = any> = {
   Book?: BookResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  NationalizedString?: NationalizedStringResolvers<ContextType>;
   Permission?: PermissionResolvers<ContextType>;
+  Product?: ProductResolvers<ContextType>;
+  ProductBreadcrumbs?: ProductBreadcrumbsResolvers<ContextType>;
+  ProductImages?: ProductImagesResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Result?: ResultResolvers<ContextType>;
   User?: UserResolvers<ContextType>;

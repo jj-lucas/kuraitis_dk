@@ -85,12 +85,31 @@ export type Permission = {
   name: Scalars['String'];
 };
 
+export type Product = {
+  __typename?: 'Product';
+  breadcrumbs: Array<ProductBreadcrumbs>;
+  images: ProductImages;
+  title: Scalars['String'];
+};
+
+export type ProductBreadcrumbs = {
+  __typename?: 'ProductBreadcrumbs';
+  label: Scalars['String'];
+  url: Scalars['String'];
+};
+
+export type ProductImages = {
+  __typename?: 'ProductImages';
+  parallax?: Maybe<Scalars['String']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   books?: Maybe<Array<Maybe<Book>>>;
   currentUser?: Maybe<User>;
   hello?: Maybe<Scalars['String']>;
   permissions: Array<Maybe<Permission>>;
+  product?: Maybe<Product>;
   review?: Maybe<NationalizedString>;
   users: Array<Maybe<User>>;
 };
@@ -99,6 +118,11 @@ export type Query = {
 export type QueryHelloArgs = {
   amount?: InputMaybe<Scalars['Int']>;
   name: Scalars['String'];
+};
+
+
+export type QueryProductArgs = {
+  lang: Scalars['String'];
 };
 
 export type Result = {
