@@ -1,4 +1,5 @@
 import React, { createContext } from 'react'
+import { ProductPageQuery } from '../../graphql-types'
 
 const LanguageContext = createContext('da')
 
@@ -12,4 +13,9 @@ const SideMenuContext = createContext({
 	setExpanded: (expanded: boolean) => {},
 })
 
-export { LanguageContext, HeaderCollapsedContext, SideMenuContext }
+const ProductContext =
+	createContext<NonNullable<NonNullable<NonNullable<ProductPageQuery['site']>['siteMetadata']>['mocks']>['product']>(
+		undefined
+	)
+
+export { LanguageContext, HeaderCollapsedContext, SideMenuContext, ProductContext }

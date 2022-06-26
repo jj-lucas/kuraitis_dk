@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import Details from './Details'
 import Gallery from './Gallery'
@@ -8,6 +8,7 @@ import ColorVariations from './ColorVariations'
 import { Wrapper, Parallax } from '@/components'
 import LongDescription from './LongDescription'
 import Sergio from './Sergio'
+import { ProductContext } from '@/contexts'
 
 const StyledProductPage = styled.div`
 	--productPageContentStart: ${p => p.theme.sizes.productPageContentStart};
@@ -38,7 +39,7 @@ const StyledProductPage = styled.div`
 `
 
 const ProductPage: React.FC = () => {
-	console.log('Render content')
+	const product = useContext(ProductContext)
 
 	return (
 		<StyledProductPage>
@@ -52,7 +53,7 @@ const ProductPage: React.FC = () => {
 			<Wrapper>
 				<ColorVariations />
 			</Wrapper>
-			<Parallax src="https://previews.123rf.com/images/mtoome/mtoome1609/mtoome160900099/63492873-leather-handbag-craftsman-at-work-in-a-workshop.jpg" />
+			<Parallax src={product?.images?.parallax || ''} />
 			<Wrapper>
 				<LongDescription />
 			</Wrapper>
