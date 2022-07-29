@@ -74,6 +74,7 @@ const typeDefs = gql`
 		unassignPermission(userId: String!, permissionName: String!): Result
 
 		createVariation(code: String!): Variation
+		deleteVariation(id: String!): Result
 	}
 `
 

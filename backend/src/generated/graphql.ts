@@ -28,6 +28,7 @@ export type Mutation = {
   createVariation?: Maybe<Variation>;
   deletePermission?: Maybe<Result>;
   deleteUser?: Maybe<Result>;
+  deleteVariation?: Maybe<Result>;
   signIn?: Maybe<User>;
   signOut?: Maybe<Result>;
   unassignPermission?: Maybe<Result>;
@@ -63,6 +64,11 @@ export type MutationDeletePermissionArgs = {
 
 
 export type MutationDeleteUserArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteVariationArgs = {
   id: Scalars['String'];
 };
 
@@ -268,6 +274,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   createVariation?: Resolver<Maybe<ResolversTypes['Variation']>, ParentType, ContextType, RequireFields<MutationCreateVariationArgs, 'code'>>;
   deletePermission?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType, RequireFields<MutationDeletePermissionArgs, 'id'>>;
   deleteUser?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'id'>>;
+  deleteVariation?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType, RequireFields<MutationDeleteVariationArgs, 'id'>>;
   signIn?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationSignInArgs, 'email' | 'password'>>;
   signOut?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType>;
   unassignPermission?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType, RequireFields<MutationUnassignPermissionArgs, 'permissionName' | 'userId'>>;

@@ -24,6 +24,23 @@ const resolvers: Resolvers = {
 
 			return variation
 		},
+
+		deleteVariation: async (_, { id }, ctx: Context) => {
+			hasPermissions(ctx, 'ADMIN')
+
+			// TODO delete all SKUs that use this variation
+			// TODO delete all variation options related to this variation
+
+			await ctx.prisma.variation.delete({
+				where: {
+					id,
+				},
+			})
+
+			return {
+				message: 'Success',
+			}
+		},
 	},
 }
 

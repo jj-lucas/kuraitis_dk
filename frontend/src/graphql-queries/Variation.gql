@@ -10,3 +10,9 @@ mutation CreateVariation($code: String!) {
 		id
 	}
 }
+
+mutation DeleteVariation($id: String!) {
+	deleteVariation(id: $id) {
+		message
+	}
+}

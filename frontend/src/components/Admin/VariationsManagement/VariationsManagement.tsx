@@ -16,6 +16,7 @@ import {
 	Variation,
 	VariationsDocument,
 	useCreateVariationMutation,
+	useDeleteVariationMutation,
 	//useCreateUserMutation,
 	//useDeleteUserMutation,
 	//useUnassignPermissionMutation,
@@ -24,8 +25,6 @@ import {
 
 const Row: React.FC<{ variation: Variation }> = ({ variation }) => {
 	const [open, setOpen] = React.useState(false)
-
-	//const [unassignPermissionMutation] = useUnassignPermissionMutation()
 
 	return (
 		<React.Fragment>
@@ -41,6 +40,7 @@ const Row: React.FC<{ variation: Variation }> = ({ variation }) => {
 				<TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
 					<Collapse in={open} timeout="auto" unmountOnExit>
 						<Box sx={{ margin: 2 }}>
+							<h3>Available options</h3>
 							{/*user.permissions &&
 								user.permissions?.length > 0 &&
 								user.permissions
@@ -68,7 +68,9 @@ const Row: React.FC<{ variation: Variation }> = ({ variation }) => {
 												)*/}
 							{/*<PermissionsModal user={user} />*/}
 						</Box>
-						<Box sx={{ margin: 2 }}>{/*<DeleteUser user={user} />*/}</Box>
+						<Box sx={{ margin: 2 }}>
+							<DeleteVariation variation={variation} />
+						</Box>
 					</Collapse>
 				</TableCell>
 			</TableRow>
@@ -119,16 +121,15 @@ const CreateVariation: React.FC = () => {
 	)
 }
 
-/*
-const DeleteUser: React.FC<{ user: User }> = ({ user }) => {
-	const [deleteUserMutation, { loading, error }] = useDeleteUserMutation()
+const DeleteVariation: React.FC<{ variation: Variation }> = ({ variation }) => {
+	const [deleteVariationMutation, { loading, error }] = useDeleteVariationMutation()
 
-	const deleteUser = (id: string) => {
-		deleteUserMutation({
+	const deleteVariation = (id: string) => {
+		deleteVariationMutation({
 			variables: {
 				id,
 			},
-			refetchQueries: [{ query: UsersDocument }],
+			refetchQueries: [{ query: VariationsDocument }],
 		})
 	}
 	return (
@@ -138,17 +139,20 @@ const DeleteUser: React.FC<{ user: User }> = ({ user }) => {
 				color={'error'}
 				loading={loading}
 				onClick={() => {
-					if (confirm('Are you sure you want to delete this user?') == true) {
-						deleteUser(user.id)
+					if (confirm('Are you sure you want to delete this variation, and all related SKUs?') == true) {
+						deleteVariation(variation.id)
 					}
 				}}>
-				Delete
+				Delete variation
 			</LoadingButton>
-			{error && <Alert severity="error">{error}</Alert>}
+			{error && (
+				<Alert severity="error">
+					<>{error}</>
+				</Alert>
+			)}
 		</>
 	)
 }
-*/
 
 export const VariationsManagement: React.FC<{ variations: VariationsQuery['variations'] }> = ({ variations }) => (
 	<>
