@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { useCurrentUserQuery } from '../../graphql-queries'
 import { Helmet } from 'react-helmet'
-import { SignIn, SignOut, UserContext } from '..'
+import { SignIn, SignOut, UserContext } from '@/components/Admin'
 import { hasPermission } from '../../utils'
 import {
 	Alert,
@@ -49,6 +49,7 @@ const NavigationLinks: React.FC = () => {
 					<>
 						<Divider />
 						{link('/admin/users', 'Users', <InboxIcon />)}
+						{link('/admin/variations', 'Variations', <InboxIcon />)}
 					</>
 				)}
 			</List>

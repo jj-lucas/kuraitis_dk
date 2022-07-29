@@ -40,6 +40,11 @@ const typeDefs = gql`
 		title: String!
 	}
 
+	type Variation {
+		id: ID!
+		code: String!
+	}
+
 	type Query {
 		books: [Book]
 		hello(name: String!, amount: Int): String
@@ -52,6 +57,8 @@ const typeDefs = gql`
 		review: NationalizedString
 
 		product(lang: String!): Product
+
+		variations: [Variation]
 	}
 
 	type Mutation {
@@ -65,6 +72,8 @@ const typeDefs = gql`
 		deletePermission(id: String!): Result
 		assignPermission(userId: String!, permissionName: String!): Result
 		unassignPermission(userId: String!, permissionName: String!): Result
+
+		createVariation(code: String!): Variation
 	}
 `
 

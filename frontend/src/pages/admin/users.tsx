@@ -1,6 +1,6 @@
 import { Alert, CircularProgress } from '@mui/material'
 import React from 'react'
-import { Authorization, UsersManagement } from '../../components'
+import { Authorization, UsersManagement } from '@/components/Admin'
 
 import { useUsersQuery } from '../../graphql-queries'
 

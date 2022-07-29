@@ -26,6 +26,7 @@ export type Mutation = {
   assignPermission?: Maybe<Result>;
   createPermission?: Maybe<Permission>;
   createUser?: Maybe<User>;
+  createVariation?: Maybe<Variation>;
   deletePermission?: Maybe<Result>;
   deleteUser?: Maybe<Result>;
   signIn?: Maybe<User>;
@@ -49,6 +50,11 @@ export type MutationCreateUserArgs = {
   email: Scalars['String'];
   name: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationCreateVariationArgs = {
+  code: Scalars['String'];
 };
 
 
@@ -112,6 +118,7 @@ export type Query = {
   product?: Maybe<Product>;
   review?: Maybe<NationalizedString>;
   users: Array<Maybe<User>>;
+  variations?: Maybe<Array<Maybe<Variation>>>;
 };
 
 
@@ -136,6 +143,12 @@ export type User = {
   id: Scalars['String'];
   name: Scalars['String'];
   permissions: Array<Maybe<Permission>>;
+};
+
+export type Variation = {
+  __typename?: 'Variation';
+  code: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 export type ApolloQueryVariables = Exact<{
@@ -210,6 +223,18 @@ export type UnassignPermissionMutationVariables = Exact<{
 
 
 export type UnassignPermissionMutation = { __typename?: 'Mutation', unassignPermission?: { __typename?: 'Result', message: string } | null };
+
+export type VariationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type VariationsQuery = { __typename?: 'Query', variations?: Array<{ __typename?: 'Variation', id: string, code: string } | null> | null };
+
+export type CreateVariationMutationVariables = Exact<{
+  code: Scalars['String'];
+}>;
+
+
+export type CreateVariationMutation = { __typename?: 'Mutation', createVariation?: { __typename?: 'Variation', id: string } | null };
 
 
 export const ApolloDocument = gql`
@@ -595,6 +620,74 @@ export function useUnassignPermissionMutation(baseOptions?: Apollo.MutationHookO
 export type UnassignPermissionMutationHookResult = ReturnType<typeof useUnassignPermissionMutation>;
 export type UnassignPermissionMutationResult = Apollo.MutationResult<UnassignPermissionMutation>;
 export type UnassignPermissionMutationOptions = Apollo.BaseMutationOptions<UnassignPermissionMutation, UnassignPermissionMutationVariables>;
+export const VariationsDocument = gql`
+    query Variations {
+  variations {
+    id
+    code
+  }
+}
+    `;
+
+/**
+ * __useVariationsQuery__
+ *
+ * To run a query within a React component, call `useVariationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useVariationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useVariationsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useVariationsQuery(baseOptions?: Apollo.QueryHookOptions<VariationsQuery, VariationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<VariationsQuery, VariationsQueryVariables>(VariationsDocument, options);
+      }
+export function useVariationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<VariationsQuery, VariationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<VariationsQuery, VariationsQueryVariables>(VariationsDocument, options);
+        }
+export type VariationsQueryHookResult = ReturnType<typeof useVariationsQuery>;
+export type VariationsLazyQueryHookResult = ReturnType<typeof useVariationsLazyQuery>;
+export type VariationsQueryResult = Apollo.QueryResult<VariationsQuery, VariationsQueryVariables>;
+export const CreateVariationDocument = gql`
+    mutation CreateVariation($code: String!) {
+  createVariation(code: $code) {
+    id
+  }
+}
+    `;
+export type CreateVariationMutationFn = Apollo.MutationFunction<CreateVariationMutation, CreateVariationMutationVariables>;
+
+/**
+ * __useCreateVariationMutation__
+ *
+ * To run a mutation, you first call `useCreateVariationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateVariationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createVariationMutation, { data, loading, error }] = useCreateVariationMutation({
+ *   variables: {
+ *      code: // value for 'code'
+ *   },
+ * });
+ */
+export function useCreateVariationMutation(baseOptions?: Apollo.MutationHookOptions<CreateVariationMutation, CreateVariationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateVariationMutation, CreateVariationMutationVariables>(CreateVariationDocument, options);
+      }
+export type CreateVariationMutationHookResult = ReturnType<typeof useCreateVariationMutation>;
+export type CreateVariationMutationResult = Apollo.MutationResult<CreateVariationMutation>;
+export type CreateVariationMutationOptions = Apollo.BaseMutationOptions<CreateVariationMutation, CreateVariationMutationVariables>;
 
       export interface PossibleTypesResultData {
         possibleTypes: {

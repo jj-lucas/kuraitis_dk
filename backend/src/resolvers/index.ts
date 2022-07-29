@@ -2,6 +2,7 @@ import { ExpressContext } from 'apollo-server-express'
 import { PrismaClient } from '@prisma/client'
 import { Resolvers } from '../generated/graphql'
 import userResolvers from './user'
+import variationResolvers from './variation'
 const merge = require('deepmerge')
 
 interface Context extends ExpressContext {
@@ -19,7 +20,7 @@ const books = [
 	},
 ]
 
-const resolvers = merge(
+const resolvers = merge.all([
 	{
 		Query: {
 			books: () => books,
@@ -57,7 +58,8 @@ const resolvers = merge(
 		},
 		Mutation: {},
 	} as Resolvers,
-	userResolvers
-)
+	userResolvers,
+	variationResolvers,
+])
 
 export default resolvers

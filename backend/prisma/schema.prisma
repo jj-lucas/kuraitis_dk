@@ -22,3 +22,16 @@ model Permission {
   name  String @unique
   users User[]
 }
+
+model VariationOption {
+  id          String    @id @default(cuid())
+  code        String
+  variation   Variation @relation(fields: [variationId], references: [id])
+  variationId String
+}
+
+model Variation {
+  id               String            @id @default(cuid())
+  code             String            @unique
+  variationOptions VariationOption[]
+}

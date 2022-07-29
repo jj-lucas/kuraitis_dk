@@ -1,9 +1,12 @@
 import React, { useContext } from 'react'
-import { UserContext } from '..'
+import { UserContext } from '@/components/Admin'
 import { hasPermission } from '../../utils'
 import { Alert } from '@mui/material'
 
-export const Authorization: React.FC<{ permissions: String[] | String }> = ({ permissions, children }) => {
+export const Authorization: React.FC<{ permissions: String[] | String; children: React.ReactNode }> = ({
+	permissions,
+	children,
+}) => {
 	const user = useContext(UserContext)
 
 	if (hasPermission(user, permissions)) {

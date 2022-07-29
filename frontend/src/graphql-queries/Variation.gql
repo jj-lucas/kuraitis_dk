@@ -1,0 +1,12 @@
+query Variations {
+	variations {
+		id
+		code
+	}
+}
+
+mutation CreateVariation($code: String!) {
+	createVariation(code: $code) {
+		id
+	}
+}

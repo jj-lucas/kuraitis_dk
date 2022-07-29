@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { UserContext } from '../../components'
+import { UserContext } from '@/components/Admin'
 
 const IndexPage: React.FC = () => {
 	const currentUser = useContext(UserContext)
