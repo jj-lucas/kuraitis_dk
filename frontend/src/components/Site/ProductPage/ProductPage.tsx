@@ -55,10 +55,10 @@ const ProductPage: React.FC = () => {
 			<Wrapper>
 				<ColorVariations />
 			</Wrapper>
-			<Parallax src={product?.images?.parallax || ''} />
 			<Wrapper>
 				<LongDescription />
 			</Wrapper>
+			<Parallax src={product?.images?.parallax || ''} />
 			<Sergio />
 		</StyledProductPage>
 	)
