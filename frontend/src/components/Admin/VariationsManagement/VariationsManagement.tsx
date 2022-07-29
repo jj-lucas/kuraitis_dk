@@ -20,10 +20,13 @@ import {
 	//useCreateUserMutation,
 	//useDeleteUserMutation,
 	//useUnassignPermissionMutation,
+	useDeleteVariationOptionMutation,
 } from '../../../graphql-queries'
+import { CreateVariationOptionModal } from './CreateVariationOptionModal'
 //import { Modal } from '@/components/Admin'
 
 const Row: React.FC<{ variation: Variation }> = ({ variation }) => {
+	const [deleteVariationOption] = useDeleteVariationOptionMutation()
 	const [open, setOpen] = React.useState(false)
 
 	return (
@@ -41,32 +44,27 @@ const Row: React.FC<{ variation: Variation }> = ({ variation }) => {
 					<Collapse in={open} timeout="auto" unmountOnExit>
 						<Box sx={{ margin: 2 }}>
 							<h3>Available options</h3>
-							{/*user.permissions &&
-								user.permissions?.length > 0 &&
-								user.permissions
-									?.filter(perm => perm && perm.name)
-									.map(
-										perm =>
-											perm && (
-												<Chip
-													color="primary"
-													icon={perm.name === 'ADMIN' ? <VerifiedUserIcon /> : undefined}
-													label={perm.name}
-													variant="outlined"
-													onDelete={e => {
-														unassignPermissionMutation({
-															variables: {
-																userId: user.id,
-																permissionName: perm.name,
-															},
-															refetchQueries: [{ query: UsersDocument }],
-														})
-													}}
-													sx={{ mr: '1rem' }}
-												/>
-											)
-												)*/}
-							{/*<PermissionsModal user={user} />*/}
+							{variation.variationOptions.map(
+								option =>
+									option && (
+										<Chip
+											key={option.id}
+											color="primary"
+											label={option.code}
+											variant="outlined"
+											onDelete={e => {
+												deleteVariationOption({
+													variables: {
+														id: option.id,
+													},
+													refetchQueries: [{ query: VariationsDocument }],
+												})
+											}}
+											sx={{ mr: '1rem' }}
+										/>
+									)
+							)}
+							<CreateVariationOptionModal variation={variation} />
 						</Box>
 						<Box sx={{ margin: 2 }}>
 							<DeleteVariation variation={variation} />

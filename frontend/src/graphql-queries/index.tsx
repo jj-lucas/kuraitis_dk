@@ -27,9 +27,11 @@ export type Mutation = {
   createPermission?: Maybe<Permission>;
   createUser?: Maybe<User>;
   createVariation?: Maybe<Variation>;
+  createVariationOption?: Maybe<VariationOption>;
   deletePermission?: Maybe<Result>;
   deleteUser?: Maybe<Result>;
   deleteVariation?: Maybe<Result>;
+  deleteVariationOption?: Maybe<Result>;
   signIn?: Maybe<User>;
   signOut?: Maybe<Result>;
   unassignPermission?: Maybe<Result>;
@@ -59,6 +61,12 @@ export type MutationCreateVariationArgs = {
 };
 
 
+export type MutationCreateVariationOptionArgs = {
+  code: Scalars['String'];
+  variationId: Scalars['String'];
+};
+
+
 export type MutationDeletePermissionArgs = {
   id: Scalars['String'];
 };
@@ -70,6 +78,11 @@ export type MutationDeleteUserArgs = {
 
 
 export type MutationDeleteVariationArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteVariationOptionArgs = {
   id: Scalars['String'];
 };
 
@@ -155,6 +168,13 @@ export type Variation = {
   __typename?: 'Variation';
   code: Scalars['String'];
   id: Scalars['ID'];
+  variationOptions: Array<Maybe<VariationOption>>;
+};
+
+export type VariationOption = {
+  __typename?: 'VariationOption';
+  code: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 export type ApolloQueryVariables = Exact<{
@@ -233,7 +253,7 @@ export type UnassignPermissionMutation = { __typename?: 'Mutation', unassignPerm
 export type VariationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type VariationsQuery = { __typename?: 'Query', variations?: Array<{ __typename?: 'Variation', id: string, code: string } | null> | null };
+export type VariationsQuery = { __typename?: 'Query', variations?: Array<{ __typename?: 'Variation', id: string, code: string, variationOptions: Array<{ __typename?: 'VariationOption', id: string, code: string } | null> } | null> | null };
 
 export type CreateVariationMutationVariables = Exact<{
   code: Scalars['String'];
@@ -248,6 +268,21 @@ export type DeleteVariationMutationVariables = Exact<{
 
 
 export type DeleteVariationMutation = { __typename?: 'Mutation', deleteVariation?: { __typename?: 'Result', message: string } | null };
+
+export type CreateVariationOptionMutationVariables = Exact<{
+  code: Scalars['String'];
+  variationId: Scalars['String'];
+}>;
+
+
+export type CreateVariationOptionMutation = { __typename?: 'Mutation', createVariationOption?: { __typename?: 'VariationOption', id: string } | null };
+
+export type DeleteVariationOptionMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteVariationOptionMutation = { __typename?: 'Mutation', deleteVariationOption?: { __typename?: 'Result', message: string } | null };
 
 
 export const ApolloDocument = gql`
@@ -638,6 +673,10 @@ export const VariationsDocument = gql`
   variations {
     id
     code
+    variationOptions {
+      id
+      code
+    }
   }
 }
     `;
@@ -734,6 +773,73 @@ export function useDeleteVariationMutation(baseOptions?: Apollo.MutationHookOpti
 export type DeleteVariationMutationHookResult = ReturnType<typeof useDeleteVariationMutation>;
 export type DeleteVariationMutationResult = Apollo.MutationResult<DeleteVariationMutation>;
 export type DeleteVariationMutationOptions = Apollo.BaseMutationOptions<DeleteVariationMutation, DeleteVariationMutationVariables>;
+export const CreateVariationOptionDocument = gql`
+    mutation CreateVariationOption($code: String!, $variationId: String!) {
+  createVariationOption(code: $code, variationId: $variationId) {
+    id
+  }
+}
+    `;
+export type CreateVariationOptionMutationFn = Apollo.MutationFunction<CreateVariationOptionMutation, CreateVariationOptionMutationVariables>;
+
+/**
+ * __useCreateVariationOptionMutation__
+ *
+ * To run a mutation, you first call `useCreateVariationOptionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateVariationOptionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createVariationOptionMutation, { data, loading, error }] = useCreateVariationOptionMutation({
+ *   variables: {
+ *      code: // value for 'code'
+ *      variationId: // value for 'variationId'
+ *   },
+ * });
+ */
+export function useCreateVariationOptionMutation(baseOptions?: Apollo.MutationHookOptions<CreateVariationOptionMutation, CreateVariationOptionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateVariationOptionMutation, CreateVariationOptionMutationVariables>(CreateVariationOptionDocument, options);
+      }
+export type CreateVariationOptionMutationHookResult = ReturnType<typeof useCreateVariationOptionMutation>;
+export type CreateVariationOptionMutationResult = Apollo.MutationResult<CreateVariationOptionMutation>;
+export type CreateVariationOptionMutationOptions = Apollo.BaseMutationOptions<CreateVariationOptionMutation, CreateVariationOptionMutationVariables>;
+export const DeleteVariationOptionDocument = gql`
+    mutation DeleteVariationOption($id: String!) {
+  deleteVariationOption(id: $id) {
+    message
+  }
+}
+    `;
+export type DeleteVariationOptionMutationFn = Apollo.MutationFunction<DeleteVariationOptionMutation, DeleteVariationOptionMutationVariables>;
+
+/**
+ * __useDeleteVariationOptionMutation__
+ *
+ * To run a mutation, you first call `useDeleteVariationOptionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteVariationOptionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteVariationOptionMutation, { data, loading, error }] = useDeleteVariationOptionMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteVariationOptionMutation(baseOptions?: Apollo.MutationHookOptions<DeleteVariationOptionMutation, DeleteVariationOptionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteVariationOptionMutation, DeleteVariationOptionMutationVariables>(DeleteVariationOptionDocument, options);
+      }
+export type DeleteVariationOptionMutationHookResult = ReturnType<typeof useDeleteVariationOptionMutation>;
+export type DeleteVariationOptionMutationResult = Apollo.MutationResult<DeleteVariationOptionMutation>;
+export type DeleteVariationOptionMutationOptions = Apollo.BaseMutationOptions<DeleteVariationOptionMutation, DeleteVariationOptionMutationVariables>;
 
       export interface PossibleTypesResultData {
         possibleTypes: {

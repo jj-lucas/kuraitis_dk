@@ -2,6 +2,10 @@ query Variations {
 	variations {
 		id
 		code
+		variationOptions {
+			id
+			code
+		}
 	}
 }
 
@@ -13,6 +17,18 @@ mutation CreateVariation($code: String!) {
 
 mutation DeleteVariation($id: String!) {
 	deleteVariation(id: $id) {
+		message
+	}
+}
+
+mutation CreateVariationOption($code: String!, $variationId: String!) {
+	createVariationOption(code: $code, variationId: $variationId) {
+		id
+	}
+}
+
+mutation DeleteVariationOption($id: String!) {
+	deleteVariationOption(id: $id) {
 		message
 	}
 }

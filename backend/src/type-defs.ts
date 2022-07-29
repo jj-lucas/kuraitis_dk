@@ -43,6 +43,12 @@ const typeDefs = gql`
 	type Variation {
 		id: ID!
 		code: String!
+		variationOptions: [VariationOption]!
+	}
+
+	type VariationOption {
+		id: ID!
+		code: String!
 	}
 
 	type Query {
@@ -75,6 +81,8 @@ const typeDefs = gql`
 
 		createVariation(code: String!): Variation
 		deleteVariation(id: String!): Result
+		createVariationOption(code: String!, variationId: String!): VariationOption
+		deleteVariationOption(id: String!): Result
 	}
 `
 

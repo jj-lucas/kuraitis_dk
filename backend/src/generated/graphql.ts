@@ -26,9 +26,11 @@ export type Mutation = {
   createPermission?: Maybe<Permission>;
   createUser?: Maybe<User>;
   createVariation?: Maybe<Variation>;
+  createVariationOption?: Maybe<VariationOption>;
   deletePermission?: Maybe<Result>;
   deleteUser?: Maybe<Result>;
   deleteVariation?: Maybe<Result>;
+  deleteVariationOption?: Maybe<Result>;
   signIn?: Maybe<User>;
   signOut?: Maybe<Result>;
   unassignPermission?: Maybe<Result>;
@@ -58,6 +60,12 @@ export type MutationCreateVariationArgs = {
 };
 
 
+export type MutationCreateVariationOptionArgs = {
+  code: Scalars['String'];
+  variationId: Scalars['String'];
+};
+
+
 export type MutationDeletePermissionArgs = {
   id: Scalars['String'];
 };
@@ -69,6 +77,11 @@ export type MutationDeleteUserArgs = {
 
 
 export type MutationDeleteVariationArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteVariationOptionArgs = {
   id: Scalars['String'];
 };
 
@@ -152,6 +165,13 @@ export type User = {
 
 export type Variation = {
   __typename?: 'Variation';
+  code: Scalars['String'];
+  id: Scalars['ID'];
+  variationOptions: Array<Maybe<VariationOption>>;
+};
+
+export type VariationOption = {
+  __typename?: 'VariationOption';
   code: Scalars['String'];
   id: Scalars['ID'];
 };
@@ -240,6 +260,7 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>;
   User: ResolverTypeWrapper<User>;
   Variation: ResolverTypeWrapper<Variation>;
+  VariationOption: ResolverTypeWrapper<VariationOption>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -259,6 +280,7 @@ export type ResolversParentTypes = {
   String: Scalars['String'];
   User: User;
   Variation: Variation;
+  VariationOption: VariationOption;
 };
 
 export type BookResolvers<ContextType = any, ParentType extends ResolversParentTypes['Book'] = ResolversParentTypes['Book']> = {
@@ -272,9 +294,11 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   createPermission?: Resolver<Maybe<ResolversTypes['Permission']>, ParentType, ContextType, RequireFields<MutationCreatePermissionArgs, 'name'>>;
   createUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'email' | 'name' | 'password'>>;
   createVariation?: Resolver<Maybe<ResolversTypes['Variation']>, ParentType, ContextType, RequireFields<MutationCreateVariationArgs, 'code'>>;
+  createVariationOption?: Resolver<Maybe<ResolversTypes['VariationOption']>, ParentType, ContextType, RequireFields<MutationCreateVariationOptionArgs, 'code' | 'variationId'>>;
   deletePermission?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType, RequireFields<MutationDeletePermissionArgs, 'id'>>;
   deleteUser?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'id'>>;
   deleteVariation?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType, RequireFields<MutationDeleteVariationArgs, 'id'>>;
+  deleteVariationOption?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType, RequireFields<MutationDeleteVariationOptionArgs, 'id'>>;
   signIn?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationSignInArgs, 'email' | 'password'>>;
   signOut?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType>;
   unassignPermission?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType, RequireFields<MutationUnassignPermissionArgs, 'permissionName' | 'userId'>>;
@@ -337,6 +361,13 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 export type VariationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Variation'] = ResolversParentTypes['Variation']> = {
   code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  variationOptions?: Resolver<Array<Maybe<ResolversTypes['VariationOption']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type VariationOptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['VariationOption'] = ResolversParentTypes['VariationOption']> = {
+  code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -352,5 +383,6 @@ export type Resolvers<ContextType = any> = {
   Result?: ResultResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   Variation?: VariationResolvers<ContextType>;
+  VariationOption?: VariationOptionResolvers<ContextType>;
 };
 
